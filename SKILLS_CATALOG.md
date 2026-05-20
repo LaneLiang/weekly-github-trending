@@ -1,6 +1,6 @@
 # Claude Code Skills Catalog
 
-**Total skills:** 450  
+**Total skills:** 514  
 **Generated:** 2026-05-20  
 **Source:** `~/.claude/skills/`
 
@@ -11,7 +11,8 @@
 | Source | Skills | Description |
 |--------|--------|-------------|
 | everything-claude-code | 234 | ECC universal configuration (180+ skills, 47 agents, 79 commands) |
-| hermes-agent | 164 | Digital twin agent with learning loop and skill auto-generation |
+| hermes-agent | 130 | Digital twin agent with learning loop and skill auto-generation |
+| ai-research-skills | 98 | AI/ML research engineering toolkit (98 skills, 22 domains: model arch to paper writing) |
 | Lark (飞书) Integration | 22 | Feishu/Lark API integrations (docs, sheets, calendar, IM, etc.) |
 | Superpowers Workflow | 19 | Built-in workflow discipline skills (plan, debug, review, verify) |
 | nature-skills | 9 | Nature/Science journal writing toolkit (9 skills) |
@@ -20,7 +21,8 @@
 ## Table of Contents
 
 - [everything-claude-code](#everything-claude-code) (234 skills)
-- [hermes-agent](#hermes-agent) (164 skills)
+- [hermes-agent](#hermes-agent) (130 skills)
+- [ai-research-skills](#ai-research-skills) (98 skills)
 - [Lark (飞书) Integration](#lark--integration) (22 skills)
 - [Superpowers Workflow](#superpowers-workflow) (19 skills)
 - [nature-skills](#nature-skills) (9 skills)
@@ -120,37 +122,37 @@
 
 ### agentic-engineering
 
-**Category:** Quality | **Path:** `everything-claude-code\.kiro\skills\agentic-engineering/`
+**Category:** AI Research | **Path:** `everything-claude-code\.kiro\skills\agentic-engineering/`
 
 **Description:** Operate as an agentic engineer using eval-first execution, decomposition, and cost-aware model routing. Use when AI agents perform most implementation work and humans enforce quality and risk controls.
 
 **Trigger Words 🤖:** When user mentions `agentic-engineering` or related concepts
 
-**Use Case 🤖:** Evaluate and benchmark outputs
+**Use Case 🤖:** LLM agent frameworks and autonomous systems
 
 ---
 
 ### agentic-os
 
-**Category:** Context | **Path:** `everything-claude-code\skills\agentic-os/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\agentic-os/`
 
 **Description:** Build persistent multi-agent operating systems on Claude Code. Covers kernel architecture, specialist agents, slash commands, file-based memory, scheduled automation, and state management without external databases.
 
 **Trigger Words 🤖:** When user mentions `agentic-os` or related concepts
 
-**Use Case 🤖:** Manage persistent memory and context
+**Use Case 🤖:** LLM agent frameworks and autonomous systems
 
 ---
 
 ### ai-first-engineering
 
-**Category:** General | **Path:** `everything-claude-code\skills\ai-first-engineering/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\ai-first-engineering/`
 
 **Description:** Engineering operating model for teams where AI agents generate a large share of implementation output.
 
 **Trigger Words 🤖:** When user mentions `ai-first-engineering` or related concepts
 
-**Use Case 🤖:** Use for tasks involving ai first engineering (see description).
+**Use Case 🤖:** LLM agent frameworks and autonomous systems
 
 ---
 
@@ -229,13 +231,13 @@
 
 ### article-writing
 
-**Category:** Content | **Path:** `everything-claude-code\.agents\skills\article-writing/`
+**Category:** AI Research | **Path:** `everything-claude-code\.agents\skills\article-writing/`
 
 **Description:** Write articles, guides, blog posts, tutorials, newsletter issues, and other long-form content in a distinctive voice derived from supplied examples or brand guidance. Use when the user wants polished written content longer than a paragraph, especially when voice consistency, structure, and credibility matter.
 
 **Trigger Words 🤖:** When user mentions `article-writing` or related concepts
 
-**Use Case 🤖:** Content generation and management
+**Use Case 🤖:** Controlled generation from language models
 
 ---
 
@@ -411,13 +413,13 @@
 
 ### claude-devfleet
 
-**Category:** Planning | **Path:** `everything-claude-code\skills\claude-devfleet/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\claude-devfleet/`
 
 **Description:** Orchestrate multi-agent coding tasks via Claude DevFleet — plan projects, dispatch parallel agents in isolated worktrees, monitor progress, and read structured reports.
 
 **Trigger Words 🤖:** When user mentions `claude-devfleet` or related concepts
 
-**Use Case 🤖:** Create implementation plans
+**Use Case 🤖:** LLM agent frameworks and autonomous systems
 
 ---
 
@@ -543,13 +545,13 @@
 
 ### context-budget
 
-**Category:** Integration | **Path:** `everything-claude-code\skills\context-budget/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\context-budget/`
 
 **Description:** Audits Claude Code context window consumption across agents, skills, MCP servers, and rules. Identifies bloat, redundant components, and produces prioritized token-savings recommendations.
 
 **Trigger Words 🤖:** When user mentions `context-budget` or related concepts
 
-**Use Case 🤖:** Manage MCP server connections
+**Use Case 🤖:** LLM agent frameworks and autonomous systems
 
 ---
 
@@ -688,14 +690,14 @@
 
 ### customs-trade-compliance
 
-**Category:** Quality | **Path:** `everything-claude-code\skills\customs-trade-compliance/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\customs-trade-compliance/`
 
 **Description:** Codified expertise for customs documentation, tariff classification, duty optimization, restricted party screening, and regulatory compliance across multiple jurisdictions. Informed by trade compliance specialists with 15+ years experience. Includes HS classification logic, Incoterms application, FTA utilization, and penalty mitigation. Use when handling customs clearance, tariff classification, trade compliance, import/export documentation, or duty optimization.
 
 **Version:** 1.0.0  
 **Trigger Words 🤖:** When user mentions `customs-trade-compliance` or related concepts
 
-**Use Case 🤖:** Check logical flow and argument coherence
+**Use Case 🤖:** Model optimization, quantization, and memory reduction
 
 ---
 
@@ -775,13 +777,13 @@
 
 ### deployment-patterns
 
-**Category:** Orchestration | **Path:** `everything-claude-code\.kiro\skills\deployment-patterns/`
+**Category:** AI Research | **Path:** `everything-claude-code\.kiro\skills\deployment-patterns/`
 
 **Description:** Deployment workflows, CI/CD pipeline patterns, Docker containerization, health checks, rollback strategies, and production readiness checklists for web applications. Use when setting up deployment infrastructure or planning releases.
 
 **Trigger Words 🤖:** When user mentions `deployment-patterns` or related concepts
 
-**Use Case 🤖:** Master orchestrator for multi-stage workflows
+**Use Case 🤖:** GPU cloud compute orchestration and job deployment
 
 ---
 
@@ -859,13 +861,13 @@
 
 ### dmux-workflows
 
-**Category:** Agent | **Path:** `everything-claude-code\.agents\skills\dmux-workflows/`
+**Category:** AI Research | **Path:** `everything-claude-code\.agents\skills\dmux-workflows/`
 
 **Description:** Multi-agent orchestration using dmux (tmux pane manager for AI agents). Patterns for parallel agent workflows across Claude Code, Codex, OpenCode, and other harnesses. Use when running multiple agent sessions in parallel or coordinating multi-agent development workflows.
 
 **Trigger Words 🤖:** When user mentions `dmux-workflows` or related concepts
 
-**Use Case 🤖:** Configure and manage AI agents
+**Use Case 🤖:** LLM agent frameworks and autonomous systems
 
 ---
 
@@ -919,13 +921,13 @@
 
 ### ecc-guide
 
-**Category:** General | **Path:** `everything-claude-code\skills\ecc-guide/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\ecc-guide/`
 
 **Description:** Guide users through ECC's current agents, skills, commands, hooks, rules, install profiles, and project onboarding by reading the live repository surface before answering.
 
 **Trigger Words 🤖:** When user mentions `ecc-guide` or related concepts
 
-**Use Case 🤖:** Use for tasks involving ecc guide (see description).
+**Use Case 🤖:** LLM agent frameworks and autonomous systems
 
 ---
 
@@ -955,14 +957,14 @@
 
 ### energy-procurement
 
-**Category:** General | **Path:** `everything-claude-code\skills\energy-procurement/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\energy-procurement/`
 
 **Description:** Codified expertise for electricity and gas procurement, tariff optimization, demand charge management, renewable PPA evaluation, and multi-facility energy cost management. Informed by energy procurement managers with 15+ years experience at large commercial and industrial consumers. Includes market structure analysis, hedging strategies, load profiling, and sustainability reporting frameworks. Use when procuring energy, optimizing tariffs, managing demand charges, evaluating PPAs, or developing energy strategies.
 
 **Version:** 1.0.0  
 **Trigger Words 🤖:** When user mentions `energy-procurement` or related concepts
 
-**Use Case 🤖:** Use for tasks involving energy procurement (see description).
+**Use Case 🤖:** Model optimization, quantization, and memory reduction
 
 ---
 
@@ -1185,13 +1187,13 @@
 
 ### gateguard
 
-**Category:** Data | **Path:** `everything-claude-code\skills\gateguard/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\gateguard/`
 
 **Description:** Fact-forcing gate that blocks Edit/Write/Bash (including MultiEdit) and demands concrete investigation (importers, data schemas, user instruction) before allowing the action. Measurably improves output quality by +2.25 points vs ungated agents.
 
 **Trigger Words 🤖:** When user mentions `gateguard` or related concepts
 
-**Use Case 🤖:** Handle data-related tasks
+**Use Case 🤖:** LLM agent frameworks and autonomous systems
 
 ---
 
@@ -1418,26 +1420,26 @@
 
 ### hookify-rules
 
-**Category:** Integration | **Path:** `everything-claude-code\skills\hookify-rules/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\hookify-rules/`
 
 **Description:** This skill should be used when the user asks to create a hookify rule, write a hook rule, configure hookify, add a hookify rule, or needs guidance on hookify rule syntax and patterns.
 
 **Trigger Words 🤖:** When user mentions `hookify-rules` or related concepts
 
-**Use Case 🤖:** Configure and manage hooks
+**Use Case 🤖:** Controlled generation from language models
 
 ---
 
 ### inventory-demand-planning
 
-**Category:** General | **Path:** `everything-claude-code\skills\inventory-demand-planning/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\inventory-demand-planning/`
 
 **Description:** Codified expertise for demand forecasting, safety stock optimization, replenishment planning, and promotional lift estimation at multi-location retailers. Informed by demand planners with 15+ years experience managing hundreds of SKUs. Includes forecasting method selection, ABC/XYZ analysis, seasonal transition management, and vendor negotiation frameworks. Use when forecasting demand, setting safety stock, planning replenishment, managing promotions, or optimizing inventory levels.
 
 **Version:** 1.0.0  
 **Trigger Words 🤖:** When user mentions `inventory-demand-planning` or related concepts
 
-**Use Case 🤖:** Use for tasks involving inventory demand planning (see description).
+**Use Case 🤖:** Model optimization, quantization, and memory reduction
 
 ---
 
@@ -1819,14 +1821,14 @@
 
 ### motion-patterns
 
-**Category:** General | **Path:** `everything-claude-code\skills\motion-patterns/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\motion-patterns/`
 
 **Description:** Production-ready animation patterns for React / Next.js — button, modal, toast, stagger, page transitions, exit animations, scroll, and layout — built on motion-foundations tokens and springs.
 
 **Version:** 1.0  
 **Trigger Words 🤖:** When user mentions `motion-patterns` or related concepts
 
-**Use Case 🤖:** Use for tasks involving motion patterns (see description).
+**Use Case 🤖:** Serverless GPU cloud for ML workloads
 
 ---
 
@@ -2061,25 +2063,25 @@
 
 ### postgres-patterns
 
-**Category:** Database | **Path:** `everything-claude-code\.kiro\skills\postgres-patterns/`
+**Category:** AI Research | **Path:** `everything-claude-code\.kiro\skills\postgres-patterns/`
 
 **Description:** PostgreSQL database patterns for query optimization, schema design, indexing, and security. Quick reference for common patterns, index types, data types, and anti-pattern detection. Based on Supabase best practices.
 
 **Trigger Words 🤖:** When user mentions `postgres-patterns` or related concepts
 
-**Use Case 🤖:** Database design, migration, and optimization
+**Use Case 🤖:** Model optimization, quantization, and memory reduction
 
 ---
 
 ### prisma-patterns
 
-**Category:** General | **Path:** `everything-claude-code\skills\prisma-patterns/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\prisma-patterns/`
 
 **Description:** Prisma ORM patterns for TypeScript backends — schema design, query optimization, transactions, pagination, and critical traps like updateMany returning count not records, $transaction timeouts, migrate dev resetting the DB, @updatedAt skipped on bulk writes, and serverless connection exhaustion.
 
 **Trigger Words 🤖:** When user mentions `prisma-patterns` or related concepts
 
-**Use Case 🤖:** Use for tasks involving prisma patterns (see description).
+**Use Case 🤖:** Model optimization, quantization, and memory reduction
 
 ---
 
@@ -2121,14 +2123,14 @@
 
 ### production-scheduling
 
-**Category:** Review | **Path:** `everything-claude-code\skills\production-scheduling/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\production-scheduling/`
 
 **Description:** Codified expertise for production scheduling, job sequencing, line balancing, changeover optimization, and bottleneck resolution in discrete and batch manufacturing. Informed by production schedulers with 15+ years experience. Includes TOC/drum-buffer-rope, SMED, OEE analysis, disruption response frameworks, and ERP/MES interaction patterns. Use when scheduling production, resolving bottlenecks, optimizing changeovers, responding to disruptions, or balancing manufacturing lines.
 
 **Version:** 1.0.0  
 **Trigger Words 🤖:** When user mentions `production-scheduling` or related concepts
 
-**Use Case 🤖:** Draft responses to peer review comments
+**Use Case 🤖:** Model optimization, quantization, and memory reduction
 
 ---
 
@@ -2146,14 +2148,14 @@
 
 ### prompt-optimizer
 
-**Category:** Writing | **Path:** `everything-claude-code\skills\prompt-optimizer/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\prompt-optimizer/`
 
 **Description:** Analyze raw prompts, identify intent and gaps, match ECC components (skills/commands/agents/hooks), and output a ready-to-paste optimized prompt. Advisory role only — never executes the task itself. TRIGGER when: user says "optimize prompt", "improve my prompt", "how to write a prompt for", "help me prompt", "rewrite this prompt", or explicitly asks to enhance prompt quality. Also triggers on Chinese equivalents: "优化prompt", "改进prompt", "怎么写prompt", "帮我优化这个指令". DO NOT TRIGGER when: user wants the task executed directly, or says "just do it" / "直接做". DO NOT TRIGGER when user says "优化代码", "优化性能", "optimize performance", "optimize this code" — those are refactoring/performance tasks, not prompt optimization.
 
 **Version:** 1.0.0  
 **Trigger Words 🤖:** When user mentions `prompt-optimizer` or related concepts
 
-**Use Case 🤖:** Draft or plan content
+**Use Case 🤖:** Model optimization, quantization, and memory reduction
 
 ---
 
@@ -2401,13 +2403,13 @@
 
 ### safety-guard
 
-**Category:** Meta | **Path:** `everything-claude-code\skills\safety-guard/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\safety-guard/`
 
 **Description:** Use this skill to prevent destructive operations when working on production systems or running agents autonomously.
 
 **Trigger Words 🤖:** When user mentions `safety-guard` or related concepts
 
-**Use Case 🤖:** Create, manage, or discover skills
+**Use Case 🤖:** LLM agent frameworks and autonomous systems
 
 ---
 
@@ -2425,13 +2427,13 @@
 
 ### scholar-evaluation
 
-**Category:** References | **Path:** `everything-claude-code\skills\scientific-thinking-scholar-evaluation/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\scientific-thinking-scholar-evaluation/`
 
 **Description:** Structured scholarly-work evaluation for papers, proposals, literature reviews, methods sections, evidence quality, citation support, and research-writing feedback.
 
 **Trigger Words 🤖:** When user mentions `scholar-evaluation` or related concepts
 
-**Use Case 🤖:** Manage, format, or check citations
+**Use Case 🤖:** LLM benchmarking and performance measurement
 
 ---
 
@@ -2486,13 +2488,13 @@
 
 ### seo
 
-**Category:** Content | **Path:** `everything-claude-code\skills\seo/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\seo/`
 
 **Description:** Audit, plan, and implement SEO improvements across technical SEO, on-page optimization, structured data, Core Web Vitals, and content strategy. Use when the user wants better search visibility, SEO remediation, schema markup, sitemap/robots work, or keyword mapping.
 
 **Trigger Words 🤖:** When user mentions `seo` or related concepts
 
-**Use Case 🤖:** Content generation and management
+**Use Case 🤖:** Model optimization, quantization, and memory reduction
 
 ---
 
@@ -2642,13 +2644,13 @@
 
 ### swiftui-patterns
 
-**Category:** General | **Path:** `everything-claude-code\skills\swiftui-patterns/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\swiftui-patterns/`
 
 **Description:** SwiftUI architecture patterns, state management with @Observable, view composition, navigation, performance optimization, and modern iOS/macOS UI best practices.
 
 **Trigger Words 🤖:** When user mentions `swiftui-patterns` or related concepts
 
-**Use Case 🤖:** Use for tasks involving swiftui patterns (see description).
+**Use Case 🤖:** Model optimization, quantization, and memory reduction
 
 ---
 
@@ -2690,13 +2692,13 @@
 
 ### tinystruct-patterns
 
-**Category:** Database | **Path:** `everything-claude-code\skills\tinystruct-patterns/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\tinystruct-patterns/`
 
 **Description:** Expert guidance for developing with the tinystruct Java framework. Use when working on the tinystruct codebase or any project built on tinystruct — including creating Application classes, @Action-mapped routes, unit tests, ActionRegistry, HTTP/CLI dual-mode handling, the built-in HTTP server, the event system, JSON with Builder/Builders, database persistence with AbstractData, POJO generation, Server-Sent Events (SSE), file uploads, and outbound HTTP networking.
 
 **Trigger Words 🤖:** When user mentions `tinystruct-patterns` or related concepts
 
-**Use Case 🤖:** Database design, migration, and optimization
+**Use Case 🤖:** Controlled generation from language models
 
 ---
 
@@ -2822,13 +2824,13 @@
 
 ### vite-patterns
 
-**Category:** Configuration | **Path:** `everything-claude-code\skills\vite-patterns/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\vite-patterns/`
 
 **Description:** Vite build tool patterns including config, plugins, HMR, env variables, proxy setup, SSR, library mode, dependency pre-bundling, and build optimization. Activate when working with vite.config.ts, Vite plugins, or Vite-based projects.
 
 **Trigger Words 🤖:** When user mentions `vite-patterns` or related concepts
 
-**Use Case 🤖:** Configure settings and preferences
+**Use Case 🤖:** Model optimization, quantization, and memory reduction
 
 ---
 
@@ -2846,13 +2848,13 @@
 
 ### workspace-surface-audit
 
-**Category:** Integration | **Path:** `everything-claude-code\skills\workspace-surface-audit/`
+**Category:** AI Research | **Path:** `everything-claude-code\skills\workspace-surface-audit/`
 
 **Description:** Audit the active repo, MCP servers, plugins, connectors, env surfaces, and harness setup, then recommend the highest-value ECC-native skills, hooks, agents, and operator workflows. Use when the user wants help setting up Claude Code or understanding what capabilities are actually available in their environment.
 
 **Trigger Words 🤖:** When user mentions `workspace-surface-audit` or related concepts
 
-**Use Case 🤖:** Manage MCP server connections
+**Use Case 🤖:** LLM agent frameworks and autonomous systems
 
 ---
 
@@ -2869,7 +2871,7 @@
 
 ## hermes-agent {{hermes-agent}}
 
-> 164 skills — use Ctrl+F to search.
+> 130 skills — use Ctrl+F to search.
 
 ### 1password
 
@@ -3013,32 +3015,6 @@
 
 ---
 
-### audiocraft-audio-generation
-
-**Category:** General | **Path:** `hermes-agent\skills\mlops\models\audiocraft/`
-
-**Description:** AudioCraft: MusicGen text-to-music, AudioGen text-to-sound.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `audiocraft-audio-generation` or related concepts
-
-**Use Case 🤖:** Use for tasks involving audiocraft audio generation (see description).
-
----
-
-### axolotl
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\training\axolotl/`
-
-**Description:** Axolotl: YAML LLM fine-tuning (LoRA, DPO, GRPO).
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `axolotl` or related concepts
-
-**Use Case 🤖:** Use for tasks involving axolotl (see description).
-
----
-
 ### baoyu-article-illustrator
 
 **Category:** General | **Path:** `hermes-agent\skills\creative\baoyu-article-illustrator/`
@@ -3143,19 +3119,6 @@
 
 ---
 
-### chroma
-
-**Category:** Database | **Path:** `hermes-agent\optional-skills\mlops\chroma/`
-
-**Description:** Open-source embedding database for AI applications. Store embeddings and metadata, perform vector and full-text search, filter by metadata. Simple 4-function API. Scales from notebooks to production clusters. Use for semantic search, RAG applications, or document retrieval. Best for local development and open-source projects.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `chroma` or related concepts
-
-**Use Case 🤖:** Database design, migration, and optimization
-
----
-
 ### claude-code
 
 **Category:** General | **Path:** `hermes-agent\skills\autonomous-ai-agents\claude-code/`
@@ -3179,19 +3142,6 @@
 **Trigger Words 🤖:** When user mentions `claude-design` or related concepts
 
 **Use Case 🤖:** Use for tasks involving claude design (see description).
-
----
-
-### clip
-
-**Category:** Content | **Path:** `hermes-agent\optional-skills\mlops\clip/`
-
-**Description:** OpenAI's model connecting vision and language. Enables zero-shot image classification, image-text matching, and cross-modal retrieval. Trained on 400M image-text pairs. Use for image search, content moderation, or vision-language tasks without fine-tuning. Best for general-purpose image understanding.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `clip` or related concepts
-
-**Use Case 🤖:** Content generation and management
 
 ---
 
@@ -3312,19 +3262,6 @@
 
 ---
 
-### distributed-llm-pretraining-torchtitan
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\torchtitan/`
-
-**Description:** Provides PyTorch-native distributed LLM pretraining using torchtitan with 4D parallelism (FSDP2, TP, PP, CP). Use when pretraining Llama 3.1, DeepSeek V3, or custom models at scale from 8 to 512+ GPUs with Float8, torch.compile, and distributed checkpointing.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `distributed-llm-pretraining-torchtitan` or related concepts
-
-**Use Case 🤖:** Use for tasks involving distributed llm pretraining torchtitan (see description).
-
----
-
 ### docker-management
 
 **Category:** DevOps | **Path:** `hermes-agent\optional-skills\devops\docker-management/`
@@ -3376,19 +3313,6 @@
 
 ---
 
-### dspy
-
-**Category:** General | **Path:** `hermes-agent\skills\mlops\research\dspy/`
-
-**Description:** DSPy: declarative LM programs, auto-optimize prompts, RAG.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `dspy` or related concepts
-
-**Use Case 🤖:** Use for tasks involving dspy (see description).
-
----
-
 ### duckduckgo-search
 
 **Category:** Research | **Path:** `hermes-agent\optional-skills\research\duckduckgo-search/`
@@ -3399,19 +3323,6 @@
 **Trigger Words 🤖:** When user mentions `duckduckgo-search` or related concepts
 
 **Use Case 🤖:** Search for papers, content, or references
-
----
-
-### evaluating-llms-harness
-
-**Category:** Quality | **Path:** `hermes-agent\skills\mlops\evaluation\lm-evaluation-harness/`
-
-**Description:** lm-eval-harness: benchmark LLMs (MMLU, GSM8K, etc.).
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `evaluating-llms-harness` or related concepts
-
-**Use Case 🤖:** Evaluate and benchmark outputs
 
 ---
 
@@ -3454,19 +3365,6 @@
 
 ---
 
-### faiss
-
-**Category:** Research | **Path:** `hermes-agent\optional-skills\mlops\faiss/`
-
-**Description:** Facebook's library for efficient similarity search and clustering of dense vectors. Supports billions of vectors, GPU acceleration, and various index types (Flat, IVF, HNSW). Use for fast k-NN search, large-scale vector retrieval, or when you need pure similarity search without metadata. Best for high-performance applications.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `faiss` or related concepts
-
-**Use Case 🤖:** Search for papers, content, or references
-
----
-
 ### fastmcp
 
 **Category:** Database | **Path:** `hermes-agent\optional-skills\mcp\fastmcp/`
@@ -3490,19 +3388,6 @@
 **Trigger Words 🤖:** When user mentions `findmy` or related concepts
 
 **Use Case 🤖:** Use for tasks involving findmy (see description).
-
----
-
-### fine-tuning-with-trl
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\training\trl-fine-tuning/`
-
-**Description:** TRL: SFT, DPO, PPO, GRPO, reward modeling for LLM RLHF.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `fine-tuning-with-trl` or related concepts
-
-**Use Case 🤖:** Use for tasks involving fine tuning with trl (see description).
 
 ---
 
@@ -3649,19 +3534,6 @@
 
 ---
 
-### guidance
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\guidance/`
-
-**Description:** Control LLM output with regex and grammars, guarantee valid JSON/XML/code generation, enforce structured formats, and build multi-step workflows with Guidance - Microsoft Research's constrained generation framework
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `guidance` or related concepts
-
-**Use Case 🤖:** Use for tasks involving guidance (see description).
-
----
-
 ### heartmula
 
 **Category:** General | **Path:** `hermes-agent\skills\media\heartmula/`
@@ -3740,19 +3612,6 @@
 
 ---
 
-### huggingface-accelerate
-
-**Category:** API | **Path:** `hermes-agent\optional-skills\mlops\accelerate/`
-
-**Description:** Simplest distributed training API. 4 lines to add distributed support to any PyTorch script. Unified API for DeepSpeed/FSDP/Megatron/DDP. Automatic device placement, mixed precision (FP16/BF16/FP8). Interactive config, single launch command. HuggingFace ecosystem standard.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `huggingface-accelerate` or related concepts
-
-**Use Case 🤖:** Design and implement APIs
-
----
-
 ### huggingface-hub
 
 **Category:** Research | **Path:** `hermes-agent\skills\mlops\huggingface-hub/`
@@ -3763,19 +3622,6 @@
 **Trigger Words 🤖:** When user mentions `huggingface-hub` or related concepts
 
 **Use Case 🤖:** Search for papers, content, or references
-
----
-
-### huggingface-tokenizers
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\huggingface-tokenizers/`
-
-**Description:** Fast tokenizers optimized for research and production. Rust-based implementation tokenizes 1GB in <20 seconds. Supports BPE, WordPiece, and Unigram algorithms. Train custom vocabularies, track alignments, handle padding/truncation. Integrates seamlessly with transformers. Use when you need high-performance tokenization or custom tokenizer training.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `huggingface-tokenizers` or related concepts
-
-**Use Case 🤖:** Use for tasks involving huggingface tokenizers (see description).
 
 ---
 
@@ -3857,19 +3703,6 @@
 
 ---
 
-### instructor
-
-**Category:** Data | **Path:** `hermes-agent\optional-skills\mlops\instructor/`
-
-**Description:** Extract structured data from LLM responses with Pydantic validation, retry failed extractions automatically, parse complex JSON with type safety, and stream partial results with Instructor - battle-tested structured output library
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `instructor` or related concepts
-
-**Use Case 🤖:** Handle data-related tasks
-
----
-
 ### jupyter-live-kernel
 
 **Category:** General | **Path:** `hermes-agent\skills\data-science\jupyter-live-kernel/`
@@ -3935,19 +3768,6 @@
 
 ---
 
-### lambda-labs-gpu-cloud
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\lambda-labs/`
-
-**Description:** Reserved and on-demand GPU cloud instances for ML training and inference. Use when you need dedicated GPU instances with simple SSH access, persistent filesystems, or high-performance multi-node clusters for large-scale training.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `lambda-labs-gpu-cloud` or related concepts
-
-**Use Case 🤖:** Use for tasks involving lambda labs gpu cloud (see description).
-
----
-
 ### lbo-model
 
 **Category:** General | **Path:** `hermes-agent\optional-skills\finance\lbo-model/`
@@ -3971,32 +3791,6 @@
 **Trigger Words 🤖:** When user mentions `linear` or related concepts
 
 **Use Case 🤖:** Use for tasks involving linear (see description).
-
----
-
-### llama-cpp
-
-**Category:** General | **Path:** `hermes-agent\skills\mlops\inference\llama-cpp/`
-
-**Description:** llama.cpp local GGUF inference + HF Hub model discovery.
-
-**Version:** 2.1.2  
-**Trigger Words 🤖:** When user mentions `llama-cpp` or related concepts
-
-**Use Case 🤖:** Use for tasks involving llama cpp (see description).
-
----
-
-### llava
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\llava/`
-
-**Description:** Large Language and Vision Assistant. Enables visual instruction tuning and image-based conversations. Combines CLIP vision encoder with Vicuna/LLaMA language models. Supports multi-turn image chat, visual question answering, and instruction following. Use for vision-language chatbots or image understanding tasks. Best for conversational image analysis.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `llava` or related concepts
-
-**Use Case 🤖:** Use for tasks involving llava (see description).
 
 ---
 
@@ -4080,14 +3874,14 @@
 
 ### merger-model
 
-**Category:** General | **Path:** `hermes-agent\optional-skills\finance\merger-model/`
+**Category:** AI Research | **Path:** `hermes-agent\optional-skills\finance\merger-model/`
 
 **Description:** Build accretion/dilution (merger) models in Excel — pro-forma P&L, synergies, financing mix, EPS impact. Pairs with excel-author. Use for M&A pitches, board materials, or deal evaluation.
 
 **Version:** 1.0.0  
 **Trigger Words 🤖:** When user mentions `merger-model` or related concepts
 
-**Use Case 🤖:** Use for tasks involving merger model (see description).
+**Use Case 🤖:** LLM benchmarking and performance measurement
 
 ---
 
@@ -4100,19 +3894,6 @@
 **Trigger Words 🤖:** When user mentions `minecraft-modpack-server` or related concepts
 
 **Use Case 🤖:** Use for tasks involving minecraft modpack server (see description).
-
----
-
-### modal-serverless-gpu
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\modal/`
-
-**Description:** Serverless GPU cloud platform for running ML workloads. Use when you need on-demand GPU access without infrastructure management, deploying ML models as APIs, or running batch jobs with automatic scaling.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `modal-serverless-gpu` or related concepts
-
-**Use Case 🤖:** Use for tasks involving modal serverless gpu (see description).
 
 ---
 
@@ -4139,19 +3920,6 @@
 **Trigger Words 🤖:** When user mentions `native-mcp` or related concepts
 
 **Use Case 🤖:** Manage MCP server connections
-
----
-
-### nemo-curator
-
-**Category:** Data | **Path:** `hermes-agent\optional-skills\mlops\nemo-curator/`
-
-**Description:** GPU-accelerated data curation for LLM training. Supports text/image/video/audio. Features fuzzy deduplication (16× faster), quality filtering (30+ heuristics), semantic deduplication, PII redaction, NSFW detection. Scales across GPUs with RAPIDS. Use for preparing high-quality training datasets, cleaning web data, or deduplicating large corpora.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `nemo-curator` or related concepts
-
-**Use Case 🤖:** Handle data-related tasks
 
 ---
 
@@ -4284,19 +4052,6 @@
 
 ---
 
-### optimizing-attention-flash
-
-**Category:** Context | **Path:** `hermes-agent\optional-skills\mlops\flash-attention/`
-
-**Description:** Optimizes transformer attention with Flash Attention for 2-4x speedup and 10-20x memory reduction. Use when training/running transformers with long sequences (>512 tokens), encountering GPU memory issues with attention, or need faster inference. Supports PyTorch native SDPA, flash-attn library, H100 FP8, and sliding window attention.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `optimizing-attention-flash` or related concepts
-
-**Use Case 🤖:** Manage persistent memory and context
-
----
-
 ### osint-investigation
 
 **Category:** General | **Path:** `hermes-agent\optional-skills\research\osint-investigation/`
@@ -4319,19 +4074,6 @@
 **Trigger Words 🤖:** When user mentions `oss-forensics` or related concepts
 
 **Use Case 🤖:** Use for tasks involving oss forensics (see description).
-
----
-
-### outlines
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\inference\outlines/`
-
-**Description:** Outlines: structured JSON/regex/Pydantic LLM generation.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `outlines` or related concepts
-
-**Use Case 🤖:** Use for tasks involving outlines (see description).
 
 ---
 
@@ -4371,32 +4113,6 @@
 **Trigger Words 🤖:** When user mentions `parallel-cli` or related concepts
 
 **Use Case 🤖:** Search for papers, content, or references
-
----
-
-### peft-fine-tuning
-
-**Category:** Context | **Path:** `hermes-agent\optional-skills\mlops\peft/`
-
-**Description:** Parameter-efficient fine-tuning for LLMs using LoRA, QLoRA, and 25+ methods. Use when fine-tuning large models (7B-70B) with limited GPU memory, when you need to train <1% of parameters with minimal accuracy loss, or for multi-adapter serving. HuggingFace's official library integrated with transformers ecosystem.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `peft-fine-tuning` or related concepts
-
-**Use Case 🤖:** Manage persistent memory and context
-
----
-
-### pinecone
-
-**Category:** Database | **Path:** `hermes-agent\optional-skills\mlops\pinecone/`
-
-**Description:** Managed vector database for production AI applications. Fully managed, auto-scaling, with hybrid search (dense + sparse), metadata filtering, and namespaces. Low latency (<100ms p95). Use for production RAG, recommendation systems, or semantic search at scale. Best for serverless, managed infrastructure.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `pinecone` or related concepts
-
-**Use Case 🤖:** Database design, migration, and optimization
 
 ---
 
@@ -4530,40 +4246,14 @@
 
 ### pytorch-fsdp
 
-**Category:** Data | **Path:** `hermes-agent\optional-skills\mlops\pytorch-fsdp/`
+**Category:** AI Research | **Path:** `hermes-agent\optional-skills\mlops\pytorch-fsdp/`
 
 **Description:** Expert guidance for Fully Sharded Data Parallel training with PyTorch FSDP - parameter sharding, mixed precision, CPU offloading, FSDP2
 
 **Version:** 1.0.0  
 **Trigger Words 🤖:** When user mentions `pytorch-fsdp` or related concepts
 
-**Use Case 🤖:** Handle data-related tasks
-
----
-
-### pytorch-lightning
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\pytorch-lightning/`
-
-**Description:** High-level PyTorch framework with Trainer class, automatic distributed training (DDP/FSDP/DeepSpeed), callbacks system, and minimal boilerplate. Scales from laptop to supercomputer with same code. Use when you want clean training loops with built-in best practices.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `pytorch-lightning` or related concepts
-
-**Use Case 🤖:** Use for tasks involving pytorch lightning (see description).
-
----
-
-### qdrant-vector-search
-
-**Category:** Research | **Path:** `hermes-agent\optional-skills\mlops\qdrant/`
-
-**Description:** High-performance vector similarity search engine for RAG and semantic search. Use when building production RAG systems requiring fast nearest neighbor search, hybrid search with filtering, or scalable vector storage with Rust-powered performance.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `qdrant-vector-search` or related concepts
-
-**Use Case 🤖:** Search for papers, content, or references
+**Use Case 🤖:** Controlled generation from language models
 
 ---
 
@@ -4619,32 +4309,6 @@
 
 ---
 
-### segment-anything-model
-
-**Category:** General | **Path:** `hermes-agent\skills\mlops\models\segment-anything/`
-
-**Description:** SAM: zero-shot image segmentation via points, boxes, masks.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `segment-anything-model` or related concepts
-
-**Use Case 🤖:** Use for tasks involving segment anything model (see description).
-
----
-
-### serving-llms-vllm
-
-**Category:** API | **Path:** `hermes-agent\skills\mlops\inference\vllm/`
-
-**Description:** vLLM: high-throughput LLM serving, OpenAI API, quantization.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `serving-llms-vllm` or related concepts
-
-**Use Case 🤖:** Design and implement APIs
-
----
-
 ### sherlock
 
 **Category:** Research | **Path:** `hermes-agent\optional-skills\security\sherlock/`
@@ -4684,19 +4348,6 @@
 
 ---
 
-### simpo-training
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\simpo/`
-
-**Description:** Simple Preference Optimization for LLM alignment. Reference-free alternative to DPO with better performance (+6.4 points on AlpacaEval 2.0). No reference model needed, more efficient than DPO. Use for preference alignment when want simpler, faster training than DPO/PPO.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `simpo-training` or related concepts
-
-**Use Case 🤖:** Use for tasks involving simpo training (see description).
-
----
-
 ### siyuan
 
 **Category:** API | **Path:** `hermes-agent\optional-skills\productivity\siyuan/`
@@ -4723,19 +4374,6 @@
 
 ---
 
-### slime-rl-training
-
-**Category:** Data | **Path:** `hermes-agent\optional-skills\mlops\slime/`
-
-**Description:** Provides guidance for LLM post-training with RL using slime, a Megatron+SGLang framework. Use when training GLM models, implementing custom data generation workflows, or needing tight Megatron-LM integration for RL scaling.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `slime-rl-training` or related concepts
-
-**Use Case 🤖:** Handle data-related tasks
-
----
-
 ### solana
 
 **Category:** API | **Path:** `hermes-agent\optional-skills\blockchain\solana/`
@@ -4751,14 +4389,14 @@
 
 ### songsee
 
-**Category:** General | **Path:** `hermes-agent\skills\media\songsee/`
+**Category:** AI Research | **Path:** `hermes-agent\skills\media\songsee/`
 
 **Description:** Audio spectrograms/features (mel, chroma, MFCC) via CLI.
 
 **Version:** 1.0.0  
 **Trigger Words 🤖:** When user mentions `songsee` or related concepts
 
-**Use Case 🤖:** Use for tasks involving songsee (see description).
+**Use Case 🤖:** Vector database for AI applications
 
 ---
 
@@ -4771,19 +4409,6 @@
 **Trigger Words 🤖:** When user mentions `songwriting-and-ai-music` or related concepts
 
 **Use Case 🤖:** Use for tasks involving songwriting and ai music (see description).
-
----
-
-### sparse-autoencoder-training
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\saelens/`
-
-**Description:** Provides guidance for training and analyzing Sparse Autoencoders (SAEs) using SAELens to decompose neural network activations into interpretable features. Use when discovering interpretable features, analyzing superposition, or studying monosemantic representations in language models.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `sparse-autoencoder-training` or related concepts
-
-**Use Case 🤖:** Use for tasks involving sparse autoencoder training (see description).
 
 ---
 
@@ -4810,19 +4435,6 @@
 **Trigger Words 🤖:** When user mentions `spotify` or related concepts
 
 **Use Case 🤖:** Search for papers, content, or references
-
----
-
-### stable-diffusion-image-generation
-
-**Category:** Creative | **Path:** `hermes-agent\optional-skills\mlops\stable-diffusion/`
-
-**Description:** State-of-the-art text-to-image generation with Stable Diffusion models via HuggingFace Diffusers. Use when generating images from text prompts, performing image-to-image translation, inpainting, or building custom diffusion pipelines.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `stable-diffusion-image-generation` or related concepts
-
-**Use Case 🤖:** Algorithmic art generation
 
 ---
 
@@ -4865,19 +4477,6 @@
 
 ---
 
-### tensorrt-llm
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\tensorrt-llm/`
-
-**Description:** Optimizes LLM inference with NVIDIA TensorRT for maximum throughput and lowest latency. Use for production deployment on NVIDIA GPUs (A100/H100), when you need 10-100x faster inference than PyTorch, or for serving models with quantization (FP8/INT4), in-flight batching, and multi-GPU scaling.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `tensorrt-llm` or related concepts
-
-**Use Case 🤖:** Use for tasks involving tensorrt llm (see description).
-
----
-
 ### touchdesigner-mcp
 
 **Category:** Integration | **Path:** `hermes-agent\skills\creative\touchdesigner-mcp/`
@@ -4888,19 +4487,6 @@
 **Trigger Words 🤖:** When user mentions `touchdesigner-mcp` or related concepts
 
 **Use Case 🤖:** Manage MCP server connections
-
----
-
-### unsloth
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\training\unsloth/`
-
-**Description:** Unsloth: 2-5x faster LoRA/QLoRA fine-tuning, less VRAM.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `unsloth` or related concepts
-
-**Use Case 🤖:** Use for tasks involving unsloth (see description).
 
 ---
 
@@ -4927,32 +4513,6 @@
 **Trigger Words 🤖:** When user mentions `webhook-subscriptions` or related concepts
 
 **Use Case 🤖:** Configure and manage AI agents
-
----
-
-### weights-and-biases
-
-**Category:** General | **Path:** `hermes-agent\skills\mlops\evaluation\weights-and-biases/`
-
-**Description:** W&B: log ML experiments, sweeps, model registry, dashboards.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `weights-and-biases` or related concepts
-
-**Use Case 🤖:** Use for tasks involving weights and biases (see description).
-
----
-
-### whisper
-
-**Category:** General | **Path:** `hermes-agent\optional-skills\mlops\whisper/`
-
-**Description:** OpenAI's general-purpose speech recognition model. Supports 99 languages, transcription, translation to English, and language identification. Six model sizes from tiny (39M params) to large (1550M params). Use for speech-to-text, podcast transcription, or multilingual audio processing. Best for robust, multilingual ASR.
-
-**Version:** 1.0.0  
-**Trigger Words 🤖:** When user mentions `whisper` or related concepts
-
-**Use Case 🤖:** Use for tasks involving whisper (see description).
 
 ---
 
@@ -4991,6 +4551,1286 @@
 **Trigger Words 🤖:** When user mentions `yuanbao` or related concepts
 
 **Use Case 🤖:** Use for tasks involving yuanbao (see description).
+
+
+## ai-research-skills {{ai-research-skills}}
+
+**Version:** 1.2.0  
+**Author:** Orchestra Research  
+
+> 98 skills — use Ctrl+F to search.
+
+### academic-plotting
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\20-ml-paper-writing\academic-plotting/`
+
+**Description:** Generates publication-quality figures for ML papers from research context. Given a paper section or description, extracts system components and relationships to generate architecture diagrams via Gemini. Given experiment results or data, auto-selects chart type and generates data-driven figures via matplotlib/seaborn. Use when creating any figure for a conference paper.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `academic-plotting` or related concepts
+
+**Use Case 🤖:** Publication-quality figures for ML papers
+
+---
+
+### ara-compiler
+
+**Category:** Methods | **Path:** `AI-Research-SKILLs\22-agent-native-research-artifact\compiler/`
+
+**Description:** Compiles any research input — PDF papers, GitHub repositories, experiment logs, code directories, or raw notes — into a complete Agent-Native Research Artifact (ARA) with cognitive layer (claims, concepts, heuristics), physical layer (configs, code stubs), exploration graph, and grounded evidence. Use when ingesting a paper or codebase into a structured, machine-executable knowledge package, building an ARA from scratch, or converting research outputs into a falsifiable, agent-traversable form.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `ara-compiler` or related concepts
+
+**Use Case 🤖:** Describe experimental methods and results
+
+---
+
+### ara-research-manager
+
+**Category:** General | **Path:** `AI-Research-SKILLs\22-agent-native-research-artifact\research-manager/`
+
+**Description:** Records research provenance as a post-task epilogue, scanning conversation history at the end of a coding or research session to extract decisions, experiments, dead ends, claims, heuristics, and pivots, and writing them into the ara/ directory with user-vs-AI provenance tags. Use as a session epilogue — never during execution — to maintain a faithful, auditable trace of how a research project actually evolved.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `ara-research-manager` or related concepts
+
+**Use Case 🤖:** Use for tasks involving ara research manager (see description).
+
+---
+
+### ara-rigor-reviewer
+
+**Category:** Workflow | **Path:** `AI-Research-SKILLs\22-agent-native-research-artifact\rigor-reviewer/`
+
+**Description:** Performs ARA Seal Level 2 semantic epistemic review on Agent-Native Research Artifacts, scoring six dimensions (evidence relevance, falsifiability, scope calibration, argument coherence, exploration integrity, methodological rigor) and producing a constructive, severity-ranked report with a Strong Accept-to-Reject recommendation. Use after Level 1 structural validation passes, when an ARA needs an objective epistemic critique before publication or release.
+
+**Version:** 3.0.0  
+**Trigger Words 🤖:** When user mentions `ara-rigor-reviewer` or related concepts
+
+**Use Case 🤖:** Review code changes for quality and correctness
+
+---
+
+### audiocraft-audio-generation
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\18-multimodal\audiocraft/`
+
+**Description:** PyTorch library for audio generation including text-to-music (MusicGen) and text-to-sound (AudioGen). Use when you need to generate music from text descriptions, create sound effects, or perform melody-conditioned music generation.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `audiocraft-audio-generation` or related concepts
+
+**Use Case 🤖:** Audio generation and processing
+
+---
+
+### autogpt-agents
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\14-agents\autogpt/`
+
+**Description:** Autonomous AI agent platform for building and deploying continuous agents. Use when creating visual workflow agents, deploying persistent autonomous agents, or building complex multi-step AI automation systems.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `autogpt-agents` or related concepts
+
+**Use Case 🤖:** LLM agent frameworks and autonomous systems
+
+---
+
+### autoresearch
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\0-autoresearch-skill/`
+
+**Description:** Orchestrates end-to-end autonomous AI research projects using a two-loop architecture. The inner loop runs rapid experiment iterations with clear optimization targets. The outer loop synthesizes results, identifies patterns, and steers research direction. Routes to domain-specific skills for execution, supports continuous agent operation via Claude Code /loop and OpenClaw heartbeat, and produces research presentations and papers. Use when starting a research project, running autonomous experiments, or managing a multi-hypothesis research effort.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `autoresearch` or related concepts
+
+**Use Case 🤖:** Autonomous research orchestration with two-loop architecture
+
+---
+
+### awq-quantization
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\10-optimization\awq/`
+
+**Description:** Activation-aware weight quantization for 4-bit LLM compression with 3x speedup and minimal accuracy loss. Use when deploying large models (7B-70B) on limited GPU memory, when you need faster inference than GPTQ with better accuracy preservation, or for instruction-tuned and multimodal models. MLSys 2024 Best Paper Award winner.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `awq-quantization` or related concepts
+
+**Use Case 🤖:** Activation-aware weight quantization
+
+---
+
+### axolotl
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\03-fine-tuning\axolotl/`
+
+**Description:** Expert guidance for fine-tuning LLMs with Axolotl - YAML configs, 100+ models, LoRA/QLoRA, DPO/KTO/ORPO/GRPO, multimodal support
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `axolotl` or related concepts
+
+**Use Case 🤖:** Fine-tune LLMs with Axolotl framework
+
+---
+
+### blip-2-vision-language
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\18-multimodal\blip-2/`
+
+**Description:** Vision-language pre-training framework bridging frozen image encoders and LLMs. Use when you need image captioning, visual question answering, image-text retrieval, or multimodal chat with state-of-the-art zero-shot performance.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `blip-2-vision-language` or related concepts
+
+**Use Case 🤖:** Vision-language pre-training
+
+---
+
+### brainstorming-research-ideas
+
+**Category:** Workflow | **Path:** `AI-Research-SKILLs\21-research-ideation\brainstorming-research-ideas/`
+
+**Description:** Guides researchers through structured ideation frameworks to discover high-impact research directions. Use when exploring new problem spaces, pivoting between projects, or seeking novel angles on existing work.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `brainstorming-research-ideas` or related concepts
+
+**Use Case 🤖:** Explore user intent and design before implementation
+
+---
+
+### chroma
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\15-rag\chroma/`
+
+**Description:** Open-source embedding database for AI applications. Store embeddings and metadata, perform vector and full-text search, filter by metadata. Simple 4-function API. Scales from notebooks to production clusters. Use for semantic search, RAG applications, or document retrieval. Best for local development and open-source projects.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `chroma` or related concepts
+
+**Use Case 🤖:** Vector database for AI applications
+
+---
+
+### clip
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\18-multimodal\clip/`
+
+**Description:** OpenAI's model connecting vision and language. Enables zero-shot image classification, image-text matching, and cross-modal retrieval. Trained on 400M image-text pairs. Use for image search, content moderation, or vision-language tasks without fine-tuning. Best for general-purpose image understanding.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `clip` or related concepts
+
+**Use Case 🤖:** Vision-language model for multimodal tasks
+
+---
+
+### constitutional-ai
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\07-safety-alignment\constitutional-ai/`
+
+**Description:** Anthropic's method for training harmless AI through self-improvement. Two-phase approach - supervised learning with self-critique/revision, then RLAIF (RL from AI Feedback). Use for safety alignment, reducing harmful outputs without human labels. Powers Claude's safety system.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `constitutional-ai` or related concepts
+
+**Use Case 🤖:** AI alignment through constitutional principles
+
+---
+
+### creative-thinking-for-research
+
+**Category:** General | **Path:** `AI-Research-SKILLs\21-research-ideation\creative-thinking-for-research/`
+
+**Description:** Applies cognitive science frameworks for creative thinking to CS and AI research ideation. Use when seeking genuinely novel research directions by leveraging combinatorial creativity, analogical reasoning, constraint manipulation, and other empirically grounded creative strategies.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `creative-thinking-for-research` or related concepts
+
+**Use Case 🤖:** Use for tasks involving creative thinking for research (see description).
+
+---
+
+### crewai-multi-agent
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\14-agents\crewai/`
+
+**Description:** Multi-agent orchestration framework for autonomous AI collaboration. Use when building teams of specialized agents working together on complex tasks, when you need role-based agent collaboration with memory, or for production workflows requiring sequential/hierarchical execution. Built without LangChain dependencies for lean, fast execution.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `crewai-multi-agent` or related concepts
+
+**Use Case 🤖:** Multi-agent orchestration framework
+
+---
+
+### deepspeed
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\08-distributed-training\deepspeed/`
+
+**Description:** Expert guidance for distributed training with DeepSpeed - ZeRO optimization stages, pipeline parallelism, FP16/BF16/FP8, 1-bit Adam, sparse attention
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `deepspeed` or related concepts
+
+**Use Case 🤖:** DeepSpeed distributed training optimization
+
+---
+
+### distributed-llm-pretraining-torchtitan
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\01-model-architecture\torchtitan/`
+
+**Description:** Provides PyTorch-native distributed LLM pretraining using torchtitan with 4D parallelism (FSDP2, TP, PP, CP). Use when pretraining Llama 3.1, DeepSeek V3, or custom models at scale from 8 to 512+ GPUs with Float8, torch.compile, and distributed checkpointing.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `distributed-llm-pretraining-torchtitan` or related concepts
+
+**Use Case 🤖:** Large-scale LLM training with PyTorch native
+
+---
+
+### dspy
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\16-prompt-engineering\dspy/`
+
+**Description:** Build complex AI systems with declarative programming, optimize prompts automatically, create modular RAG systems and agents with DSPy - Stanford NLP's framework for systematic LM programming
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `dspy` or related concepts
+
+**Use Case 🤖:** Programming framework for LM pipelines
+
+---
+
+### evaluating-code-models
+
+**Category:** General | **Path:** `AI-Research-SKILLs\11-evaluation\bigcode-evaluation-harness/`
+
+**Description:** Evaluates code generation models across HumanEval, MBPP, MultiPL-E, and 15+ benchmarks with pass@k metrics. Use when benchmarking code models, comparing coding abilities, testing multi-language support, or measuring code generation quality. Industry standard from BigCode Project used by HuggingFace leaderboards.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `evaluating-code-models` or related concepts
+
+**Use Case 🤖:** Use for tasks involving evaluating code models (see description).
+
+---
+
+### evaluating-cosmos-policy
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\18-multimodal\cosmos-policy/`
+
+**Description:** Evaluates NVIDIA Cosmos Policy on LIBERO and RoboCasa simulation environments. Use when setting up cosmos-policy for robot manipulation evaluation, running headless GPU evaluations with EGL rendering, or profiling inference latency on cluster or local GPU machines.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `evaluating-cosmos-policy` or related concepts
+
+**Use Case 🤖:** LLM benchmarking and performance measurement
+
+---
+
+### evaluating-llms-harness
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\11-evaluation\lm-evaluation-harness/`
+
+**Description:** Evaluates LLMs across 60+ academic benchmarks (MMLU, HumanEval, GSM8K, TruthfulQA, HellaSwag). Use when benchmarking model quality, comparing models, reporting academic results, or tracking training progress. Industry standard used by EleutherAI, HuggingFace, and major labs. Supports HuggingFace, vLLM, APIs.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `evaluating-llms-harness` or related concepts
+
+**Use Case 🤖:** High-throughput LLM inference with vLLM
+
+---
+
+### evolving-ai-agents
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\14-agents\a-evolve/`
+
+**Description:** Provides guidance for automatically evolving and optimizing AI agents across any domain using LLM-driven evolution algorithms. Use when building self-improving agents, optimizing agent prompts and skills against benchmarks, or implementing automated agent evaluation loops.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `evolving-ai-agents` or related concepts
+
+**Use Case 🤖:** LLM agent frameworks and autonomous systems
+
+---
+
+### experiment-tracking-swanlab
+
+**Category:** Methods | **Path:** `AI-Research-SKILLs\13-mlops\swanlab/`
+
+**Description:** Provides guidance for experiment tracking with SwanLab. Use when you need open-source run tracking, local or self-hosted dashboards, and lightweight media logging for ML workflows.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `experiment-tracking-swanlab` or related concepts
+
+**Use Case 🤖:** Describe experimental methods and results
+
+---
+
+### faiss
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\15-rag\faiss/`
+
+**Description:** Facebook's library for efficient similarity search and clustering of dense vectors. Supports billions of vectors, GPU acceleration, and various index types (Flat, IVF, HNSW). Use for fast k-NN search, large-scale vector retrieval, or when you need pure similarity search without metadata. Best for high-performance applications.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `faiss` or related concepts
+
+**Use Case 🤖:** Efficient similarity search and clustering
+
+---
+
+### fine-tuning-openvla-oft
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\18-multimodal\openvla-oft/`
+
+**Description:** Fine-tunes and evaluates OpenVLA-OFT and OpenVLA-OFT+ policies for robot action generation with continuous action heads, LoRA adaptation, and FiLM conditioning on LIBERO simulation and ALOHA real-world setups. Use when reproducing OpenVLA-OFT paper results, training custom VLA action heads (L1 or diffusion), deploying server-client inference for ALOHA, or debugging normalization, LoRA merge, and cross-GPU issues.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `fine-tuning-openvla-oft` or related concepts
+
+**Use Case 🤖:** Fine-tune LLMs with LoRA, QLoRA, or full fine-tuning
+
+---
+
+### fine-tuning-serving-openpi
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\18-multimodal\openpi/`
+
+**Description:** Fine-tune and serve Physical Intelligence OpenPI models (pi0, pi0-fast, pi0.5) using JAX or PyTorch backends for robot policy inference across ALOHA, DROID, and LIBERO environments. Use when adapting pi0 models to custom datasets, converting JAX checkpoints to PyTorch, running policy inference servers, or debugging norm stats and GPU memory issues.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `fine-tuning-serving-openpi` or related concepts
+
+**Use Case 🤖:** Fine-tune LLMs with LoRA, QLoRA, or full fine-tuning
+
+---
+
+### fine-tuning-with-trl
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\06-post-training\trl-fine-tuning/`
+
+**Description:** Fine-tune LLMs using reinforcement learning with TRL - SFT for instruction tuning, DPO for preference alignment, PPO/GRPO for reward optimization, and reward model training. Use when need RLHF, align model with preferences, or train from human feedback. Works with HuggingFace Transformers.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `fine-tuning-with-trl` or related concepts
+
+**Use Case 🤖:** Fine-tune LLMs with LoRA, QLoRA, or full fine-tuning
+
+---
+
+### gguf-quantization
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\10-optimization\gguf/`
+
+**Description:** GGUF format and llama.cpp quantization for efficient CPU/GPU inference. Use when deploying models on consumer hardware, Apple Silicon, or when needing flexible quantization from 2-8 bit without GPU requirements.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `gguf-quantization` or related concepts
+
+**Use Case 🤖:** Quantized model format for CPU inference
+
+---
+
+### gptq
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\10-optimization\gptq/`
+
+**Description:** Post-training 4-bit quantization for LLMs with minimal accuracy loss. Use for deploying large models (70B, 405B) on consumer GPUs, when you need 4× memory reduction with <2% perplexity degradation, or for faster inference (3-4× speedup) vs FP16. Integrates with transformers and PEFT for QLoRA fine-tuning.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `gptq` or related concepts
+
+**Use Case 🤖:** Post-training quantization for LLMs
+
+---
+
+### grpo-rl-training
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\06-post-training\grpo-rl-training/`
+
+**Description:** Expert guidance for GRPO/RL fine-tuning with TRL for reasoning and task-specific model training
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `grpo-rl-training` or related concepts
+
+**Use Case 🤖:** Fine-tune LLMs with LoRA, QLoRA, or full fine-tuning
+
+---
+
+### guidance
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\16-prompt-engineering\guidance/`
+
+**Description:** Control LLM output with regex and grammars, guarantee valid JSON/XML/code generation, enforce structured formats, and build multi-step workflows with Guidance - Microsoft Research's constrained generation framework
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `guidance` or related concepts
+
+**Use Case 🤖:** Controlled generation from language models
+
+---
+
+### hqq-quantization
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\10-optimization\hqq/`
+
+**Description:** Half-Quadratic Quantization for LLMs without calibration data. Use when quantizing models to 4/3/2-bit precision without needing calibration datasets, for fast quantization workflows, or when deploying with vLLM or HuggingFace Transformers.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `hqq-quantization` or related concepts
+
+**Use Case 🤖:** High-throughput LLM inference with vLLM
+
+---
+
+### huggingface-accelerate
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\08-distributed-training\accelerate/`
+
+**Description:** Simplest distributed training API. 4 lines to add distributed support to any PyTorch script. Unified API for DeepSpeed/FSDP/Megatron/DDP. Automatic device placement, mixed precision (FP16/BF16/FP8). Interactive config, single launch command. HuggingFace ecosystem standard.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `huggingface-accelerate` or related concepts
+
+**Use Case 🤖:** HuggingFace Accelerate for distributed training
+
+---
+
+### huggingface-tokenizers
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\02-tokenization\huggingface-tokenizers/`
+
+**Description:** Fast tokenizers optimized for research and production. Rust-based implementation tokenizes 1GB in <20 seconds. Supports BPE, WordPiece, and Unigram algorithms. Train custom vocabularies, track alignments, handle padding/truncation. Integrates seamlessly with transformers. Use when you need high-performance tokenization or custom tokenizer training.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `huggingface-tokenizers` or related concepts
+
+**Use Case 🤖:** Fast tokenization with HuggingFace Tokenizers
+
+---
+
+### implementing-llms-litgpt
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\01-model-architecture\litgpt/`
+
+**Description:** Implements and trains LLMs using Lightning AI's LitGPT with 20+ pretrained architectures (Llama, Gemma, Phi, Qwen, Mistral). Use when need clean model implementations, educational understanding of architectures, or production fine-tuning with LoRA/QLoRA. Single-file implementations, no abstraction layers.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `implementing-llms-litgpt` or related concepts
+
+**Use Case 🤖:** Implement and train LLMs with LitGPT framework
+
+---
+
+### instructor
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\16-prompt-engineering\instructor/`
+
+**Description:** Extract structured data from LLM responses with Pydantic validation, retry failed extractions automatically, parse complex JSON with type safety, and stream partial results with Instructor - battle-tested structured output library
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `instructor` or related concepts
+
+**Use Case 🤖:** Structured outputs from LLMs
+
+---
+
+### knowledge-distillation
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\19-emerging-techniques\knowledge-distillation/`
+
+**Description:** Compress large language models using knowledge distillation from teacher to student models. Use when deploying smaller models with retained performance, transferring GPT-4 capabilities to open-source models, or reducing inference costs. Covers temperature scaling, soft targets, reverse KLD, logit distillation, and MiniLLM training strategies.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `knowledge-distillation` or related concepts
+
+**Use Case 🤖:** Transfer knowledge from large to small models
+
+---
+
+### lambda-labs-gpu-cloud
+
+**Category:** General | **Path:** `AI-Research-SKILLs\09-infrastructure\lambda-labs/`
+
+**Description:** Reserved and on-demand GPU cloud instances for ML training and inference. Use when you need dedicated GPU instances with simple SSH access, persistent filesystems, or high-performance multi-node clusters for large-scale training.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `lambda-labs-gpu-cloud` or related concepts
+
+**Use Case 🤖:** Use for tasks involving lambda labs gpu cloud (see description).
+
+---
+
+### langchain
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\14-agents\langchain/`
+
+**Description:** Framework for building LLM-powered applications with agents, chains, and RAG. Supports multiple providers (OpenAI, Anthropic, Google), 500+ integrations, ReAct agents, tool calling, memory management, and vector store retrieval. Use for building chatbots, question-answering systems, autonomous agents, or RAG applications. Best for rapid prototyping and production deployments.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `langchain` or related concepts
+
+**Use Case 🤖:** Build LLM applications with LangChain
+
+---
+
+### langsmith-observability
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\17-observability\langsmith/`
+
+**Description:** LLM observability platform for tracing, evaluation, and monitoring. Use when debugging LLM applications, evaluating model outputs against datasets, monitoring production systems, or building systematic testing pipelines for AI applications.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `langsmith-observability` or related concepts
+
+**Use Case 🤖:** LLM application monitoring and debugging
+
+---
+
+### llama-cpp
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\12-inference-serving\llama-cpp/`
+
+**Description:** Runs LLM inference on CPU, Apple Silicon, and consumer GPUs without NVIDIA hardware. Use for edge deployment, M1/M2/M3 Macs, AMD/Intel GPUs, or when CUDA is unavailable. Supports GGUF quantization (1.5-8 bit) for reduced memory and 4-10× speedup vs PyTorch on CPU.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `llama-cpp` or related concepts
+
+**Use Case 🤖:** LLM inference in C/C++ with llama.cpp
+
+---
+
+### llama-factory
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\03-fine-tuning\llama-factory/`
+
+**Description:** Expert guidance for fine-tuning LLMs with LLaMA-Factory - WebUI no-code, 100+ models, 2/3/4/5/6/8-bit QLoRA, multimodal support
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `llama-factory` or related concepts
+
+**Use Case 🤖:** Fine-tune LLaMA models with LLaMA-Factory
+
+---
+
+### llamaguard
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\07-safety-alignment\llamaguard/`
+
+**Description:** Meta's 7-8B specialized moderation model for LLM input/output filtering. 6 safety categories - violence/hate, sexual content, weapons, substances, self-harm, criminal planning. 94-95% accuracy. Deploy with vLLM, HuggingFace, Sagemaker. Integrates with NeMo Guardrails.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `llamaguard` or related concepts
+
+**Use Case 🤖:** LLM-based input-output safeguard model
+
+---
+
+### llamaindex
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\14-agents\llamaindex/`
+
+**Description:** Data framework for building LLM applications with RAG. Specializes in document ingestion (300+ connectors), indexing, and querying. Features vector indices, query engines, agents, and multi-modal support. Use for document Q&A, chatbots, knowledge retrieval, or building RAG pipelines. Best for data-centric LLM applications.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `llamaindex` or related concepts
+
+**Use Case 🤖:** Data framework for LLM applications
+
+---
+
+### llava
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\18-multimodal\llava/`
+
+**Description:** Large Language and Vision Assistant. Enables visual instruction tuning and image-based conversations. Combines CLIP vision encoder with Vicuna/LLaMA language models. Supports multi-turn image chat, visual question answering, and instruction following. Use for vision-language chatbots or image understanding tasks. Best for conversational image analysis.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `llava` or related concepts
+
+**Use Case 🤖:** Large language and vision assistant
+
+---
+
+### long-context
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\19-emerging-techniques\long-context/`
+
+**Description:** Extend context windows of transformer models using RoPE, YaRN, ALiBi, and position interpolation techniques. Use when processing long documents (32k-128k+ tokens), extending pre-trained models beyond original context limits, or implementing efficient positional encodings. Covers rotary embeddings, attention biases, interpolation methods, and extrapolation strategies for LLMs.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `long-context` or related concepts
+
+**Use Case 🤖:** Extend LLM context window length
+
+---
+
+### mamba-architecture
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\01-model-architecture\mamba/`
+
+**Description:** State-space model with O(n) complexity vs Transformers' O(n²). 5× faster inference, million-token sequences, no KV cache. Selective SSM with hardware-aware design. Mamba-1 (d_state=16) and Mamba-2 (d_state=128, multi-head). Models 130M-2.8B on HuggingFace.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `mamba-architecture` or related concepts
+
+**Use Case 🤖:** State space models for efficient sequence modeling
+
+---
+
+### miles-rl-training
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\06-post-training\miles/`
+
+**Description:** Provides guidance for enterprise-grade RL training using miles, a production-ready fork of slime. Use when training large MoE models with FP8/INT4, needing train-inference alignment, or requiring speculative RL for maximum throughput.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `miles-rl-training` or related concepts
+
+**Use Case 🤖:** Controlled generation from language models
+
+---
+
+### ml-paper-writing
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\20-ml-paper-writing\ml-paper-writing/`
+
+**Description:** Write publication-ready ML/AI papers for NeurIPS, ICML, ICLR, ACL, AAAI, COLM. Use when drafting papers from research repos, structuring arguments, verifying citations, or preparing camera-ready submissions. For systems venues (OSDI, NSDI, ASPLOS, SOSP), use systems-paper-writing instead.
+
+**Version:** 1.2.0  
+**Trigger Words 🤖:** When user mentions `ml-paper-writing` or related concepts
+
+**Use Case 🤖:** Write publication-ready ML/AI papers for top conferences
+
+---
+
+### ml-training-recipes
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\10-optimization\ml-training-recipes/`
+
+**Description:** Battle-tested PyTorch training recipes for all domains — LLMs, vision, diffusion, medical imaging, protein/drug discovery, spatial omics, genomics. Covers training loops, optimizer selection (AdamW, Muon), LR scheduling, mixed precision, debugging, and systematic experimentation. Use when training or fine-tuning neural networks, debugging loss spikes or OOM, choosing architectures, or optimizing GPU throughput.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `ml-training-recipes` or related concepts
+
+**Use Case 🤖:** Fine-tune LLMs with LoRA, QLoRA, or full fine-tuning
+
+---
+
+### mlflow
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\13-mlops\mlflow/`
+
+**Description:** Track ML experiments, manage model registry with versioning, deploy models to production, and reproduce experiments with MLflow - framework-agnostic ML lifecycle platform
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `mlflow` or related concepts
+
+**Use Case 🤖:** ML lifecycle management with MLflow
+
+---
+
+### modal-serverless-gpu
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\09-infrastructure\modal/`
+
+**Description:** Serverless GPU cloud platform for running ML workloads. Use when you need on-demand GPU access without infrastructure management, deploying ML models as APIs, or running batch jobs with automatic scaling.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `modal-serverless-gpu` or related concepts
+
+**Use Case 🤖:** Serverless GPU cloud for ML workloads
+
+---
+
+### model-merging
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\19-emerging-techniques\model-merging/`
+
+**Description:** Merge multiple fine-tuned models using mergekit to combine capabilities without retraining. Use when creating specialized models by blending domain-specific expertise (math + coding + chat), improving performance beyond single models, or experimenting rapidly with model variants. Covers SLERP, TIES-Merging, DARE, Task Arithmetic, linear merging, and production deployment strategies.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `model-merging` or related concepts
+
+**Use Case 🤖:** Merge multiple models into one
+
+---
+
+### model-pruning
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\19-emerging-techniques\model-pruning/`
+
+**Description:** Reduce LLM size and accelerate inference using pruning techniques like Wanda and SparseGPT. Use when compressing models without retraining, achieving 50% sparsity with minimal accuracy loss, or enabling faster inference on hardware accelerators. Covers unstructured pruning, structured pruning, N:M sparsity, magnitude pruning, and one-shot methods.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `model-pruning` or related concepts
+
+**Use Case 🤖:** Reduce model size through pruning
+
+---
+
+### moe-training
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\19-emerging-techniques\moe-training/`
+
+**Description:** Train Mixture of Experts (MoE) models using DeepSpeed or HuggingFace. Use when training large-scale models with limited compute (5× cost reduction vs dense models), implementing sparse architectures like Mixtral 8x7B or DeepSeek-V3, or scaling model capacity without proportional compute increase. Covers MoE architectures, routing mechanisms, load balancing, expert parallelism, and inference optimization.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `moe-training` or related concepts
+
+**Use Case 🤖:** Mixture-of-Experts model training
+
+---
+
+### nanogpt
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\01-model-architecture\nanogpt/`
+
+**Description:** Educational GPT implementation in ~300 lines. Reproduces GPT-2 (124M) on OpenWebText. Clean, hackable code for learning transformers. By Andrej Karpathy. Perfect for understanding GPT architecture from scratch. Train on Shakespeare (CPU) or OpenWebText (multi-GPU).
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `nanogpt` or related concepts
+
+**Use Case 🤖:** Minimal GPT implementation for learning and experimentation
+
+---
+
+### nemo-curator
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\05-data-processing\nemo-curator/`
+
+**Description:** GPU-accelerated data curation for LLM training. Supports text/image/video/audio. Features fuzzy deduplication (16× faster), quality filtering (30+ heuristics), semantic deduplication, PII redaction, NSFW detection. Scales across GPUs with RAPIDS. Use for preparing high-quality training datasets, cleaning web data, or deduplicating large corpora.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `nemo-curator` or related concepts
+
+**Use Case 🤖:** Scalable data curation for LLM training
+
+---
+
+### nemo-evaluator-sdk
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\11-evaluation\nemo-evaluator/`
+
+**Description:** Evaluates LLMs across 100+ benchmarks from 18+ harnesses (MMLU, HumanEval, GSM8K, safety, VLM) with multi-backend execution. Use when needing scalable evaluation on local Docker, Slurm HPC, or cloud platforms. NVIDIA's enterprise-grade platform with container-first architecture for reproducible benchmarking.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `nemo-evaluator-sdk` or related concepts
+
+**Use Case 🤖:** LLM benchmarking and performance measurement
+
+---
+
+### nemo-guardrails
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\07-safety-alignment\nemo-guardrails/`
+
+**Description:** NVIDIA's runtime safety framework for LLM applications. Features jailbreak detection, input/output validation, fact-checking, hallucination detection, PII filtering, toxicity detection. Uses Colang 2.0 DSL for programmable rails. Production-ready, runs on T4 GPU.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `nemo-guardrails` or related concepts
+
+**Use Case 🤖:** Programmable guardrails for LLMs
+
+---
+
+### nnsight-remote-interpretability
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\04-mechanistic-interpretability\nnsight/`
+
+**Description:** Provides guidance for interpreting and manipulating neural network internals using nnsight with optional NDIF remote execution. Use when needing to run interpretability experiments on massive models (70B+) without local GPU resources, or when working with any PyTorch architecture.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `nnsight-remote-interpretability` or related concepts
+
+**Use Case 🤖:** Neural network interpretability framework
+
+---
+
+### openrlhf-training
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\06-post-training\openrlhf/`
+
+**Description:** High-performance RLHF framework with Ray+vLLM acceleration. Use for PPO, GRPO, RLOO, DPO training of large models (7B-70B+). Built on Ray, vLLM, ZeRO-3. 2× faster than DeepSpeedChat with distributed architecture and GPU resource sharing.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `openrlhf-training` or related concepts
+
+**Use Case 🤖:** Ray-based RLHF training framework
+
+---
+
+### optimizing-attention-flash
+
+**Category:** Context | **Path:** `AI-Research-SKILLs\10-optimization\flash-attention/`
+
+**Description:** Optimizes transformer attention with Flash Attention for 2-4x speedup and 10-20x memory reduction. Use when training/running transformers with long sequences (>512 tokens), encountering GPU memory issues with attention, or need faster inference. Supports PyTorch native SDPA, flash-attn library, H100 FP8, and sliding window attention.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `optimizing-attention-flash` or related concepts
+
+**Use Case 🤖:** Manage persistent memory and context
+
+---
+
+### outlines
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\16-prompt-engineering\outlines/`
+
+**Description:** Guarantee valid JSON/XML/code structure during generation, use Pydantic models for type-safe outputs, support local models (Transformers, vLLM), and maximize inference speed with Outlines - dottxt.ai's structured generation library
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `outlines` or related concepts
+
+**Use Case 🤖:** Structured text generation
+
+---
+
+### peft-fine-tuning
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\03-fine-tuning\peft/`
+
+**Description:** Parameter-efficient fine-tuning for LLMs using LoRA, QLoRA, and 25+ methods. Use when fine-tuning large models (7B-70B) with limited GPU memory, when you need to train <1% of parameters with minimal accuracy loss, or for multi-adapter serving. HuggingFace's official library integrated with transformers ecosystem.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `peft-fine-tuning` or related concepts
+
+**Use Case 🤖:** Fine-tune LLMs with LoRA, QLoRA, or full fine-tuning
+
+---
+
+### phoenix-observability
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\17-observability\phoenix/`
+
+**Description:** Open-source AI observability platform for LLM tracing, evaluation, and monitoring. Use when debugging LLM applications with detailed traces, running evaluations on datasets, or monitoring production AI systems with real-time insights.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `phoenix-observability` or related concepts
+
+**Use Case 🤖:** LLM application monitoring and debugging
+
+---
+
+### pinecone
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\15-rag\pinecone/`
+
+**Description:** Managed vector database for production AI applications. Fully managed, auto-scaling, with hybrid search (dense + sparse), metadata filtering, and namespaces. Low latency (<100ms p95). Use for production RAG, recommendation systems, or semantic search at scale. Best for serverless, managed infrastructure.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `pinecone` or related concepts
+
+**Use Case 🤖:** Vector database for production AI
+
+---
+
+### presenting-conference-talks
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\20-ml-paper-writing\presenting-conference-talks/`
+
+**Description:** Generates conference presentation slides (Beamer LaTeX PDF and editable PPTX) from a compiled paper with speaker notes and talk script. Use when preparing oral talks, spotlight presentations, or invited talks for ML and systems conferences.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `presenting-conference-talks` or related concepts
+
+**Use Case 🤖:** Prepare conference presentation slides and talks
+
+---
+
+### prompt-guard
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\07-safety-alignment\prompt-guard/`
+
+**Description:** Meta's 86M prompt injection and jailbreak detector. Filters malicious prompts and third-party data for LLM apps. 99%+ TPR, <1% FPR. Fast (<2ms GPU). Multilingual (8 languages). Deploy with HuggingFace or batch processing for RAG security.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `prompt-guard` or related concepts
+
+**Use Case 🤖:** Retrieval-Augmented Generation and semantic search
+
+---
+
+### pytorch-fsdp2
+
+**Category:** Workflow | **Path:** `AI-Research-SKILLs\08-distributed-training\pytorch-fsdp2/`
+
+**Description:** Adds PyTorch FSDP2 (fully_shard) to training scripts with correct init, sharding, mixed precision/offload config, and distributed checkpointing. Use when models exceed single-GPU memory or when you need DTensor-based sharding with DeviceMesh.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `pytorch-fsdp2` or related concepts
+
+**Use Case 🤖:** Initialize a new CLAUDE.md with codebase documentation
+
+---
+
+### pytorch-lightning
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\08-distributed-training\pytorch-lightning/`
+
+**Description:** High-level PyTorch framework with Trainer class, automatic distributed training (DDP/FSDP/DeepSpeed), callbacks system, and minimal boilerplate. Scales from laptop to supercomputer with same code. Use when you want clean training loops with built-in best practices.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `pytorch-lightning` or related concepts
+
+**Use Case 🤖:** Lightweight PyTorch training framework
+
+---
+
+### pyvene-interventions
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\04-mechanistic-interpretability\pyvene/`
+
+**Description:** Provides guidance for performing causal interventions on PyTorch models using pyvene's declarative intervention framework. Use when conducting causal tracing, activation patching, interchange intervention training, or testing causal hypotheses about model behavior.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `pyvene-interventions` or related concepts
+
+**Use Case 🤖:** Interventions on PyTorch models for interpretability
+
+---
+
+### qdrant-vector-search
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\15-rag\qdrant/`
+
+**Description:** High-performance vector similarity search engine for RAG and semantic search. Use when building production RAG systems requiring fast nearest neighbor search, hybrid search with filtering, or scalable vector storage with Rust-powered performance.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `qdrant-vector-search` or related concepts
+
+**Use Case 🤖:** Vector search engine for AI applications
+
+---
+
+### quantizing-models-bitsandbytes
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\10-optimization\bitsandbytes/`
+
+**Description:** Quantizes LLMs to 8-bit or 4-bit for 50-75% memory reduction with minimal accuracy loss. Use when GPU memory is limited, need to fit larger models, or want faster inference. Supports INT8, NF4, FP4 formats, QLoRA training, and 8-bit optimizers. Works with HuggingFace Transformers.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `quantizing-models-bitsandbytes` or related concepts
+
+**Use Case 🤖:** Quantization and optimizers for LLMs
+
+---
+
+### ray-data
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\05-data-processing\ray-data/`
+
+**Description:** Scalable data processing for ML workloads. Streaming execution across CPU/GPU, supports Parquet/CSV/JSON/images. Integrates with Ray Train, PyTorch, TensorFlow. Scales from single machine to 100s of nodes. Use for batch inference, data preprocessing, multi-modal data loading, or distributed ETL pipelines.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `ray-data` or related concepts
+
+**Use Case 🤖:** Distributed data processing with Ray
+
+---
+
+### ray-train
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\08-distributed-training\ray-train/`
+
+**Description:** Distributed training orchestration across clusters. Scales PyTorch/TensorFlow/HuggingFace from laptop to 1000s of nodes. Built-in hyperparameter tuning with Ray Tune, fault tolerance, elastic scaling. Use when training massive models across multiple machines or running distributed hyperparameter sweeps.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `ray-train` or related concepts
+
+**Use Case 🤖:** Distributed training with Ray Train
+
+---
+
+### rwkv-architecture
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\01-model-architecture\rwkv/`
+
+**Description:** RNN+Transformer hybrid with O(n) inference. Linear time, infinite context, no KV cache. Train like GPT (parallel), infer like RNN (sequential). Linux Foundation AI project. Production at Windows, Office, NeMo. RWKV-7 (March 2025). Models up to 14B parameters.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `rwkv-architecture` or related concepts
+
+**Use Case 🤖:** RNN-style LLM with linear attention
+
+---
+
+### segment-anything-model
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\18-multimodal\segment-anything/`
+
+**Description:** Foundation model for image segmentation with zero-shot transfer. Use when you need to segment any object in images using points, boxes, or masks as prompts, or automatically generate all object masks in an image.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `segment-anything-model` or related concepts
+
+**Use Case 🤖:** Promptable image segmentation
+
+---
+
+### sentence-transformers
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\15-rag\sentence-transformers/`
+
+**Description:** Framework for state-of-the-art sentence, text, and image embeddings. Provides 5000+ pre-trained models for semantic similarity, clustering, and retrieval. Supports multilingual, domain-specific, and multimodal models. Use for generating embeddings for RAG, semantic search, or similarity tasks. Best for production embedding generation.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `sentence-transformers` or related concepts
+
+**Use Case 🤖:** Sentence embeddings and semantic search
+
+---
+
+### sentencepiece
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\02-tokenization\sentencepiece/`
+
+**Description:** Language-independent tokenizer treating text as raw Unicode. Supports BPE and Unigram algorithms. Fast (50k sentences/sec), lightweight (6MB memory), deterministic vocabulary. Used by T5, ALBERT, XLNet, mBART. Train on raw text without pre-tokenization. Use when you need multilingual support, CJK languages, or reproducible tokenization.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `sentencepiece` or related concepts
+
+**Use Case 🤖:** Unsupervised text tokenizer and detokenizer
+
+---
+
+### serving-llms-vllm
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\12-inference-serving\vllm/`
+
+**Description:** Serves LLMs with high throughput using vLLM's PagedAttention and continuous batching. Use when deploying production LLM APIs, optimizing inference latency/throughput, or serving models with limited GPU memory. Supports OpenAI-compatible endpoints, quantization (GPTQ/AWQ/FP8), and tensor parallelism.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `serving-llms-vllm` or related concepts
+
+**Use Case 🤖:** High-throughput LLM inference with vLLM
+
+---
+
+### sglang
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\12-inference-serving\sglang/`
+
+**Description:** Fast structured generation and serving for LLMs with RadixAttention prefix caching. Use for JSON/regex outputs, constrained decoding, agentic workflows with tool calls, or when you need 5× faster inference than vLLM with prefix sharing. Powers 300,000+ GPUs at xAI, AMD, NVIDIA, and LinkedIn.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `sglang` or related concepts
+
+**Use Case 🤖:** Efficient LLM inference and serving with SGLang
+
+---
+
+### simpo-training
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\06-post-training\simpo/`
+
+**Description:** Simple Preference Optimization for LLM alignment. Reference-free alternative to DPO with better performance (+6.4 points on AlpacaEval 2.0). No reference model needed, more efficient than DPO. Use for preference alignment when want simpler, faster training than DPO/PPO.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `simpo-training` or related concepts
+
+**Use Case 🤖:** Model optimization, quantization, and memory reduction
+
+---
+
+### skypilot-multi-cloud-orchestration
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\09-infrastructure\skypilot/`
+
+**Description:** Multi-cloud orchestration for ML workloads with automatic cost optimization. Use when you need to run training or batch jobs across multiple clouds, leverage spot instances with auto-recovery, or optimize GPU costs across providers.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `skypilot-multi-cloud-orchestration` or related concepts
+
+**Use Case 🤖:** Multi-cloud job runner for ML
+
+---
+
+### slime-rl-training
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\06-post-training\slime/`
+
+**Description:** Provides guidance for LLM post-training with RL using slime, a Megatron+SGLang framework. Use when training GLM models, implementing custom data generation workflows, or needing tight Megatron-LM integration for RL scaling.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `slime-rl-training` or related concepts
+
+**Use Case 🤖:** RLHF and preference alignment for LLMs
+
+---
+
+### sparse-autoencoder-training
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\04-mechanistic-interpretability\saelens/`
+
+**Description:** Provides guidance for training and analyzing Sparse Autoencoders (SAEs) using SAELens to decompose neural network activations into interpretable features. Use when discovering interpretable features, analyzing superposition, or studying monosemantic representations in language models.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `sparse-autoencoder-training` or related concepts
+
+**Use Case 🤖:** Sparse autoencoder analysis for interpretability
+
+---
+
+### speculative-decoding
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\19-emerging-techniques\speculative-decoding/`
+
+**Description:** Accelerate LLM inference using speculative decoding, Medusa multiple heads, and lookahead decoding techniques. Use when optimizing inference speed (1.5-3.6× speedup), reducing latency for real-time applications, or deploying models with limited compute. Covers draft models, tree-based attention, Jacobi iteration, parallel token generation, and production deployment strategies.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `speculative-decoding` or related concepts
+
+**Use Case 🤖:** Accelerate LLM inference with speculative decoding
+
+---
+
+### stable-diffusion-image-generation
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\18-multimodal\stable-diffusion/`
+
+**Description:** State-of-the-art text-to-image generation with Stable Diffusion models via HuggingFace Diffusers. Use when generating images from text prompts, performing image-to-image translation, inpainting, or building custom diffusion pipelines.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `stable-diffusion-image-generation` or related concepts
+
+**Use Case 🤖:** Text-to-image generation model
+
+---
+
+### systems-paper-writing
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\20-ml-paper-writing\systems-paper-writing/`
+
+**Description:** Comprehensive guide for writing systems papers targeting OSDI, SOSP, ASPLOS, NSDI, and EuroSys. Provides paragraph-level structural blueprints, writing patterns, venue-specific checklists, reviewer guidelines, LaTeX templates, and conference deadlines. Use this skill for all systems conference paper writing.
+
+**Version:** 1.1.0  
+**Trigger Words 🤖:** When user mentions `systems-paper-writing` or related concepts
+
+**Use Case 🤖:** Systems conference paper writing (OSDI, SOSP, ASPLOS)
+
+---
+
+### tensorboard
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\13-mlops\tensorboard/`
+
+**Description:** Visualize training metrics, debug models with histograms, compare experiments, visualize model graphs, and profile performance with TensorBoard - Google's ML visualization toolkit
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `tensorboard` or related concepts
+
+**Use Case 🤖:** TensorBoard visualization toolkit
+
+---
+
+### tensorrt-llm
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\12-inference-serving\tensorrt-llm/`
+
+**Description:** Optimizes LLM inference with NVIDIA TensorRT for maximum throughput and lowest latency. Use for production deployment on NVIDIA GPUs (A100/H100), when you need 10-100x faster inference than PyTorch, or for serving models with quantization (FP8/INT4), in-flight batching, and multi-GPU scaling.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `tensorrt-llm` or related concepts
+
+**Use Case 🤖:** NVIDIA TensorRT for LLM inference optimization
+
+---
+
+### torchforge-rl-training
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\06-post-training\torchforge/`
+
+**Description:** Provides guidance for PyTorch-native agentic RL using torchforge, Meta's library separating infra from algorithms. Use when you want clean RL abstractions, easy algorithm experimentation, or scalable training with Monarch and TorchTitan.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `torchforge-rl-training` or related concepts
+
+**Use Case 🤖:** Large-scale LLM training with PyTorch native
+
+---
+
+### training-llms-megatron
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\08-distributed-training\megatron-core/`
+
+**Description:** Trains large language models (2B-462B parameters) using NVIDIA Megatron-Core with advanced parallelism strategies. Use when training models >1B parameters, need maximum GPU efficiency (47% MFU on H100), or require tensor/pipeline/sequence/context/expert parallelism. Production-ready framework used for Nemotron, LLaMA, DeepSeek.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `training-llms-megatron` or related concepts
+
+**Use Case 🤖:** NVIDIA Megatron for large-scale model training
+
+---
+
+### transformer-lens-interpretability
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\04-mechanistic-interpretability\transformer-lens/`
+
+**Description:** Provides guidance for mechanistic interpretability research using TransformerLens to inspect and manipulate transformer internals via HookPoints and activation caching. Use when reverse-engineering model algorithms, studying attention patterns, or performing activation patching experiments.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `transformer-lens-interpretability` or related concepts
+
+**Use Case 🤖:** Mechanistic interpretability for GPT-style models
+
+---
+
+### unsloth
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\03-fine-tuning\unsloth/`
+
+**Description:** Expert guidance for fast fine-tuning with Unsloth - 2-5x faster training, 50-80% less memory, LoRA/QLoRA optimization
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `unsloth` or related concepts
+
+**Use Case 🤖:** Fast and memory-efficient LLM fine-tuning
+
+---
+
+### verl-rl-training
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\06-post-training\verl/`
+
+**Description:** Provides guidance for training LLMs with reinforcement learning using verl (Volcano Engine RL). Use when implementing RLHF, GRPO, PPO, or other RL algorithms for LLM post-training at scale with flexible infrastructure backends.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `verl-rl-training` or related concepts
+
+**Use Case 🤖:** Versatile RL training framework
+
+---
+
+### weights-and-biases
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\13-mlops\weights-and-biases/`
+
+**Description:** Track ML experiments with automatic logging, visualize training in real-time, optimize hyperparameters with sweeps, and manage model registry with W&B - collaborative MLOps platform
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `weights-and-biases` or related concepts
+
+**Use Case 🤖:** ML experiment tracking and lifecycle management
+
+---
+
+### whisper
+
+**Category:** AI Research | **Path:** `AI-Research-SKILLs\18-multimodal\whisper/`
+
+**Description:** OpenAI's general-purpose speech recognition model. Supports 99 languages, transcription, translation to English, and language identification. Six model sizes from tiny (39M params) to large (1550M params). Use for speech-to-text, podcast transcription, or multilingual audio processing. Best for robust, multilingual ASR.
+
+**Version:** 1.0.0  
+**Trigger Words 🤖:** When user mentions `whisper` or related concepts
+
+**Use Case 🤖:** Speech recognition and transcription
 
 
 ## Lark (飞书) Integration {{lark--integration}}

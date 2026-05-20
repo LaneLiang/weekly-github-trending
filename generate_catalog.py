@@ -58,11 +58,16 @@ STANDALONE_GROUPS = {
     'security-review': 'Superpowers Workflow',
     'agent-reach': 'Projects (Non-Skill)',
     'research-paper-writing': 'Custom Skills',
+    'AI-Research-SKILLs': 'AI Research Skills',
+    'ai-research-skills': 'AI Research Skills',
+    'nature-skills': 'Nature Skills',
 }
 
 SOURCE_DESCRIPTIONS = {
     'everything-claude-code': 'ECC universal configuration (180+ skills, 47 agents, 79 commands)',
     'hermes-agent': 'Digital twin agent with learning loop and skill auto-generation',
+    'ai-research-skills': 'AI/ML research engineering toolkit (98 skills, 22 domains: model arch to paper writing)',
+    'AI-Research-SKILLs': 'AI/ML research engineering toolkit (98 skills, 22 domains: model arch to paper writing)',
     'academic-research-skills': 'Production-grade academic research pipeline (4 skills, 35+ modes)',
     'nature-skills': 'Nature/Science journal writing toolkit (9 skills)',
     'paper-polish-workflow': 'Academic paper polishing workflow (16 skills)',
@@ -125,13 +130,24 @@ def find_skill_files(root: str) -> list[dict]:
 def _find_plugin_context(skill_dir: str, root: str) -> dict | None:
     current = skill_dir
     for _ in range(6):
-        plugin_json = os.path.join(current, '.claude-plugin', 'plugin.json')
-        if os.path.isfile(plugin_json):
-            try:
-                with open(plugin_json, 'r', encoding='utf-8') as f:
-                    return json.load(f)
-            except (json.JSONDecodeError, OSError):
-                break
+        # Try plugin.json first, then marketplace.json
+        for fname in ('plugin.json', 'marketplace.json'):
+            meta_path = os.path.join(current, '.claude-plugin', fname)
+            if os.path.isfile(meta_path):
+                try:
+                    with open(meta_path, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                    # marketplace.json wraps metadata differently
+                    if fname == 'marketplace.json':
+                        return {
+                            'name': data.get('name', ''),
+                            'version': data.get('metadata', {}).get('version', ''),
+                            'description': data.get('metadata', {}).get('description', ''),
+                            'author': data.get('owner', {}),
+                        }
+                    return data
+                except (json.JSONDecodeError, OSError):
+                    break
         parent = os.path.dirname(current)
         if parent == current or os.path.normpath(parent) == os.path.normpath(root):
             break
@@ -232,6 +248,105 @@ USE_CASE_PATTERNS = [
     ('weekly-github-trending', 'Meta', 'Generate weekly GitHub trending projects report (每周GitHub热门)'),
     ('writing-plans', 'Workflow', 'Create detailed implementation plans from designs'),
     ('writing-skills', 'Meta', 'Write and publish new Claude Code skills'),
+    # AI-Research-SKILLs patterns (name-based, matched first)
+    ('autoresearch', 'AI Research', 'Autonomous research orchestration with two-loop architecture'),
+    ('model-architecture', 'AI Research', 'Implement and understand LLM architectures (GPT, Mamba, RWKV)'),
+    ('tokenization', 'AI Research', 'Train custom tokenizers and handle multilingual text'),
+    ('fine-tuning', 'AI Research', 'Fine-tune LLMs with LoRA, QLoRA, or full fine-tuning'),
+    ('mechanistic-interpretability', 'AI Research', 'Analyze model internals and find neural circuits'),
+    ('data-processing', 'AI Research', 'Curate and process training datasets at scale'),
+    ('post-training', 'AI Research', 'RLHF and preference alignment for LLMs'),
+    ('safety-alignment', 'AI Research', 'AI safety, content moderation, prompt injection detection'),
+    ('distributed-training', 'AI Research', 'Multi-GPU and multi-node distributed training'),
+    ('infrastructure', 'AI Research', 'GPU cloud compute orchestration and job deployment'),
+    ('optimization', 'AI Research', 'Model optimization, quantization, and memory reduction'),
+    ('evaluation', 'AI Research', 'LLM benchmarking and performance measurement'),
+    ('inference-serving', 'AI Research', 'Production LLM inference deployment'),
+    ('mlops', 'AI Research', 'ML experiment tracking and lifecycle management'),
+    ('agents', 'AI Research', 'LLM agent frameworks and autonomous systems'),
+    ('rag', 'AI Research', 'Retrieval-Augmented Generation and semantic search'),
+    ('prompt-engineering', 'AI Research', 'Structured LLM outputs and constrained generation'),
+    ('observability', 'AI Research', 'LLM application monitoring and debugging'),
+    ('multimodal', 'AI Research', 'Vision, audio, and multimodal model development'),
+    ('emerging-techniques', 'AI Research', 'Cutting-edge ML: MoE, merging, distillation, pruning'),
+    ('ml-paper-writing', 'AI Research', 'Write publication-ready ML/AI papers for top conferences'),
+    ('research-ideation', 'AI Research', 'Structured brainstorming for new research directions'),
+    ('agent-native-research-artifact', 'AI Research', 'Compile research into falsifiable agent-traversable artifacts'),
+    # Specific AI tools
+    ('litgpt', 'AI Research', 'Implement and train LLMs with LitGPT framework'),
+    ('mamba', 'AI Research', 'State space models for efficient sequence modeling'),
+    ('nanogpt', 'AI Research', 'Minimal GPT implementation for learning and experimentation'),
+    ('rwkv', 'AI Research', 'RNN-style LLM with linear attention'),
+    ('torchtitan', 'AI Research', 'Large-scale LLM training with PyTorch native'),
+    ('axolotl', 'AI Research', 'Fine-tune LLMs with Axolotl framework'),
+    ('llama-factory', 'AI Research', 'Fine-tune LLaMA models with LLaMA-Factory'),
+    ('peft', 'AI Research', 'Parameter-Efficient Fine-Tuning with HuggingFace PEFT'),
+    ('unsloth', 'AI Research', 'Fast and memory-efficient LLM fine-tuning'),
+    ('deepspeed', 'AI Research', 'DeepSpeed distributed training optimization'),
+    ('megatron', 'AI Research', 'NVIDIA Megatron for large-scale model training'),
+    ('flash-attention', 'AI Research', 'Fast and memory-efficient attention mechanism'),
+    ('vllm', 'AI Research', 'High-throughput LLM inference with vLLM'),
+    ('sglang', 'AI Research', 'Efficient LLM inference and serving with SGLang'),
+    ('langchain', 'AI Research', 'Build LLM applications with LangChain'),
+    ('llamaindex', 'AI Research', 'Data framework for LLM applications'),
+    ('crewai', 'AI Research', 'Multi-agent orchestration framework'),
+    ('dspy', 'AI Research', 'Programming framework for LM pipelines'),
+    ('chroma', 'AI Research', 'Vector database for AI applications'),
+    ('faiss', 'AI Research', 'Efficient similarity search and clustering'),
+    ('clip', 'AI Research', 'Vision-language model for multimodal tasks'),
+    ('whisper', 'AI Research', 'Speech recognition and transcription'),
+    ('stable-diffusion', 'AI Research', 'Text-to-image generation model'),
+    ('wandb', 'AI Research', 'Experiment tracking with Weights & Biases'),
+    ('mlflow', 'AI Research', 'ML lifecycle management with MLflow'),
+    ('tensorboard', 'AI Research', 'TensorBoard visualization toolkit'),
+    ('openrlhf', 'AI Research', 'Ray-based RLHF training framework'),
+    ('trl', 'AI Research', 'Transformer Reinforcement Learning'),
+    ('verl', 'AI Research', 'Versatile RL training framework'),
+    ('axolotl', 'AI Research', 'Multi-modal LLM fine-tuning toolkit'),
+    ('modal', 'AI Research', 'Serverless GPU cloud for ML workloads'),
+    ('skypilot', 'AI Research', 'Multi-cloud job runner for ML'),
+    ('saelens', 'AI Research', 'Sparse autoencoder analysis for interpretability'),
+    ('transformer-lens', 'AI Research', 'Mechanistic interpretability for GPT-style models'),
+    ('nnsight', 'AI Research', 'Neural network interpretability framework'),
+    ('pyvene', 'AI Research', 'Interventions on PyTorch models for interpretability'),
+    ('huggingface-tokenizers', 'AI Research', 'Fast tokenization with HuggingFace Tokenizers'),
+    ('sentencepiece', 'AI Research', 'Unsupervised text tokenizer and detokenizer'),
+    ('nemo-curator', 'AI Research', 'Scalable data curation for LLM training'),
+    ('ray-data', 'AI Research', 'Distributed data processing with Ray'),
+    ('llamaguard', 'AI Research', 'LLM-based input-output safeguard model'),
+    ('nemo-guardrails', 'AI Research', 'Programmable guardrails for LLMs'),
+    ('constitutional-ai', 'AI Research', 'AI alignment through constitutional principles'),
+    ('gptq', 'AI Research', 'Post-training quantization for LLMs'),
+    ('awq', 'AI Research', 'Activation-aware weight quantization'),
+    ('gguf', 'AI Research', 'Quantized model format for CPU inference'),
+    ('bitsandbytes', 'AI Research', 'Quantization and optimizers for LLMs'),
+    ('lm-evaluation-harness', 'AI Research', 'Comprehensive LLM evaluation framework'),
+    ('tensorrt-llm', 'AI Research', 'NVIDIA TensorRT for LLM inference optimization'),
+    ('llama-cpp', 'AI Research', 'LLM inference in C/C++ with llama.cpp'),
+    ('accelerate', 'AI Research', 'HuggingFace Accelerate for distributed training'),
+    ('pytorch-lightning', 'AI Research', 'Lightweight PyTorch training framework'),
+    ('ray-train', 'AI Research', 'Distributed training with Ray Train'),
+    ('pinecone', 'AI Research', 'Vector database for production AI'),
+    ('qdrant', 'AI Research', 'Vector search engine for AI applications'),
+    ('sentence-transformers', 'AI Research', 'Sentence embeddings and semantic search'),
+    ('instructor', 'AI Research', 'Structured outputs from LLMs'),
+    ('guidance', 'AI Research', 'Controlled generation from language models'),
+    ('outlines', 'AI Research', 'Structured text generation'),
+    ('langsmith', 'AI Research', 'LLM application observability platform'),
+    ('phoenix', 'AI Research', 'AI observability and evaluation'),
+    ('audiocraft', 'AI Research', 'Audio generation and processing'),
+    ('blip-2', 'AI Research', 'Vision-language pre-training'),
+    ('llava', 'AI Research', 'Large language and vision assistant'),
+    ('segment-anything', 'AI Research', 'Promptable image segmentation'),
+    ('knowledge-distillation', 'AI Research', 'Transfer knowledge from large to small models'),
+    ('model-merging', 'AI Research', 'Merge multiple models into one'),
+    ('model-pruning', 'AI Research', 'Reduce model size through pruning'),
+    ('moe-training', 'AI Research', 'Mixture-of-Experts model training'),
+    ('speculative-decoding', 'AI Research', 'Accelerate LLM inference with speculative decoding'),
+    ('long-context', 'AI Research', 'Extend LLM context window length'),
+    ('academic-plotting', 'AI Research', 'Publication-quality figures for ML papers'),
+    ('systems-paper-writing', 'AI Research', 'Systems conference paper writing (OSDI, SOSP, ASPLOS)'),
+    ('conference-talks', 'AI Research', 'Prepare conference presentation slides and talks'),
     # Hermes agent patterns
     ('hermes-', 'Agent', 'Digital twin agent with learning and memory capabilities'),
     # Single-word patterns (lower priority, matched against description too)
