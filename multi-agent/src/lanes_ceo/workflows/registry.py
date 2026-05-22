@@ -2,6 +2,7 @@ from lanes_ceo.workflows.base import Workflow
 from lanes_ceo.workflows.briefings import AINewsWorkflow, GitHubTrendingWorkflow
 from lanes_ceo.workflows.daily_loop import DailyReportWorkflow, ReflectionWorkflow
 from lanes_ceo.workflows.fake import FakeWorkflow
+from lanes_ceo.workflows.mail_digest import MailDigestWorkflow
 from lanes_ceo.workflows.paper_research import PaperResearchWorkflow
 from lanes_ceo.workflows.paper_writing import PaperWritingWorkflow
 
@@ -17,6 +18,7 @@ class WorkflowRegistry:
             ReflectionWorkflow(),
             PaperResearchWorkflow(),
             PaperWritingWorkflow(),
+            MailDigestWorkflow(),
         ]:
             self._workflows[wf.role_group] = wf
 

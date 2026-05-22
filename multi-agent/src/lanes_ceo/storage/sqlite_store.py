@@ -2,7 +2,7 @@ import json
 import sqlite3
 from pathlib import Path
 
-from lanes_ceo.contracts import CriticReview, Job, NotificationEvent, TaskRequest
+from lanes_ceo.contracts import CriticReview, Job, NotificationEvent, ScoreRecord, TaskRequest
 from lanes_ceo.enums import JobStatus, NotificationType, SourceChannel
 from lanes_ceo.storage.schema import FOUNDATION_SCHEMA
 
@@ -182,6 +182,43 @@ class SQLiteStore:
                 payload=json.loads(row[5]),
                 receipt_required=bool(row[6]),
                 retry_policy=row[7],
+            )
+            for row in rows
+        ]
+
+    def save_score_record(self, record: ScoreRecord) -> None:
+        with sqlite3.connect(self.path) as conn:
+            conn.execute(
+                """
+                INSERT INTO score_records VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    record.score_id,
+                    record.job_id,
+                    record.scored_role,
+                    record.scorer_role,
+                    record.score,
+                    record.rating,
+                    record.review_summary,
+                    record.created_at,
+                    record.month_bucket,
+                ),
+            )
+
+    def list_score_records(self) -> list[ScoreRecord]:
+        with sqlite3.connect(self.path) as conn:
+            rows = conn.execute("SELECT * FROM score_records").fetchall()
+        return [
+            ScoreRecord(
+                score_id=row[0],
+                job_id=row[1],
+                scored_role=row[2],
+                scorer_role=row[3],
+                score=row[4],
+                rating=row[5],
+                review_summary=row[6],
+                created_at=row[7],
+                month_bucket=row[8],
             )
             for row in rows
         ]

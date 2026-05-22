@@ -47,4 +47,16 @@ CREATE TABLE IF NOT EXISTS notification_events (
     receipt_required INTEGER NOT NULL,
     retry_policy TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS score_records (
+    score_id TEXT PRIMARY KEY,
+    job_id TEXT NOT NULL,
+    scored_role TEXT NOT NULL,
+    scorer_role TEXT NOT NULL,
+    score INTEGER NOT NULL,
+    rating TEXT NOT NULL,
+    review_summary TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    month_bucket TEXT NOT NULL
+);
 """
