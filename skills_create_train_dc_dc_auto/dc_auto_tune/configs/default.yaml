@@ -1,0 +1,47 @@
+# Default configuration for LLM-RL co-driven DC-DC converter auto-tuning
+
+circuit:
+  vin: 12.0
+  vout_ref: 5.0
+  L: 0.0001        # 100 uH
+  C: 0.0001        # 100 uF
+  R_load: 5.0
+  f_sw: 100000     # 100 kHz
+  rds_on: 0.05
+  esr_c: 0.01
+
+sac:
+  actor_lr: 0.0003
+  critic_lr: 0.0003
+  alpha_lr: 0.0003
+  gamma: 0.99
+  tau: 0.005
+  batch_size: 256
+  buffer_size: 100000
+  hidden_dim: 256
+  n_hidden: 2
+  initial_alpha: 0.2
+
+reward_weights:
+  w_vr: 1.0
+  w_ev: 1.0
+  w_eff: 0.5
+  w_tr: 0.8
+  w_os: 0.8
+  w_us: 0.8
+  w_pm: 0.3
+  w_ts: 0.5
+
+meta:
+  llm_provider: "openai"
+  llm_model: "gpt-4o"
+  intervention_interval: 50
+  temperature: 0.2
+  max_suggestion_magnitude: 0.5
+
+train:
+  n_episodes: 1000
+  steps_per_episode: 500
+  warmup_steps: 5000
+  update_every: 1
+  random_seed: 42
