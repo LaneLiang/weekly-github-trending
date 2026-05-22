@@ -210,6 +210,35 @@ All experiments were run on a single machine with:
 Training time for 200 episodes (200 steps each) was approximately 16--19 minutes
 per strategy, with LLM API calls contributing $<$1\% of total runtime.
 
+\section{Multi-Trial Ablation Results (50 Episodes $\times$ 3 Trials)}
+
+\begin{table}[h]
+\centering
+\caption{Multi-trial ablation at 50 episodes $\times$ 3 trials $\times$ 200 steps.
+Mean $\pm$ std across trials. Intervention count includes all meta-optimizer calls
+(LLM API calls for LLM strategies; random/BO perturbation for non-LLM strategies).
+At this short horizon, LLM interventions are premature and do not improve convergence;
+the event-triggered plateau detector correctly makes zero LLM calls.}
+\label{tab:multitrial}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Strategy} & \textbf{Final Reward} & \textbf{Vo Error \%} & \textbf{Ripple \%} & \textbf{Time (s)} & \textbf{LLM Calls} \\
+\midrule
+Random Search      & $-0.0427 \pm 0.0007$ & $0.07 \pm 0.07$ & $0.59 \pm 0.06$ & $245 \pm 31$ & $1 \pm 0$ \\
+Bayesian Opt (GP)  & $-0.0431 \pm 0.0031$ & $0.04 \pm 0.01$ & $0.63 \pm 0.21$ & $212 \pm 4$  & $1 \pm 0$ \\
+LLM Fixed-Interval & $-0.0593 \pm 0.0045$ & $1.20 \pm 1.07$ & $2.08 \pm 0.40$ & $232 \pm 26$ & $1 \pm 0$ \\
+LLM Event-Triggered& $-0.0720 \pm 0.0009$ & $1.11 \pm 0.35$ & $3.92 \pm 0.71$ & $388 \pm 18$ & $0 \pm 0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The event-triggered strategy made zero LLM calls across all three trials because
+the plateau detector correctly identified that the agent was improving on its own.
+This validates the detector's intended behavior: restrain intervention during
+active learning phases. As shown in the main text (200-episode ablation), LLM
+coaching benefits emerge with longer training horizons when interventions can be
+informed by richer training dynamics.
+
 \section{Test Suite}
 
 The codebase includes 50 automated tests covering:

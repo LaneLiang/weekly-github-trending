@@ -150,7 +150,7 @@ def train_one_trial(
             llm_calls += 1
             intervention_eps.append(ep)
 
-        if ep % 50 == 0 or ep == 1:
+        if ep % 10 == 0 or ep == 1:
             print(f"  [{name}][seed={seed}] ep {ep:4d}/{episodes} | "
                   f"avg_r={avg_r:+.4f} | vo_err={vo_error:.2f}% | "
                   f"calls={llm_calls} | t={time.time()-t0:.0f}s")

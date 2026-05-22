@@ -57,7 +57,14 @@ COLORS = {
 }
 
 
-def load_ablation_results(path: str = "logs/ablation/results.json") -> dict:
+def load_ablation_results(path: str = "logs/ablation/results_expanded.json") -> dict:
+    """Load ablation results, preferring expanded multi-trial format.
+
+    Falls back to legacy results.json if results_expanded.json is absent.
+    """
+    from pathlib import Path
+    if not Path(path).exists():
+        path = "logs/ablation/results.json"
     with open(path) as f:
         return json.load(f)
 
@@ -196,79 +203,106 @@ def fig1_architecture():
 # ═══════════════════════════════════════════════════════════════════════
 
 def fig2_convergence():
-    """Improved convergence comparison with smoothed curves + bar chart."""
+    """Convergence comparison supporting both single-trial and multi-trial formats."""
     results = load_ablation_results()
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5),
                                     gridspec_kw={"width_ratios": [1.3, 1]})
 
     colors = {"random": COLORS["random"], "bayesopt": COLORS["bayesopt"],
-              "llm": COLORS["llm"]}
+              "llm_fixed": COLORS["llm"], "llm_event": "#f39c12"}
     labels = {"random": "Random Search", "bayesopt": "Bayesian Opt (GP-EI)",
-              "llm": "LLM Meta-Optimizer (Ours)"}
-    linestyles = {"random": "--", "bayesopt": "-.", "llm": "-"}
+              "llm_fixed": "LLM Fixed-Interval", "llm_event": "LLM Event-Triggered"}
+    linestyles = {"random": "--", "bayesopt": "-.", "llm_fixed": "-", "llm_event": ":"}
+
+    # Detect format: multi-trial expanded vs. single-trial legacy
+    # Also support legacy key 'llm' -> map to 'llm_fixed'
+    all_names = [n for n in ["random", "bayesopt", "llm_fixed", "llm_event"]
+                 if n in results] or \
+                [n for n in ["random", "bayesopt", "llm"] if n in results]
+    is_expanded = any("reward_mean" in results[n] for n in all_names)
 
     # Left: smoothed convergence
-    for name in ["random", "bayesopt", "llm"]:
+    for name in all_names:
         if name not in results:
             continue
-        rewards = np.array(results[name]["rewards"])
-        # Smooth with window 15
-        window = 15
+        entry = results[name]
+        if is_expanded and "reward_mean" in entry:
+            rewards = np.array(entry["reward_mean"])
+            stds = np.array(entry["reward_std"])
+        else:
+            rewards = np.array(entry["rewards"])
+            stds = None
+
+        window = max(5, len(rewards) // 10)
         kernel = np.ones(window) / window
         smoothed = np.convolve(rewards, kernel, mode="valid")
         episodes = np.arange(len(smoothed)) + window - 1
-        ax1.plot(episodes, smoothed, color=colors[name], linestyle=linestyles[name],
-                 linewidth=2, label=labels[name], alpha=0.9)
-        # Shade ±1 std
-        std_arr = np.array([np.std(rewards[max(0,i-10):i+10])
-                           for i in range(window-1, len(rewards))])
-        ax1.fill_between(episodes, smoothed - std_arr, smoothed + std_arr,
-                         color=colors[name], alpha=0.08)
 
-    # Mark intervention points
-    for ep in [25, 50, 75, 100]:
-        ax1.axvline(x=ep, color="gray", linestyle=":", alpha=0.4, linewidth=0.8)
-    ax1.text(52, -0.03, "LLM\ninterventions", fontsize=7, color="gray", alpha=0.7)
+        ax1.plot(episodes, smoothed, color=colors[name], linestyle=linestyles.get(name, "-"),
+                 linewidth=2, label=labels.get(name, name), alpha=0.9)
+
+        if stds is not None and len(stds) == len(rewards):
+            std_smoothed = np.convolve(stds, kernel, mode="valid")
+            ax1.fill_between(episodes, smoothed - std_smoothed, smoothed + std_smoothed,
+                             color=colors[name], alpha=0.08)
+        elif stds is None:
+            std_arr = np.array([np.std(rewards[max(0,i-10):i+10])
+                               for i in range(window-1, len(rewards))])
+            ax1.fill_between(episodes, smoothed - std_arr, smoothed + std_arr,
+                             color=colors[name], alpha=0.08)
 
     ax1.set_xlabel("Episode")
     ax1.set_ylabel("Average Reward per Episode")
-    ax1.set_title("Convergence Comparison (200 Episodes)")
+    ax1.set_title("Convergence Comparison (Multi-Trial)")
     ax1.legend(loc="lower right", framealpha=0.9)
     ax1.grid(True, alpha=0.2)
 
-    # Right: bar chart with convergence time
-    names_list = ["random", "bayesopt", "llm"]
-    final_rewards = [np.mean(results[n]["rewards"][-20:]) for n in names_list]
-    final_stds = [np.std(results[n]["rewards"][-20:]) for n in names_list]
-    times = [results[n]["elapsed_s"] for n in names_list]
-    bar_colors = [colors[n] for n in names_list]
+    # Right: bar chart with final performance
+    x_pos = np.arange(len(all_names))
+    final_rewards = []
+    final_stds = []
+    times = []
+    calls = []
+    for n in all_names:
+        entry = results[n]
+        if is_expanded and "final_reward_mean" in entry:
+            final_rewards.append(entry["final_reward_mean"])
+            final_stds.append(entry["final_reward_std"])
+            times.append(entry["elapsed_s_mean"])
+            calls.append(entry.get("llm_calls_mean", 0))
+        else:
+            final_rewards.append(np.mean(entry["rewards"][-20:]))
+            final_stds.append(np.std(entry["rewards"][-20:]))
+            times.append(entry["elapsed_s"])
+            calls.append(entry.get("llm_calls", 0))
 
-    # Twin axis for time
+    bar_colors = [colors[n] for n in all_names]
     ax2b = ax2.twinx()
-    x_pos = np.arange(len(names_list))
     bars = ax2.bar(x_pos, final_rewards, 0.5, yerr=final_stds,
                    color=bar_colors, edgecolor="black", linewidth=0.5,
                    capsize=4, label="Final Reward")
     ax2.set_xticks(x_pos)
-    ax2.set_xticklabels([labels[n] for n in names_list], rotation=15, ha="right", fontsize=8)
+    ax2.set_xticklabels([labels.get(n, n) for n in all_names], rotation=15, ha="right", fontsize=7)
     ax2.set_ylabel("Final Reward (last 20 ep)")
     ax2.set_title("Final Performance & Training Time")
 
-    # Time markers
     time_markers = ax2b.scatter(x_pos, times, marker="D", s=80, color=COLORS["dark"],
                                 zorder=5, label="Training Time")
     for i, t in enumerate(times):
         ax2b.annotate(f"{t:.0f}s", (x_pos[i], t), textcoords="offset points",
                       xytext=(0, 10), ha="center", fontsize=8, color=COLORS["dark"])
+    # Show LLM call count for LLM strategies
+    for i, c in enumerate(calls):
+        if c > 0:
+            ax2.annotate(f"{c:.0f} calls", (x_pos[i], final_rewards[i]),
+                         textcoords="offset points", xytext=(0, -15),
+                         ha="center", fontsize=7, color="blue")
 
     ax2b.set_ylabel("Training Time (s)", color=COLORS["dark"])
     ax2b.tick_params(axis="y", labelcolor=COLORS["dark"])
-
-    # Combined legend
     lines1, labels1 = ax2.get_legend_handles_labels()
     lines2, labels2 = ax2b.get_legend_handles_labels()
     ax2.legend(lines1 + lines2, labels1 + labels2, loc="lower right", fontsize=7)
-
     ax2.grid(True, alpha=0.2, axis="y")
 
     plt.suptitle("Ablation Study: Meta-Optimization Strategy Comparison",
