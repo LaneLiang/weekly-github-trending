@@ -3,3 +3,12 @@ __pycache__/
 *.pyc
 runtime/
 secret.local.*
+secret.md
+secret*.md
+.env
+.env.local
+*.key
+*.pem
+credentials.json
+*.egg-info/
+
