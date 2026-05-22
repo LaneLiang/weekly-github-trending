@@ -2,6 +2,7 @@ import json
 import subprocess
 
 from lanes_ceo.contracts import Artifact, CriticReview, Job
+from lanes_ceo.workflows.utils import llm_chat
 
 GITHUB_TRENDING_SYSTEM = (
     "你是一名技术分析师，需要基于GitHub热门仓库数据撰写周报摘要。"
@@ -23,7 +24,6 @@ class GitHubTrendingWorkflow:
     def run_actor(self, job: Job) -> Artifact:
         message = job.input.get("message", "weekly")
 
-        # Try fetching real GitHub data via gh CLI
         repos = _fetch_trending_repos()
         if repos:
             repo_list = "\n".join(
@@ -31,13 +31,13 @@ class GitHubTrendingWorkflow:
                 for r in repos
             )
             llm_input = f"本周GitHub热门仓库：\n{repo_list}"
-            summary = _llm_chat(GITHUB_TRENDING_SYSTEM, llm_input) or repo_list
+            summary = llm_chat(GITHUB_TRENDING_SYSTEM, llm_input) or repo_list
             sources = [r["url"] for r in repos]
         else:
             llm_input = f"生成一周GitHub热门项目调研报告。主题：{message}"
-            summary = _llm_chat(GITHUB_TRENDING_SYSTEM, llm_input) or (
+            summary = llm_chat(GITHUB_TRENDING_SYSTEM, llm_input) or (
                 f"GitHub 热门项目调研报告: {message}\n"
-                f"（gh CLI 不可用且未配置 LLM，请安装 gh 或配置 LANES_CEO_LLM_API_KEY）"
+                f"（gh CLI 不可用且未配置 LLM）"
             )
             sources = ["github-trending-page"]
 
@@ -75,13 +75,12 @@ class AINewsWorkflow:
     def run_actor(self, job: Job) -> Artifact:
         message = job.input.get("message", "weekly")
 
-        news = _llm_chat(
+        news = llm_chat(
             AI_NEWS_SYSTEM,
             f"请生成本周（截止{_today()}）AI领域重要新闻简报。主题偏好：{message}",
         )
         summary = news if news else (
-            f"AI 新闻简报: {message}\n"
-            f"（未配置 LLM，请设置 LANES_CEO_LLM_API_KEY 以启用 AI 新闻生成）"
+            f"AI 新闻简报: {message}\n（未配置 LLM，请设置 LANES_CEO_LLM_API_KEY）"
         )
 
         return Artifact(
@@ -110,24 +109,16 @@ class AINewsWorkflow:
         )
 
 
-# --- GitHub data fetcher ---
-
 def _fetch_trending_repos() -> list[dict] | None:
-    """Fetch trending repos via gh CLI. Returns None if unavailable."""
     try:
         result = subprocess.run(
             [
-                "gh", "api",
-                "/search/repositories",
+                "gh", "api", "/search/repositories",
                 "-f", "q=stars:>50+pushed:>2026-05-01",
-                "-f", "sort=stars",
-                "-f", "order=desc",
-                "-f", "per_page=10",
+                "-f", "sort=stars", "-f", "order=desc", "-f", "per_page=10",
                 "--jq", ".items[] | {full_name, description, stars: .stargazers_count, url: .html_url}",
             ],
-            capture_output=True,
-            text=True,
-            timeout=30,
+            capture_output=True, text=True, timeout=30,
         )
         if result.returncode != 0:
             return None
@@ -140,23 +131,6 @@ def _fetch_trending_repos() -> list[dict] | None:
                     continue
         return repos if repos else None
     except (FileNotFoundError, subprocess.TimeoutExpired):
-        return None
-
-
-# --- Shared helpers ---
-
-def _llm_chat(system_prompt: str, user_prompt: str) -> str | None:
-    try:
-        from lanes_ceo.config import Config
-        from lanes_ceo.llm import LLMClient
-
-        cfg = Config.from_env()
-        llm = LLMClient(cfg)
-        response = llm.chat(system_prompt, user_prompt)
-        if response.startswith("[LLM"):
-            return None
-        return response
-    except Exception:
         return None
 
 

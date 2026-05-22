@@ -32,19 +32,13 @@ class PresentationWorkflow:
         today = date.today()
         week_label = f"{today.year}W{today.isocalendar()[1]}"
 
-        try:
-            from lanes_ceo.config import Config
-            from lanes_ceo.llm import LLMClient
+        from lanes_ceo.workflows.utils import llm_chat
 
-            cfg = Config.from_env()
-            llm = LLMClient(cfg)
-            prompt = _build_ppt_prompt(message)
-            llm_response = llm.chat(
-                "你是一名博士研究生，需准备30分钟组会PPT汇报。输出每页标题和要点。",
-                prompt,
-            )
-        except Exception:
-            llm_response = ""
+        prompt = _build_ppt_prompt(message)
+        llm_response = llm_chat(
+            "你是一名博士研究生，需准备30分钟组会PPT汇报。输出每页标题和要点。",
+            prompt,
+        ) or ""
 
         artifact_dir = Path(job.workspace) / "artifacts"
         artifact_dir.mkdir(parents=True, exist_ok=True)

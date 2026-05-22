@@ -36,6 +36,7 @@ class Config:
 
     @classmethod
     def from_env(cls) -> "Config":
+        _load_dotenv()
         return cls(
             db_path=os.getenv("LANES_CEO_DB_PATH", "runtime/lanes_ceo.sqlite3"),
             timezone=os.getenv("LANES_CEO_TIMEZONE", "Asia/Shanghai"),
@@ -68,6 +69,14 @@ class Config:
     def ensure_dirs(self) -> None:
         for d in [self.db_path, self.artifact_dir, self.log_file]:
             Path(d).parent.mkdir(parents=True, exist_ok=True)
+
+
+def _load_dotenv() -> None:
+    try:
+        from dotenv import load_dotenv as _load
+        _load(Path(__file__).parent.parent.parent / ".env")
+    except Exception:
+        pass
 
 
 def _bool_env(key: str) -> bool:

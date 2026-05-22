@@ -1,6 +1,7 @@
 from datetime import date
 
 from lanes_ceo.contracts import Artifact, CriticReview, Job
+from lanes_ceo.workflows.utils import llm_chat
 
 REPORT_MIN_SECTIONS = 3
 REFLECTION_MIN_WORDS = 80
@@ -25,7 +26,7 @@ class DailyReportWorkflow:
         message = job.input.get("message", "今日工作总结")
         today = date.today().isoformat()
 
-        content = _llm_chat(DAILY_REPORT_SYSTEM, f"今天日期：{today}\n主题：{message}")
+        content = llm_chat(DAILY_REPORT_SYSTEM, f"今天日期：{today}\n主题：{message}")
         report = content if content else f"今日工作总结（{today}）：{message}\n（待 LLM 配置后自动生成详细内容）"
 
         return Artifact(
@@ -64,7 +65,7 @@ class ReflectionWorkflow:
         message = job.input.get("message", "今日反思")
         today = date.today().isoformat()
 
-        content = _llm_chat(REFLECTION_SYSTEM, f"今天日期：{today}\n主题：{message}")
+        content = llm_chat(REFLECTION_SYSTEM, f"今天日期：{today}\n主题：{message}")
         reflection = content if content else f"今日反思（{today}）：{message}\n（待 LLM 配置后自动生成详细内容）"
 
         return Artifact(
@@ -92,21 +93,6 @@ class ReflectionWorkflow:
             return_to_actor=not approved,
             handoff_note="反思总结审核通过" if approved else "反思不够深入，请重新思考",
         )
-
-
-def _llm_chat(system_prompt: str, user_prompt: str) -> str | None:
-    try:
-        from lanes_ceo.config import Config
-        from lanes_ceo.llm import LLMClient
-
-        cfg = Config.from_env()
-        llm = LLMClient(cfg)
-        response = llm.chat(system_prompt, user_prompt)
-        if response.startswith("[LLM") or response.startswith("[LLM error"):
-            return None
-        return response
-    except Exception:
-        return None
 
 
 def _check_report_quality(text: str) -> list[str]:

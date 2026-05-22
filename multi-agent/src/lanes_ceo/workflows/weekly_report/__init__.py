@@ -34,20 +34,13 @@ class WeeklyReportWorkflow:
         today = date.today()
         week_label = f"{today.year}W{today.isocalendar()[1]}"
 
-        # Build document content via LLM when available, otherwise stub
-        try:
-            from lanes_ceo.config import Config
-            from lanes_ceo.llm import LLMClient
+        from lanes_ceo.workflows.utils import llm_chat
 
-            cfg = Config.from_env()
-            llm = LLMClient(cfg)
-            prompt = _build_weekly_report_prompt(message)
-            llm_response = llm.chat(
-                "你是一名博士研究生，需按毕业论文格式撰写周报。输出严格分8个章节，内容详实。",
-                prompt,
-            )
-        except Exception:
-            llm_response = ""
+        prompt = _build_weekly_report_prompt(message)
+        llm_response = llm_chat(
+            "你是一名博士研究生，需按毕业论文格式撰写周报。输出严格分8个章节，内容详实。",
+            prompt,
+        ) or ""
 
         artifact_dir = Path(job.workspace) / "artifacts"
         artifact_dir.mkdir(parents=True, exist_ok=True)

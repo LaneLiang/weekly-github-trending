@@ -1,4 +1,12 @@
 from lanes_ceo.contracts import Artifact, CriticReview, Job
+from lanes_ceo.workflows.utils import llm_chat
+
+
+DRAFT_SYSTEM = (
+    "你是一名博士研究生，需要按照Nature/Science水准撰写论文草稿。"
+    "要求：逻辑清晰、论证严密、图表题注规范、公式编号完整。"
+    "输出完整的论文小节，800字以内。"
+)
 
 
 class PaperWritingWorkflow:
@@ -10,7 +18,7 @@ class PaperWritingWorkflow:
     def run_actor(self, job: Job) -> Artifact:
         section = job.input.get("message", "draft section")
 
-        draft = _llm_draft(section)
+        draft = llm_chat(DRAFT_SYSTEM, f"撰写以下论文小节：{section}")
         summary = draft if draft else (
             f"论文草稿: {section}\n"
             f"输出路径: drafts/current/, figures/, references.bib\n"
@@ -24,14 +32,8 @@ class PaperWritingWorkflow:
             summary=summary,
             artifact_paths=["drafts/current/", "figures/", "references.bib"],
             sources=["literature-review", "experiment-data"],
-            risks=[
-                "factual accuracy requires author verification",
-                "figure placement may need adjustment",
-            ],
-            user_confirmations=[
-                "请确认技术内容准确性",
-                "图表数据和格式是否需要调整",
-            ],
+            risks=["factual accuracy requires author verification", "figure placement may need adjustment"],
+            user_confirmations=["请确认技术内容准确性", "图表数据和格式是否需要调整"],
         )
 
     def run_critic(self, job: Job, artifact: Artifact) -> CriticReview:
@@ -48,28 +50,6 @@ class PaperWritingWorkflow:
             return_to_actor=not approved,
             handoff_note="论文草稿审核通过" if approved else "请修改后重新提交",
         )
-
-
-DRAFT_SYSTEM = (
-    "你是一名博士研究生，需要按照Nature/Science水准撰写论文草稿。"
-    "要求：逻辑清晰、论证严密、图表题注规范、公式编号完整。"
-    "输出完整的论文小节，800字以内。"
-)
-
-
-def _llm_draft(section: str) -> str | None:
-    try:
-        from lanes_ceo.config import Config
-        from lanes_ceo.llm import LLMClient
-
-        cfg = Config.from_env()
-        llm = LLMClient(cfg)
-        response = llm.chat(DRAFT_SYSTEM, f"撰写以下论文小节：{section}")
-        if response.startswith("[LLM"):
-            return None
-        return response
-    except Exception:
-        return None
 
 
 def _check_draft_quality(artifact: Artifact) -> list[str]:

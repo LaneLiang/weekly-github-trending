@@ -6,6 +6,7 @@ from email.header import decode_header
 from typing import Any
 
 from lanes_ceo.contracts import Artifact, CriticReview, Job
+from lanes_ceo.workflows.utils import llm_chat
 
 logger = logging.getLogger("lanes_ceo.mail")
 
@@ -33,7 +34,7 @@ class MailDigestWorkflow:
         emails = _fetch_recent_emails()
         if emails:
             email_text = _format_email_list(emails)
-            summary = _llm_chat(MAIL_DIGEST_SYSTEM, f"今日邮件列表：\n{email_text}") or email_text
+            summary = llm_chat(MAIL_DIGEST_SYSTEM, f"今日邮件列表：\n{email_text}") or email_text
             paper_flags = [
                 f"论文相关邮件: {e['subject']} (来自 {e['from']})"
                 for e in emails if should_keep_unread(e["subject"])
@@ -42,7 +43,7 @@ class MailDigestWorkflow:
         else:
             summary = (
                 f"邮件摘要（{_today()}）：\n"
-                f"（IMAP 未配置或无法连接，请设置 LANES_CEO_EMAIL_* 环境变量）\n"
+                f"（IMAP 未配置，请设置 LANES_CEO_EMAIL_* 环境变量）\n"
                 f"触发消息: {message}"
             )
             paper_flags = []
@@ -57,12 +58,8 @@ class MailDigestWorkflow:
             summary=summary,
             artifact_paths=[],
             sources=sources,
-            risks=risks + (
-                ["paper decision emails require unread preservation"] if paper_flags else []
-            ),
-            user_confirmations=paper_flags + [
-                "是否有需要额外关注的紧急邮件",
-            ],
+            risks=risks + (["paper decision emails require unread preservation"] if paper_flags else []),
+            user_confirmations=paper_flags + ["是否有需要额外关注的紧急邮件"],
         )
 
     def run_critic(self, job: Job, artifact: Artifact) -> CriticReview:
@@ -88,10 +85,7 @@ def should_keep_unread(subject: str) -> bool:
     return any(kw.lower() in subject.lower() for kw in PAPER_KEYWORDS)
 
 
-# --- IMAP integration ---
-
 def _fetch_recent_emails(hours: int = 48) -> list[dict[str, str]] | None:
-    """Fetch recent emails via IMAP. Returns None if unavailable."""
     try:
         from lanes_ceo.config import Config
 
@@ -104,8 +98,7 @@ def _fetch_recent_emails(hours: int = 48) -> list[dict[str, str]] | None:
             return None
 
         try:
-            emails = _search_recent(server, hours)
-            return emails
+            return _search_recent(server, hours)
         finally:
             try:
                 server.logout()
@@ -139,7 +132,6 @@ def _search_recent(server: imaplib.IMAP4, hours: int) -> list[dict[str, str]]:
 
     email_ids = data[0].split()
     emails: list[dict[str, str]] = []
-    # Fetch most recent 20, newest first
     for eid in reversed(email_ids[-20:]):
         status, msg_data = server.fetch(eid, "(RFC822)")
         if status != "OK":
@@ -171,23 +163,6 @@ def _format_email_list(emails: list[dict[str, str]]) -> str:
         flag = " [论文]" if should_keep_unread(e["subject"]) else ""
         lines.append(f"- {e['from']}: {e['subject']}{flag}")
     return "\n".join(lines)
-
-
-# --- Shared helpers ---
-
-def _llm_chat(system_prompt: str, user_prompt: str) -> str | None:
-    try:
-        from lanes_ceo.config import Config
-        from lanes_ceo.llm import LLMClient
-
-        cfg = Config.from_env()
-        llm = LLMClient(cfg)
-        response = llm.chat(system_prompt, user_prompt)
-        if response.startswith("[LLM"):
-            return None
-        return response
-    except Exception:
-        return None
 
 
 def _today() -> str:
