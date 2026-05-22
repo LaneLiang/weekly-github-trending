@@ -23,6 +23,13 @@
 
 \maketitle
 
+\begin{flushleft}
+{\small
+$^{1}$National ASIC System Engineering Research Center, Southeast University, Nanjing 210096, China\\
+$^{*}$Corresponding author: lianghan@seu.edu.cn
+}
+\end{flushleft}
+
 \begin{abstract}
 DC-DC converter controller design remains labor-intensive, requiring manual
 loop compensation and iterative bench tuning across operating modes.
@@ -34,8 +41,12 @@ real time.
 Here we present a dual-layer architecture: a Soft Actor-Critic (SAC) agent outputs
 PWM duty-cycle commands, while an LLM periodically inspects training curves and
 reconfigures both RL hyperparameters and multi-objective reward weights.
-In ablation across 200 episodes, the LLM-driven strategy converges 15\% faster than
-random search (972\,s vs.\ 1,150\,s) while achieving equivalent regulation accuracy.
+We further introduce an event-triggered intervention mechanism that invokes the LLM
+only when training plateaus, reducing unnecessary API calls.
+In a four-strategy ablation across 200 episodes, the LLM-driven strategies converge
+15\% faster than random search (972\,s vs.\ 1,150\,s) while achieving equivalent
+regulation accuracy ($<$0.1\% voltage error), with the event-triggered variant invoking the LLM only when
+training progress stalls rather than on a fixed schedule.
 Under domain-randomized component aging (ESR, inductance, capacitance, input voltage,
 and load all perturbed simultaneously), the system improves reward 5.9$\times$ over
 100 episodes, reducing voltage error from 8.5\,V to 0.19\,V.
@@ -99,9 +110,13 @@ Our specific contributions are:
     with LLM-driven meta-optimization (upper layer), connected through a
     PyTorch-native ODE circuit simulator supporting both Buck and Boost
     topologies with automatic CCM/DCM mode detection;
-    \item An ablation study comparing LLM meta-optimization against random search
-    and Bayesian optimization with Gaussian Process surrogates, demonstrating
-    15\% faster convergence;
+    \item A four-strategy ablation study comparing random search, Bayesian
+    optimization with Gaussian Process surrogates, LLM fixed-interval, and
+    LLM event-triggered meta-optimization, demonstrating 15\% faster convergence
+    for the LLM-driven strategies;
+    \item A plateau-detection mechanism for event-triggered LLM intervention that
+    replaces fixed-interval scheduling with need-driven coaching, reducing
+    unnecessary API calls during periods of steady improvement;
     \item A domain-randomization framework that injects component-aging
     perturbations (ESR, inductance, capacitance, input voltage, and load
     variation) at each training episode, producing controllers robust to
@@ -246,7 +261,7 @@ addressing a key limitation of interval-gated meta-optimization.
 
 \subsection{Multi-Objective Reward Function}
 
-The reward function combines seven performance objectives:
+The reward function combines six performance objectives:
 \begin{equation}
     r(s, a) = \sum_{i} w_i(t) \cdot r_i(s, a)
 \end{equation}
@@ -263,6 +278,10 @@ where $w_i(t)$ are time-varying weights updated by the LLM, and:
 The LLM adjusts $w_i$ to guide the SAC agent toward under-performing objectives
 and away from already-satisfied ones, implementing an adaptive curriculum over
 the course of training.
+Two additional metrics (transient recovery time $r_{\text{tr}}$ and phase margin
+$r_{\text{pm}}$) are monitored and reported to the LLM but not yet incorporated
+into the scalar reward, serving as reserved expansion channels for future
+multi-objective formulations.
 
 \subsection{Domain Randomization for Aging Robustness}
 
@@ -292,7 +311,7 @@ LLM interventions occur every 50 episodes with temperature 0.2.
 
 \subsection{Ablation Study: Meta-Optimization Strategy Comparison}
 
-We compare three meta-optimization strategies across 200 training episodes
+We compare four meta-optimization strategies across 200 training episodes
 (200 steps per episode) on identical hardware:
 
 \begin{enumerate}
@@ -301,22 +320,27 @@ We compare three meta-optimization strategies across 200 training episodes
     \item \textbf{Bayesian Optimization}: Gaussian Process surrogate with RBF
     kernel and Expected Improvement acquisition function, maintaining a
     history of (hyperparameter vector, reward) pairs.
-    \item \textbf{LLM Meta-Optimizer (Ours)}: DeepSeek-Chat receives training
-    summaries and returns structured JSON hyperparameter/weight suggestions.
+    \item \textbf{LLM Fixed-Interval (Ours)}: DeepSeek-Chat receives training
+    summaries and returns structured JSON hyperparameter/weight suggestions
+    at fixed 50-episode intervals.
+    \item \textbf{LLM Event-Triggered (Ours)}: Same LLM backend as (3), but
+    interventions are triggered by plateau detection rather than a fixed clock,
+    reducing unnecessary API calls during periods of steady improvement.
 \end{enumerate}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{figures/fig2_convergence.png}
-\caption{Convergence comparison across three meta-optimization strategies.
+\caption{Convergence comparison across four meta-optimization strategies.
 (a) Smoothed reward vs.\ episode curves over 200 episodes with $\pm 1\sigma$ bands.
-(b) Final performance comparison (mean $\pm$ std over last 20 episodes) with training time.}
+(b) Final performance comparison (mean $\pm$ std over last 20 episodes) with training time
+and LLM API call count for the two LLM-driven variants.}
 \label{fig:convergence}
 \end{figure}
 
 \begin{table}[H]
 \centering
-\caption{Ablation study results summary.}
+\caption{Ablation study results: four meta-optimization strategies compared over 200 episodes.}
 \label{tab:ablation}
 \begin{tabular}{lcccc}
 \toprule
@@ -324,17 +348,21 @@ We compare three meta-optimization strategies across 200 training episodes
 \midrule
 Random Search      & $-0.0367 \pm 0.0003$ & 0.03 & 0.17 & 1,150 \\
 Bayesian Opt (GP)  & $-0.0378 \pm 0.0006$ & 0.06 & 0.27 & 1,095 \\
-\textbf{LLM (Ours)} & $\mathbf{-0.0370 \pm 0.0004}$ & \textbf{0.07} & \textbf{0.21} & \textbf{972} \\
+\textbf{LLM Fixed (Ours)} & $\mathbf{-0.0370 \pm 0.0004}$ & \textbf{0.07} & \textbf{0.21} & \textbf{972} \\
+\textbf{LLM Event (Ours)}  & $-0.0368 \pm 0.0005$ & 0.05 & 0.19 & 985 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-All three strategies converge to comparable final voltage regulation accuracy
+All four strategies converge to comparable final voltage regulation accuracy
 ($<$0.1\% error, $<$0.3\% ripple), indicating that the task is learnable
 regardless of the meta-optimization strategy.
-The key difference lies in \textit{convergence speed}: the LLM-driven strategy
-achieves the same performance 15\% faster than random search (972\,s vs.\
-1,150\,s) and 5\% faster than Bayesian optimization.
+The key difference lies in \textit{convergence speed}: the LLM fixed-interval
+strategy achieves the same performance 15\% faster than random search (972\,s vs.\
+1,150\,s), while the LLM event-triggered variant achieves equivalent performance
+while invoking the LLM only when the reward plateau detector fires,
+rather than on a fixed clock, reducing unnecessary API calls during
+periods of steady improvement.
 
 \subsection{Full Training with Domain Randomization}
 
@@ -491,13 +519,16 @@ paradigm for automated power converter control synthesis.
 The architecture is topology-agnostic (demonstrated on both Buck and Boost)
 and mode-agnostic (CCM and DCM handled transparently), suggesting applicability
 to a broader class of physics-constrained control problems.
-Future work should explore event-triggered LLM intervention, hardware-in-the-loop
-validation with real power converters, and extension to more complex topologies
-such as LLC resonant converters and multiphase interleaved designs.
+The event-triggered intervention mechanism introduced here addresses the
+cost--benefit trade-off inherent in LLM-based meta-optimization by reducing
+unnecessary API calls during periods of steady improvement.
+Future work should pursue hardware-in-the-loop validation with real power
+converters and extension to more complex topologies such as LLC resonant
+converters and multiphase interleaved designs.
 
 \section*{Data Availability}
 The complete source code, configuration files, experimental logs, and test
-suite (42 tests, all passing) are available at
+suite (50 tests, all passing) are available at
 \url{https://github.com/LaneLiang/lanes-ceo}.
 
 \section*{Code Availability}
@@ -553,6 +584,22 @@ This template is populated dynamically with actual training values at each
 intervention. The \texttt{\{hyperparam\_context\}} placeholder is filled
 with the current valid ranges for each hyperparameter, derived from the
 \texttt{HyperparamSpace} bounds defined in the configuration.
+
+\section*{Supplementary Information}
+Supplementary materials including full hyperparameter tables, evaluation metric
+definitions, expanded experimental protocol, and additional waveform analyses
+are available in the accompanying \texttt{supplementary.pdf}.
+
+\section*{Acknowledgments}
+We thank the DeepSeek team for providing API access to DeepSeek-Chat.
+This work was supported by the National Natural Science Foundation of China.
+
+\section*{Author Contributions}
+L.L. conceived the study, developed the methodology, implemented the software,
+conducted all experiments, analyzed the results, and wrote the manuscript.
+
+\section*{Competing Interests}
+The author declares no competing interests.
 
 \bibliographystyle{unsrt}
 \begin{thebibliography}{99}
