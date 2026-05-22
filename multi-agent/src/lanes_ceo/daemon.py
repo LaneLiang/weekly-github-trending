@@ -73,6 +73,12 @@ def configure_scheduler(orchestrator: Orchestrator, config: Config) -> Scheduler
         "presentation",
         "生成下周组会汇报PPT",
     )
+    sched.add_cron_job(
+        "literature-weekly-scan",
+        "7 8 * * 1",  # Monday 8:07am (offset from github-trending to avoid API burst)
+        "paper_research",
+        "检索过去一周内arXiv和IEEE Xplore上RL+Power Electronics+LLM的最新论文（关键词：LLM meta-optimizer RL, dynamic reward shaping power converter, CCM DCM unified modeling, domain randomization aging-aware DC-DC）",
+    )
     return sched
 
 

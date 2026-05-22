@@ -59,7 +59,7 @@ def test_weekly_report_critic_approves_valid_artifact() -> None:
         workspace.mkdir(parents=True)
         docx_path = workspace / "artifacts" / "report.docx"
         docx_path.parent.mkdir(parents=True)
-        _write_docx(docx_path, "2026W21", "test", "")
+        _write_docx(docx_path, "2026W21", "test")
 
         wf = WeeklyReportWorkflow()
         job = Job(
@@ -141,6 +141,6 @@ def test_clean_text_no_empty_phrases() -> None:
 def test_write_docx_creates_valid_file() -> None:
     with tempfile.TemporaryDirectory() as tmpdir:
         path = Path(tmpdir) / "test.docx"
-        _write_docx(path, "2026W21", "测试主题", "")
+        _write_docx(path, "2026W21", "测试主题")
         assert path.exists()
         assert path.stat().st_size > 0
