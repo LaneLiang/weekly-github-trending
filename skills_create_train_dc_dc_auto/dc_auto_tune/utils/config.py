@@ -9,6 +9,7 @@ from dc_auto_tune.utils.types_ import (
     SACParams,
     RewardWeights,
     MetaOptConfig,
+    PerturbationConfig,
     TrainConfig,
 )
 
@@ -64,4 +65,5 @@ def load_config(path: str | Path) -> Config:
         reward_weights=RewardWeights(**raw.get("reward_weights", {})),
         meta=MetaOptConfig(**meta_raw),
         train=TrainConfig(**raw.get("train", {})),
+        perturbation=PerturbationConfig(**raw.get("perturbation", {})),
     )

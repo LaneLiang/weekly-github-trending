@@ -40,6 +40,14 @@ meta:
   temperature: 0.2
   max_suggestion_magnitude: 0.5
 
+perturbation:
+  enabled: true
+  max_esr_ratio: 2.5    # ESR aging: up to 2.5x nominal
+  min_L_ratio: 0.8       # inductance degradation: down to 80%
+  min_C_ratio: 0.7       # capacitance degradation: down to 70%
+  vin_ripple: 0.1         # input voltage variation: +/-10%
+  load_spread: 0.5        # load variation: 50%-150% nominal
+
 train:
   n_episodes: 1000
   steps_per_episode: 500

@@ -72,6 +72,18 @@ class TrainConfig:
 
 
 @dataclass
+class PerturbationConfig:
+    """Domain-randomization perturbation ranges (relative to nominal)."""
+
+    max_esr_ratio: float = 2.5
+    min_L_ratio: float = 0.8
+    min_C_ratio: float = 0.7
+    vin_ripple: float = 0.1
+    load_spread: float = 0.5
+    enabled: bool = True
+
+
+@dataclass
 class Config:
     """Top-level configuration aggregating all sub-configs."""
 
@@ -80,3 +92,4 @@ class Config:
     reward_weights: RewardWeights = field(default_factory=RewardWeights)
     meta: MetaOptConfig = field(default_factory=MetaOptConfig)
     train: TrainConfig = field(default_factory=TrainConfig)
+    perturbation: PerturbationConfig = field(default_factory=PerturbationConfig)

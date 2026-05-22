@@ -6,6 +6,7 @@ from collections import deque
 from dc_auto_tune.utils.types_ import Config
 from dc_auto_tune.env.buck_ccm import BuckCCMEnv
 from dc_auto_tune.env.rewards import MultiObjectiveReward
+from dc_auto_tune.env.perturbation import DomainRandomizer
 from dc_auto_tune.rl.sac_agent import SACAgent
 from dc_auto_tune.rl.replay_buffer import ReplayBuffer
 from dc_auto_tune.meta.optimizer import LLMMetaOptimizer
@@ -29,6 +30,7 @@ class Trainer:
         self.agent = SACAgent(obs_dim=8, action_dim=1, params=config.sac)
         self.buffer = ReplayBuffer(config.sac.buffer_size, obs_dim=8, action_dim=1)
         self.meta_opt = LLMMetaOptimizer(config.meta, HyperparamSpace(), api_key)
+        self.randomizer = DomainRandomizer(config.perturbation)
         self.logger = TrainingLogger()
         self.current_episode = 0
         self.global_step = 0
@@ -40,6 +42,10 @@ class Trainer:
         """Run the main training loop for ``config.train.n_episodes`` episodes."""
         for ep in range(self.config.train.n_episodes):
             self.current_episode = ep + 1
+            # Apply domain randomization at episode start
+            if self.config.perturbation.enabled:
+                perturbed = self.randomizer.sample(self.config.circuit)
+                self.env.p = perturbed
             obs = self.env.reset()
             ep_reward = 0.0
             ep_metrics = {}
