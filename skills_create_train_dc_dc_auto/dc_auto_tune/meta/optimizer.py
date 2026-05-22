@@ -69,8 +69,7 @@ class LLMMetaOptimizer:
             hyperparam_context=self.space.generate_prompt_context()
         )
         user = self._build_prompt(training_state)
-        raw = self.client.chat(system, user)
-        result = json.loads(raw)
+        result = self._call_with_retry(system, user)
 
         if "sac_updates" in result:
             result["sac_updates"] = self.space.validate_and_clamp_sac(
@@ -81,6 +80,28 @@ class LLMMetaOptimizer:
                 result["weight_updates"]
             )
         return result
+
+    def _call_with_retry(self, system: str, user: str, max_retries: int = 2) -> dict:
+        """Call LLM and parse JSON, retrying once with a stricter prompt on failure."""
+        raw = self.client.chat(system, user)
+        for attempt in range(max_retries):
+            try:
+                return json.loads(raw)
+            except json.JSONDecodeError:
+                if attempt == max_retries - 1:
+                    return {
+                        "analysis": "LLM returned unparseable JSON after retry",
+                        "sac_updates": {},
+                        "weight_updates": {},
+                    }
+                # Retry with a stronger prompt
+                retry_user = (
+                    "Your previous response was not valid JSON. "
+                    "You MUST respond with ONLY a valid JSON object. "
+                    "Do not include any text outside the JSON.\n\n"
+                    + user
+                )
+                raw = self.client.chat(system, retry_user)
 
     def _build_prompt(self, state: dict) -> str:
         """Build the user-message text describing current training state."""

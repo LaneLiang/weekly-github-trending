@@ -33,8 +33,9 @@ reward_weights:
   w_ts: 0.5
 
 meta:
-  llm_provider: "openai"
-  llm_model: "gpt-4o"
+  llm_provider: "openai"   # DeepSeek uses OpenAI-compatible API
+  llm_model: "deepseek-chat"
+  llm_base_url: "https://api.deepseek.com"
   intervention_interval: 50
   temperature: 0.2
   max_suggestion_magnitude: 0.5

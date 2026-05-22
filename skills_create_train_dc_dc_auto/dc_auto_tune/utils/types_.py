@@ -51,8 +51,10 @@ class RewardWeights:
 class MetaOptConfig:
     """LLM meta-optimizer configuration."""
 
-    llm_provider: str = "openai"
-    llm_model: str = "gpt-4o"
+    llm_provider: str = "openai"  # "openai" also covers DeepSeek (compatible API)
+    llm_model: str = "deepseek-chat"
+    llm_base_url: str = "https://api.deepseek.com"
+    llm_api_key: str = ""  # populated from env at load time
     intervention_interval: int = 50
     temperature: float = 0.2
     max_suggestion_magnitude: float = 0.5

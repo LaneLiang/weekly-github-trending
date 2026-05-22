@@ -25,14 +25,18 @@ class LLMClient:
         return self._client
 
     def _setup_client(self) -> None:
+        key = self.api_key or self.config.llm_api_key
         if self.config.llm_provider == "openai":
             from openai import OpenAI
 
-            self._client = OpenAI(api_key=self.api_key)
+            self._client = OpenAI(
+                api_key=key,
+                base_url=self.config.llm_base_url,
+            )
         elif self.config.llm_provider == "anthropic":
             from anthropic import Anthropic
 
-            self._client = Anthropic(api_key=self.api_key)
+            self._client = Anthropic(api_key=key)
         else:
             raise ValueError(
                 f"Unknown LLM provider: {self.config.llm_provider}"
