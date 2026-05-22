@@ -34,7 +34,7 @@ class WeeklyReportWorkflow:
         today = date.today()
         week_label = f"{today.year}W{today.isocalendar()[1]}"
 
-        from lanes_ceo.workflows.utils import llm_chat
+        from lanes_ceo.workflows.utils import get_artifact_dir, llm_chat
 
         prompt = _build_weekly_report_prompt(message)
         llm_response = llm_chat(
@@ -42,8 +42,7 @@ class WeeklyReportWorkflow:
             prompt,
         ) or ""
 
-        artifact_dir = Path(job.workspace) / "artifacts"
-        artifact_dir.mkdir(parents=True, exist_ok=True)
+        artifact_dir = get_artifact_dir("weekly_report")
         docx_path = artifact_dir / f"weekly-report-{week_label}.docx"
 
         _write_docx(docx_path, week_label, message, llm_response)

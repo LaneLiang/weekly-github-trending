@@ -32,7 +32,7 @@ class PresentationWorkflow:
         today = date.today()
         week_label = f"{today.year}W{today.isocalendar()[1]}"
 
-        from lanes_ceo.workflows.utils import llm_chat
+        from lanes_ceo.workflows.utils import get_artifact_dir, llm_chat
 
         prompt = _build_ppt_prompt(message)
         llm_response = llm_chat(
@@ -40,8 +40,7 @@ class PresentationWorkflow:
             prompt,
         ) or ""
 
-        artifact_dir = Path(job.workspace) / "artifacts"
-        artifact_dir.mkdir(parents=True, exist_ok=True)
+        artifact_dir = get_artifact_dir("presentation")
         pptx_path = artifact_dir / f"presentation-{week_label}.pptx"
 
         slide_count = _write_pptx(pptx_path, message, llm_response)

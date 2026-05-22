@@ -1,5 +1,8 @@
 """Shared utilities for workflow implementations."""
 
+import os
+from pathlib import Path
+
 HUMANIZER_SUFFIX = (
     "【写作风格要求】请使用自然流畅的中文表达，避免以下AI生成常见问题：\n"
     "1. 不要使用「在当今时代」「随着…的发展」「综上所述」等模板句式；\n"
@@ -25,3 +28,32 @@ def llm_chat(system_prompt: str, user_prompt: str) -> str | None:
         return response
     except Exception:
         return None
+
+
+PROJECT_OUTPUT_BASE = Path(
+    os.getenv(
+        "LANES_CEO_OUTPUT_BASE",
+        "G:/blog/claude_code_useage/PROJECT/multi-agent",
+    )
+)
+
+_ARTIFACT_TYPE_DIR_MAP: dict[str, str] = {
+    "weekly_report": "weekly_reports",
+    "presentation": "presentations",
+    "daily_report": "daily_reports",
+    "reflection": "reflections",
+    "paper_draft": "paper_drafts",
+    "paper_research": "paper_research",
+    "mail_digest": "mail_digests",
+    "github_trending": "briefings",
+    "ai_news": "briefings",
+    "fake": "debug",
+}
+
+
+def get_artifact_dir(artifact_type: str) -> Path:
+    """Return the categorized output directory for a given artifact type, creating it if needed."""
+    subdir = _ARTIFACT_TYPE_DIR_MAP.get(artifact_type, artifact_type)
+    target = PROJECT_OUTPUT_BASE / subdir
+    target.mkdir(parents=True, exist_ok=True)
+    return target
