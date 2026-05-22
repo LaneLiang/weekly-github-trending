@@ -21,6 +21,8 @@ class HyperparamSpace:
         "initial_alpha": (0.01, 1.0),
     }
 
+    SAC_INT_PARAMS: set[str] = {"batch_size", "buffer_size"}
+
     WEIGHT_BOUNDS: dict[str, tuple[float, float]] = {
         "w_vr": (0.0, 5.0),
         "w_ev": (0.0, 5.0),
@@ -41,12 +43,16 @@ class HyperparamSpace:
 
         Returns:
             Dict with every value clamped to [lo, hi] for its key.
+            Integer-typed parameters are rounded to int.
         """
         clamped: dict = {}
         for k, v in updates.items():
             if k in cls.SAC_BOUNDS:
                 lo, hi = cls.SAC_BOUNDS[k]
-                clamped[k] = max(lo, min(hi, v))
+                v = max(lo, min(hi, v))
+                if k in cls.SAC_INT_PARAMS:
+                    v = int(round(v))
+                clamped[k] = v
         return clamped
 
     @classmethod
