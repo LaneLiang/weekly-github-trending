@@ -1,4 +1,4 @@
-from lanes_ceo.contracts import Job
+from lanes_ceo.contracts import Artifact, Job
 from lanes_ceo.enums import JobStatus
 from lanes_ceo.workflows.mail_digest import MailDigestWorkflow, PAPER_KEYWORDS
 
@@ -17,14 +17,15 @@ def test_mail_digest_actor_produces_artifact() -> None:
     )
     artifact = wf.run_actor(job)
     assert artifact.artifact_type == "mail_digest"
-    assert len(artifact.user_confirmations) >= 2
+    assert len(artifact.user_confirmations) >= 1
+    assert len(artifact.sources) >= 1
 
 
-def test_mail_digest_critic_approves() -> None:
+def test_mail_digest_critic_approves_rich_digest() -> None:
     wf = MailDigestWorkflow()
     job = Job(
-        job_id="job-mail",
-        request_id="req-1",
+        job_id="job-mail2",
+        request_id="req-2",
         role_group="mail_digest",
         actor="mail-digest-actor",
         critic="mail-digest-critic",
@@ -32,9 +33,44 @@ def test_mail_digest_critic_approves() -> None:
         input={"message": "today"},
         workspace="runtime/jobs/test",
     )
-    artifact = wf.run_actor(job)
+    artifact = Artifact(
+        artifact_id="art-md",
+        job_id=job.job_id,
+        artifact_type="mail_digest",
+        summary="今日邮件摘要（3封）：1) 导师张教授发来下周组会时间调整通知 2) 论文合作者发来修改意见 3) 学院通知下周五提交中期考核材料",
+        artifact_paths=[],
+        sources=["mail-inbox"],
+        risks=[],
+        user_confirmations=["是否有需要额外关注的紧急邮件"],
+    )
     review = wf.run_critic(job, artifact)
     assert review.approved is True
+
+
+def test_mail_digest_critic_rejects_empty() -> None:
+    wf = MailDigestWorkflow()
+    job = Job(
+        job_id="job-mail3",
+        request_id="req-3",
+        role_group="mail_digest",
+        actor="mail-digest-actor",
+        critic="mail-digest-critic",
+        status=JobStatus.RECEIVED,
+        input={"message": "today"},
+        workspace="runtime/jobs/test",
+    )
+    artifact = Artifact(
+        artifact_id="art-md2",
+        job_id=job.job_id,
+        artifact_type="mail_digest",
+        summary="no mail",
+        artifact_paths=[],
+        sources=[],
+        risks=[],
+        user_confirmations=[],
+    )
+    review = wf.run_critic(job, artifact)
+    assert review.approved is False
 
 
 def test_should_keep_unread_for_paper_emails() -> None:

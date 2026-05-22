@@ -8,15 +8,20 @@ class PaperResearchWorkflow:
 
     def run_actor(self, job: Job) -> Artifact:
         topic = job.input.get("message", "research topic")
+
+        research_plan = _llm_research(topic)
+        summary = research_plan if research_plan else (
+            f"文献调研: {topic}\n"
+            f"检索源: arxiv, semantic-scholar, google-scholar\n"
+            f"（待 LLM 配置后自动生成检索策略和文献分析）"
+        )
+
         return Artifact(
             artifact_id=f"artifact-{job.job_id}",
             job_id=job.job_id,
             artifact_type="paper_research",
-            summary=f"literature research for: {topic}",
-            artifact_paths=[
-                "papers/downloaded/",
-                "papers/notes/",
-            ],
+            summary=summary,
+            artifact_paths=["papers/downloaded/", "papers/notes/"],
             sources=["arxiv", "scholar", "semantic-scholar"],
             risks=[
                 "download failures on paywalled papers",
@@ -29,20 +34,49 @@ class PaperResearchWorkflow:
         )
 
     def run_critic(self, job: Job, artifact: Artifact) -> CriticReview:
-        has_sources = len(artifact.sources) >= 2
-        has_paths = len(artifact.artifact_paths) >= 2
-        issues = []
-        if not has_sources:
-            issues.append("insufficient source coverage")
-        if not has_paths:
-            issues.append("missing download or notes directory")
+        issues = _check_research_quality(artifact)
+        score = 90 - len(issues) * 15
+        approved = len(issues) == 0
         return CriticReview(
             review_id=f"review-{job.job_id}",
             job_id=job.job_id,
-            review_result="approved" if not issues else "rejected",
-            score=90 if not issues else 55,
+            review_result="approved" if approved else "returned",
+            score=max(score, 0),
             issues=issues,
-            approved=not issues,
-            return_to_actor=bool(issues),
-            handoff_note="research complete" if not issues else "expand sources and outputs",
+            approved=approved,
+            return_to_actor=not approved,
+            handoff_note="文献调研完成" if approved else "请补充检索范围和文献分析",
         )
+
+
+RESEARCH_SYSTEM = (
+    "你是一名博士研究生，需要为指定课题做文献调研。输出：1) 推荐检索关键词 "
+    "2) 该领域前5篇重要论文（含标题+期刊+年份）3) 研究缺口分析。"
+    "使用学术语言。总计500字以内。"
+)
+
+
+def _llm_research(topic: str) -> str | None:
+    try:
+        from lanes_ceo.config import Config
+        from lanes_ceo.llm import LLMClient
+
+        cfg = Config.from_env()
+        llm = LLMClient(cfg)
+        response = llm.chat(RESEARCH_SYSTEM, f"调研课题：{topic}")
+        if response.startswith("[LLM"):
+            return None
+        return response
+    except Exception:
+        return None
+
+
+def _check_research_quality(artifact: Artifact) -> list[str]:
+    issues = []
+    if len(artifact.sources) < 2:
+        issues.append("检索源覆盖不足（需≥2个来源）")
+    if len(artifact.artifact_paths) < 2:
+        issues.append("缺少下载或笔记目录")
+    if len(artifact.summary) < 100:
+        issues.append("调研内容过短（<100字）")
+    return issues
