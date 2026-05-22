@@ -231,6 +231,19 @@ discount factor $\gamma$, soft-update coefficient $\tau$, batch size, and
 entropy coefficient $\alpha$. The `weight\_updates` field adjusts the
 multi-objective reward weights.
 
+\textbf{Event-Triggered Intervention.}
+In addition to fixed-interval intervention (every 50 episodes), we implement
+a plateau-detection mechanism that triggers LLM consultation only when reward
+improvement stalls.
+A sliding window of the last $W = 20$ episode rewards is maintained; if the
+relative improvement between the older and recent halves of the window falls
+below a threshold $\theta = 0.02$ for $P = 5$ consecutive checks, a plateau
+is declared and the LLM is invoked.
+Minimum and maximum interval guards ($T_{\min} = 10$, $T_{\max} = 100$ episodes)
+prevent both over-frequent and excessively rare interventions.
+This event-triggered mode replaces the fixed schedule with a need-driven policy,
+addressing a key limitation of interval-gated meta-optimization.
+
 \subsection{Multi-Objective Reward Function}
 
 The reward function combines seven performance objectives:
@@ -445,19 +458,18 @@ generalizes across the aging envelope rather than memorizing a single
 operating point.
 
 Several limitations merit discussion.
-First, the LLM intervention is currently gated by a fixed interval (50 episodes)
-rather than being triggered by training-curve events (e.g., reward plateau
-detection), which represents an opportunity for more efficient meta-optimization.
-Second, the 200-episode training horizon used in the ablation is shorter than
+First, the 200-episode training horizon used in the ablation is shorter than
 typical production RL training, and convergence differences may be more
-pronounced at larger scales.
-Third, LLM inference introduces per-intervention latency (2--5\,s) and API cost,
+pronounced at larger scales (500+ episodes); expanded multi-trial experiments
+are ongoing and will be reported in the final version.
+Second, LLM inference introduces per-intervention latency (2--5\,s) and API cost,
 which partially offsets the wall-clock speedup; the primary benefit is therefore
 automation of reward and hyperparameter engineering rather than raw runtime
-reduction.
-Fourth, our domain-randomization ranges, while grounded in aging physics, have
+reduction. Our event-triggered intervention mode mitigates this by reducing
+unnecessary LLM calls during periods of steady improvement.
+Third, our domain-randomization ranges, while grounded in aging physics, have
 not been validated against hardware degradation measurements.
-Fifth, the current reward function uses a simplified efficiency proxy
+Fourth, the current reward function uses a simplified efficiency proxy
 (conduction loss) rather than a full switching-loss model, and the evaluation
 uses simulation rather than physical hardware.
 
