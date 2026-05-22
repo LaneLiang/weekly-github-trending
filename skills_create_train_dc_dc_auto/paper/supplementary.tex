@@ -1,0 +1,230 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\begin{document}
+
+\begin{center}
+{\Large\textbf{Supplementary Information}}\\[0.5em]
+{\large Continuous LLM-Driven Meta-Optimization for Reinforcement}\\
+{\large Learning-Based DC-DC Converter Control}\\[1em]
+Lane Liang$^{1*}$
+\end{center}
+
+\section{Hyperparameter Configuration}
+
+\subsection{SAC Agent Hyperparameters}
+
+\begin{table}[h]
+\centering
+\caption{Default SAC hyperparameters used across all experiments.}
+\begin{tabular}{lrl}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Description} \\
+\midrule
+Actor learning rate & $3\times10^{-4}$ & Adam optimizer \\
+Critic learning rate & $3\times10^{-4}$ & Adam optimizer \\
+Alpha learning rate & $3\times10^{-4}$ & Entropy coefficient \\
+Discount factor $\gamma$ & 0.99 & MDP discount \\
+Soft update coefficient $\tau$ & 0.005 & Target network update \\
+Batch size & 256 & Sampled from replay buffer \\
+Replay buffer size & $10^6$ & Maximum transitions stored \\
+Initial entropy $\alpha$ & 0.2 & Automatic tuning enabled \\
+Target entropy & $-|\mathcal{A}| = -1$ & Action dimension = 1 \\
+Actor architecture & [256, 256] & 2-layer MLP, ReLU \\
+Critic architecture & [256, 256] & 2-layer MLP, ReLU \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{LLM Meta-Optimizer Configuration}
+
+\begin{table}[h]
+\centering
+\caption{LLM intervention and API configuration.}
+\begin{tabular}{lrl}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Description} \\
+\midrule
+Model & DeepSeek-Chat & OpenAI-compatible endpoint \\
+Intervention interval & 50 & Episodes between LLM calls \\
+Temperature & 0.2 & Low temperature for consistency \\
+Max retries & 2 & JSON parse failure retries \\
+Context window & 20 & Recent episodes for reward summary \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Hyperparameter Search Bounds for Meta-Optimization}
+
+\begin{table}[h]
+\centering
+\caption{Valid ranges for SAC hyperparameter adjustments by the meta-optimizer.}
+\begin{tabular}{lrl}
+\toprule
+\textbf{Parameter} & \textbf{Range} & \textbf{Type} \\
+\midrule
+actor\_lr & $[1\times10^{-5}, 1\times10^{-2}]$ & float \\
+critic\_lr & $[1\times10^{-5}, 1\times10^{-2}]$ & float \\
+alpha\_lr & $[1\times10^{-5}, 1\times10^{-2}]$ & float \\
+gamma & $[0.9, 0.999]$ & float \\
+tau & $[0.001, 0.1]$ & float \\
+batch\_size & $[64, 1024]$ & integer \\
+buffer\_size & $[10^4, 10^6]$ & integer \\
+initial\_alpha & $[0.05, 1.0]$ & float \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Reward Weight Ranges}
+
+\begin{table}[h]
+\centering
+\caption{LLM-adjustable reward weight ranges. All weights initialized to 1.0.}
+\begin{tabular}{lrl}
+\toprule
+\textbf{Weight} & \textbf{Range} & \textbf{Objective} \\
+\midrule
+$w_{\text{ev}}$ & $[0.1, 10.0]$ & Voltage error \\
+$w_{\text{vr}}$ & $[0.1, 10.0]$ & Voltage ripple \\
+$w_{\text{eff}}$ & $[0.1, 5.0]$ & Efficiency \\
+$w_{\text{tr}}$ & $[0.1, 10.0]$ & Transient recovery time \\
+$w_{\text{os}}$ & $[0.1, 10.0]$ & Overshoot penalty \\
+$w_{\text{us}}$ & $[0.1, 10.0]$ & Undershoot penalty \\
+$w_{\text{pm}}$ & $[0.1, 3.0]$ & Phase margin (placeholder) \\
+$w_{\text{ts}}$ & $[0.1, 10.0]$ & Startup time \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Domain Randomization Distributions}
+
+The domain randomizer samples from uniform distributions at each episode start:
+
+\begin{table}[h]
+\centering
+\caption{Component perturbation ranges for domain randomization.}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Parameter} & \textbf{Range} & \textbf{Physical Motivation} \\
+\midrule
+ESR & $\mathcal{U}(1.0, 2.5) \times \text{ESR}_0$ & Electrolytic capacitor aging \\
+$L$ & $\mathcal{U}(0.8, 1.0) \times L_0$ & Core saturation, thermal drift \\
+$C$ & $\mathcal{U}(0.7, 1.0) \times C_0$ & Capacitance degradation \\
+$V_{\text{in}}$ & $\mathcal{U}(0.9, 1.1) \times V_{\text{in},0}$ & Input voltage regulation \\
+$R_{\text{load}}$ & $\mathcal{U}(0.5, 1.5) \times R_{\text{load},0}$ & Load current variation \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Circuit Parameters}
+
+\subsection{Buck Converter}
+
+\begin{table}[h]
+\centering
+\caption{Nominal Buck converter parameters.}
+\begin{tabular}{lr}
+\toprule
+\textbf{Parameter} & \textbf{Value} \\
+\midrule
+Input voltage $V_{\text{in}}$ & 12\,V \\
+Reference voltage $V_{\text{ref}}$ & 5\,V \\
+Inductance $L$ & 100\,$\mu$H \\
+Capacitance $C$ & 100\,$\mu$F \\
+Load resistance $R_{\text{load}}$ & 5\,$\Omega$ \\
+Switching frequency $f_{\text{sw}}$ & 100\,kHz \\
+MOSFET $R_{\text{ds(on)}}$ & 0.1\,$\Omega$ \\
+Diode $V_f$ & 0.7\,V \\
+Initial ESR & 0.05\,$\Omega$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Boost Converter}
+
+\begin{table}[h]
+\centering
+\caption{Nominal Boost converter parameters.}
+\begin{tabular}{lr}
+\toprule
+\textbf{Parameter} & \textbf{Value} \\
+\midrule
+Input voltage $V_{\text{in}}$ & 12\,V \\
+Reference voltage $V_{\text{ref}}$ & 24\,V \\
+Inductance $L$ & 200\,$\mu$H \\
+Capacitance $C$ & 100\,$\mu$F \\
+Load resistance $R_{\text{load}}$ & 24\,$\Omega$ \\
+Switching frequency $f_{\text{sw}}$ & 100\,kHz \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{ODE Solver Details}
+
+The circuit environment uses forward Euler integration with $N=50$ sub-steps
+per switching cycle. The solver operates at an effective time step of:
+
+\begin{equation}
+\Delta t = \frac{1}{f_{\text{sw}} \cdot N} = \frac{1}{100 \times 10^3 \cdot 50}
+= 200\,\text{ns}
+\end{equation}
+
+At each sub-step, the solver evaluates the state-space equations for the
+current switch state (ON/OFF/IDLE), updates the state vector, and checks
+for DCM zero-crossing conditions. The simulation runs at approximately
+10,000$\times$ real-time on a modern CPU.
+
+\section{7-Metric Evaluation Protocol}
+
+All seven metrics are computed from the output voltage history $V_o(t)$ and
+inductor current history $i_L(t)$ over an episode:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Voltage Error}: $| \mathbb{E}[V_o^{\text{steady}}] - V_{\text{ref}} | / V_{\text{ref}} \times 100\%$
+    \item \textbf{Voltage Ripple}: $(\max V_o^{\text{steady}} - \min V_o^{\text{steady}}) / V_{\text{ref}} \times 100\%$
+    \item \textbf{Efficiency}: $P_{\text{out}} / P_{\text{in}} \times 100\%$, where $P_{\text{out}} = V_o \cdot I_{\text{load}}$, $P_{\text{in}} = V_{\text{in}} \cdot \bar{i_L}$
+    \item \textbf{Recovery Time}: Time from last significant disturbance ($>2\times$ ripple band) to return within $\pm2\%$ of $V_{\text{ref}}$
+    \item \textbf{Overshoot}: $\max(0, \max V_o - V_{\text{ref}}) / V_{\text{ref}} \times 100\%$
+    \item \textbf{Undershoot}: $\max(0, V_{\text{ref}} - \min V_o^{\text{post-startup}}) / V_{\text{ref}} \times 100\%$
+    \item \textbf{Startup Time}: Time for $V_o$ to reach 90\% of $V_{\text{ref}}$ and remain within $\pm10\%$ band
+\end{enumerate}
+
+The steady-state region is defined as the last 20\% of episode samples.
+
+\section{Compute Environment}
+
+All experiments were run on a single machine with:
+\begin{itemize}
+    \item CPU: AMD Ryzen 9 7950X (16 cores, 32 threads)
+    \item RAM: 64\,GB DDR5
+    \item OS: Windows 11, Python 3.11
+    \item PyTorch 2.4 (CPU-only, no GPU required)
+    \item LLM API: DeepSeek-Chat via OpenAI-compatible endpoint
+\end{itemize}
+
+Training time for 200 episodes (200 steps each) was approximately 16--19 minutes
+per strategy, with LLM API calls contributing $<$1\% of total runtime.
+
+\section{Test Suite}
+
+The codebase includes 42 automated tests covering:
+\begin{itemize}
+    \item SAC agent: action selection, update stability, evaluation mode
+    \item Replay buffer: push/sample, shape correctness, under-fill protection
+    \item CCM/DCM solver: light-load DCM entry, heavy-load CCM, zero-current clamping, mode flag
+    \item Boost converter: steady-state convergence, observation shape, reset
+    \item Domain randomization: bounds checking, determinism, base-parameter preservation
+    \item LLM optimizer: valid JSON output, parameter bounds, weight bounds
+    \item Ablation: strategy correctness, vector conversion, GP kernel
+    \item Evaluation metrics: steady-state, ripple, efficiency, startup, overshoot, undershoot, recovery
+    \item End-to-end trainer: crash-free execution, LLM call at intervention
+\end{itemize}
+
+All 42 tests pass (execution time $\sim$4\,s).
+
+\end{document}
