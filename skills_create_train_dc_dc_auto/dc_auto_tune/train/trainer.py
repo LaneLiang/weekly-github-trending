@@ -1,4 +1,9 @@
-"""Main training loop with periodic LLM meta-optimization interventions."""
+"""Main training loop with LLM meta-optimization interventions.
+
+Supports two intervention modes:
+- Fixed-interval: LLM called every N episodes (original mode)
+- Event-triggered: LLM called when reward plateaus are detected (new mode)
+"""
 
 import torch
 import numpy as np
@@ -11,6 +16,7 @@ from dc_auto_tune.rl.sac_agent import SACAgent
 from dc_auto_tune.rl.replay_buffer import ReplayBuffer
 from dc_auto_tune.meta.optimizer import LLMMetaOptimizer
 from dc_auto_tune.meta.hyperparam_space import HyperparamSpace
+from dc_auto_tune.meta.plateau_detector import PlateauDetector
 from dc_auto_tune.train.logger import TrainingLogger
 
 
@@ -19,8 +25,9 @@ class Trainer:
 
     Each episode collects experience via environment interaction, stores
     transitions in a replay buffer, and periodically updates the SAC agent.
-    At a configurable interval the LLM meta-optimizer inspects training
-    progress and suggests hyperparameter / reward-weight adjustments.
+    The LLM meta-optimizer inspects training progress either at fixed
+    intervals or when a reward plateau is detected, and suggests
+    hyperparameter / reward-weight adjustments.
     """
 
     def __init__(self, config: Config, api_key: str | None = None):
@@ -37,6 +44,18 @@ class Trainer:
         self.llm_call_count = 0
         self.reward_window = deque(maxlen=20)
         self.metric_window = deque(maxlen=20)
+
+        # Plateau detector for event-triggered intervention
+        if config.meta.use_event_trigger:
+            self.plateau_detector = PlateauDetector(
+                window=config.meta.plateau_window,
+                patience=config.meta.plateau_patience,
+                improvement_threshold=config.meta.plateau_improvement_threshold,
+                min_interval=config.meta.plateau_min_interval,
+                max_interval=config.meta.plateau_max_interval,
+            )
+        else:
+            self.plateau_detector = None
 
     def train(self):
         """Run the main training loop for ``config.train.n_episodes`` episodes."""
@@ -78,8 +97,20 @@ class Trainer:
                 "alpha": ep_metrics.get("alpha", 0),
             })
 
-            if self.current_episode % self.config.meta.intervention_interval == 0:
+            if self._should_intervene():
                 self._llm_intervention()
+
+    def _should_intervene(self) -> bool:
+        """Decide whether to trigger LLM intervention this episode.
+
+        Two modes:
+        - Fixed-interval (default): triggers every ``intervention_interval`` episodes
+        - Event-triggered: uses PlateauDetector to fire on reward stagnation
+        """
+        if self.plateau_detector is not None:
+            avg_reward = float(np.mean(self.reward_window)) if self.reward_window else 0.0
+            return self.plateau_detector.update(self.current_episode, avg_reward)
+        return self.current_episode % self.config.meta.intervention_interval == 0
 
     def _llm_intervention(self):
         """Query the LLM meta-optimizer and apply suggested adjustments.

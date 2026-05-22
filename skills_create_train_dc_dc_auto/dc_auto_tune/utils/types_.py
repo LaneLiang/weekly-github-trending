@@ -59,6 +59,14 @@ class MetaOptConfig:
     temperature: float = 0.2
     max_suggestion_magnitude: float = 0.5
 
+    # Event-triggered intervention (plateau detection mode)
+    use_event_trigger: bool = False
+    plateau_window: int = 20
+    plateau_patience: int = 5
+    plateau_improvement_threshold: float = 0.02
+    plateau_min_interval: int = 10
+    plateau_max_interval: int = 100
+
 
 @dataclass
 class TrainConfig:
