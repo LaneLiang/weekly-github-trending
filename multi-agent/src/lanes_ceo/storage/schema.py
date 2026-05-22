@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS task_requests (
     task_intent TEXT NOT NULL,
     priority TEXT NOT NULL,
     attachments_json TEXT NOT NULL,
-    authorization_context_json TEXT NOT NULL
+    authorization_context_json TEXT NOT NULL,
+    idempotency_key TEXT
 );
 
 CREATE TABLE IF NOT EXISTS jobs (

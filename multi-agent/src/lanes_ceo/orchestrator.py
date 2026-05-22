@@ -7,6 +7,10 @@ from lanes_ceo.storage.sqlite_store import SQLiteStore
 from lanes_ceo.workflows.registry import WorkflowRegistry
 
 
+class DuplicateRequestError(ValueError):
+    """Raised when a request with the same idempotency key has already been processed."""
+
+
 class Orchestrator:
     def __init__(
         self,
@@ -19,6 +23,12 @@ class Orchestrator:
         self.outbox = outbox
 
     def handle(self, request: TaskRequest, role_group: str) -> Job:
+        if request.idempotency_key and self.store.has_idempotency_key(
+            request.idempotency_key
+        ):
+            raise DuplicateRequestError(
+                f"Duplicate idempotency key: {request.idempotency_key}"
+            )
         workflow = self.registry.get(role_group)
         self.store.save_request(request)
         job = Job(

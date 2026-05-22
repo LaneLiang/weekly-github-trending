@@ -14,6 +14,7 @@ class TaskRequest:
     priority: str
     attachments: list[str] = field(default_factory=list)
     authorization_context: dict[str, Any] = field(default_factory=dict)
+    idempotency_key: str | None = None
 
 
 @dataclass(slots=True)

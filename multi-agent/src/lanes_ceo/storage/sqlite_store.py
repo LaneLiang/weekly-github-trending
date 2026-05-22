@@ -20,7 +20,7 @@ class SQLiteStore:
         with sqlite3.connect(self.path) as conn:
             conn.execute(
                 """
-                INSERT INTO task_requests VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO task_requests VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     request.request_id,
@@ -31,6 +31,7 @@ class SQLiteStore:
                     request.priority,
                     json.dumps(request.attachments),
                     json.dumps(request.authorization_context),
+                    request.idempotency_key,
                 ),
             )
 
@@ -51,7 +52,18 @@ class SQLiteStore:
             priority=row[5],
             attachments=json.loads(row[6]),
             authorization_context=json.loads(row[7]),
+            idempotency_key=row[8] if len(row) > 8 else None,
         )
+
+    def has_idempotency_key(self, key: str) -> bool:
+        if key is None:
+            return False
+        with sqlite3.connect(self.path) as conn:
+            row = conn.execute(
+                "SELECT 1 FROM task_requests WHERE idempotency_key = ? LIMIT 1",
+                (key,),
+            ).fetchone()
+        return row is not None
 
     def save_job(self, job: Job) -> None:
         with sqlite3.connect(self.path) as conn:
