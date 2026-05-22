@@ -250,8 +250,8 @@ def run_ablation(
         for trial in range(n_trials):
             env = BuckCCMEnv(circuit_config)
             reward_fn = MultiObjectiveReward(circuit_config.vout_ref, weight_config)
-            agent = SACAgent(obs_dim=7, action_dim=1, params=sac_config)
-            buffer = ReplayBuffer(sac_config.buffer_size, obs_dim=7, action_dim=1)
+            agent = SACAgent(obs_dim=8, action_dim=1, params=sac_config)
+            buffer = ReplayBuffer(sac_config.buffer_size, obs_dim=8, action_dim=1)
 
             trial_rewards = []
             for ep in range(1, episodes_per_trial + 1):

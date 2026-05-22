@@ -26,8 +26,8 @@ class Trainer:
         self.config = config
         self.env = BuckCCMEnv(config.circuit)
         self.reward_fn = MultiObjectiveReward(config.circuit.vout_ref, config.reward_weights)
-        self.agent = SACAgent(obs_dim=7, action_dim=1, params=config.sac)
-        self.buffer = ReplayBuffer(config.sac.buffer_size, obs_dim=7, action_dim=1)
+        self.agent = SACAgent(obs_dim=8, action_dim=1, params=config.sac)
+        self.buffer = ReplayBuffer(config.sac.buffer_size, obs_dim=8, action_dim=1)
         self.meta_opt = LLMMetaOptimizer(config.meta, HyperparamSpace(), api_key)
         self.logger = TrainingLogger()
         self.current_episode = 0
