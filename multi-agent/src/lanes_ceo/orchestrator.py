@@ -40,7 +40,7 @@ class Orchestrator:
             actor=workflow.actor_name,
             critic=workflow.critic_name,
             status=JobStatus.RECEIVED,
-            input={"message": request.raw_message},
+            input={"message": request.raw_message, "sender": request.sender},
             workspace=f"runtime/jobs/{request.request_id}",
         )
         self.store.save_job(job)
@@ -61,6 +61,8 @@ class Orchestrator:
             return self.store.get_job(job.job_id)
         self.store.update_job_status(job.job_id, JobStatus.APPROVED)
         approved_job = self.store.get_job(job.job_id)
-        self.outbox.record_approved_job(approved_job)
+        self.outbox.record_approved_job(
+            approved_job, target_channel=request.source_channel.value
+        )
         self.store.update_job_status(job.job_id, JobStatus.NOTIFIED)
         return self.store.get_job(job.job_id)

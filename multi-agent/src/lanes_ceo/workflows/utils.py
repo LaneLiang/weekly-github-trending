@@ -1,7 +1,10 @@
 """Shared utilities for workflow implementations."""
 
+import logging
 import os
 from pathlib import Path
+
+logger = logging.getLogger("lanes_ceo.utils")
 
 HUMANIZER_SUFFIX = (
     "【写作风格要求】请使用自然流畅的中文表达，避免以下AI生成常见问题：\n"
@@ -24,9 +27,11 @@ def llm_chat(system_prompt: str, user_prompt: str) -> str | None:
         llm = LLMClient(cfg)
         response = llm.chat(full_system, user_prompt)
         if response.startswith("[LLM"):
+            logger.warning("LLM returned fallback placeholder — check API key and model config")
             return None
         return response
-    except Exception:
+    except Exception as exc:
+        logger.error("LLM call failed: %s (%s)", exc, type(exc).__name__)
         return None
 
 

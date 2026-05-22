@@ -237,7 +237,22 @@ def _add_run(paragraph, text: str, cn_font: str, size, bold: bool = False,
 
 
 def llm_response_has_all_sections(summary: str) -> bool:
-    return True
+    """Check that at least 5 of the 8 required sections appear in the summary."""
+    required_keywords = [
+        ["已完成", "完成工作", "本周工作"],
+        ["进度", "复盘"],
+        ["实验", "仿真", "数据"],
+        ["亮点", "进展", "突破"],
+        ["问题", "困难", "瓶颈"],
+        ["失败", "教训", "不足"],
+        ["下周", "计划"],
+        ["协助", "支持", "资源"],
+    ]
+    found = 0
+    for keywords in required_keywords:
+        if any(kw in summary for kw in keywords):
+            found += 1
+    return found >= 5
 
 
 def detect_empty_phrases(text: str) -> list[str]:

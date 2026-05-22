@@ -14,6 +14,8 @@ class Config:
     feishu_enabled: bool = False
     feishu_app_id: str = ""
     feishu_app_secret: str = ""
+    feishu_webhook_host: str = ""
+    feishu_webhook_port: int = 0
 
     weixin_enabled: bool = False
     qq_enabled: bool = False
@@ -46,6 +48,8 @@ class Config:
             feishu_enabled=_bool_env("LANES_CEO_FEISHU_ENABLED"),
             feishu_app_id=os.getenv("LANES_CEO_FEISHU_APP_ID", ""),
             feishu_app_secret=os.getenv("LANES_CEO_FEISHU_APP_SECRET", ""),
+            feishu_webhook_host=os.getenv("LANES_CEO_FEISHU_WEBHOOK_HOST", "127.0.0.1"),
+            feishu_webhook_port=int(os.getenv("LANES_CEO_FEISHU_WEBHOOK_PORT", "8080")),
             weixin_enabled=_bool_env("LANES_CEO_WEIXIN_ENABLED"),
             qq_enabled=_bool_env("LANES_CEO_QQ_ENABLED"),
             llm_provider=os.getenv("LANES_CEO_LLM_PROVIDER", "openai"),

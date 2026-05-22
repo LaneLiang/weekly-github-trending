@@ -77,7 +77,7 @@ def test_weekly_report_critic_approves_valid_artifact() -> None:
             artifact_id="art-wr-1",
             job_id="job-wr-3",
             artifact_type="weekly_report",
-            summary="周报 2026W21: 测试 包含研究背景 实验 计划 亮点",
+            summary="周报 2026W21: 本周已完成工作任务汇总，实验数据结果良好，工作亮点突出，下周计划明确，存在问题需导师协助",
             artifact_paths=[str(docx_path)],
             sources=["llm-generated"],
             risks=[],
@@ -121,7 +121,10 @@ def test_section_count_is_eight() -> None:
 
 
 def test_llm_response_has_all_sections() -> None:
-    assert llm_response_has_all_sections("any") is True
+    rich = "本周已完成工作任务，实验数据仿真结果良好，工作亮点突出，存在问题需导师协助，下周计划明确"
+    assert llm_response_has_all_sections(rich) is True
+    poor = "随便写写"
+    assert llm_response_has_all_sections(poor) is False
 
 
 def test_detect_empty_phrases() -> None:
