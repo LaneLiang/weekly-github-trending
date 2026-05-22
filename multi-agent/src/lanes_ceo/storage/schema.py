@@ -35,4 +35,15 @@ CREATE TABLE IF NOT EXISTS critic_reviews (
     return_to_actor INTEGER NOT NULL,
     handoff_note TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS notification_events (
+    notification_id TEXT PRIMARY KEY,
+    job_id TEXT NOT NULL,
+    target_channel TEXT NOT NULL,
+    target_recipient TEXT NOT NULL,
+    message_type TEXT NOT NULL,
+    payload_json TEXT NOT NULL,
+    receipt_required INTEGER NOT NULL,
+    retry_policy TEXT NOT NULL
+);
 """

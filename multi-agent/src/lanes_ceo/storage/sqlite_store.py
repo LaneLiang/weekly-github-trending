@@ -2,8 +2,8 @@ import json
 import sqlite3
 from pathlib import Path
 
-from lanes_ceo.contracts import CriticReview, Job, TaskRequest
-from lanes_ceo.enums import JobStatus, SourceChannel
+from lanes_ceo.contracts import CriticReview, Job, NotificationEvent, TaskRequest
+from lanes_ceo.enums import JobStatus, NotificationType, SourceChannel
 from lanes_ceo.storage.schema import FOUNDATION_SCHEMA
 
 
@@ -135,3 +135,41 @@ class SQLiteStore:
             return_to_actor=bool(row[6]),
             handoff_note=row[7],
         )
+
+    def save_notification(self, notification: NotificationEvent) -> None:
+        with sqlite3.connect(self.path) as conn:
+            conn.execute(
+                """
+                INSERT INTO notification_events VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    notification.notification_id,
+                    notification.job_id,
+                    notification.target_channel.value,
+                    notification.target_recipient,
+                    notification.message_type.value,
+                    json.dumps(notification.payload),
+                    int(notification.receipt_required),
+                    notification.retry_policy,
+                ),
+            )
+
+    def list_notifications(self, job_id: str) -> list[NotificationEvent]:
+        with sqlite3.connect(self.path) as conn:
+            rows = conn.execute(
+                "SELECT * FROM notification_events WHERE job_id = ?",
+                (job_id,),
+            ).fetchall()
+        return [
+            NotificationEvent(
+                notification_id=row[0],
+                job_id=row[1],
+                target_channel=SourceChannel(row[2]),
+                target_recipient=row[3],
+                message_type=NotificationType(row[4]),
+                payload=json.loads(row[5]),
+                receipt_required=bool(row[6]),
+                retry_policy=row[7],
+            )
+            for row in rows
+        ]
