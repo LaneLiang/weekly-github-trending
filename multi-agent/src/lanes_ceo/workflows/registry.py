@@ -5,6 +5,8 @@ from lanes_ceo.workflows.fake import FakeWorkflow
 from lanes_ceo.workflows.mail_digest import MailDigestWorkflow
 from lanes_ceo.workflows.paper_research import PaperResearchWorkflow
 from lanes_ceo.workflows.paper_writing import PaperWritingWorkflow
+from lanes_ceo.workflows.presentation import PresentationWorkflow
+from lanes_ceo.workflows.weekly_report import WeeklyReportWorkflow
 
 
 class WorkflowRegistry:
@@ -19,6 +21,8 @@ class WorkflowRegistry:
             PaperResearchWorkflow(),
             PaperWritingWorkflow(),
             MailDigestWorkflow(),
+            WeeklyReportWorkflow(),
+            PresentationWorkflow(),
         ]:
             self._workflows[wf.role_group] = wf
 

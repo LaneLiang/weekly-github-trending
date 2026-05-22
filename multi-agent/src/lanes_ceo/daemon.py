@@ -61,6 +61,18 @@ def configure_scheduler(orchestrator: Orchestrator, config: Config) -> Scheduler
         "reflection",
         "今日反思与改进",
     )
+    sched.add_cron_job(
+        "weekly-report",
+        "0 21 * * 5",  # Friday 9pm (buffer before 24:00 deadline)
+        "weekly_report",
+        "生成当周科研周报",
+    )
+    sched.add_cron_job(
+        "presentation-prep",
+        "0 20 * * 0",  # Sunday 8pm (prepare for next week's meeting)
+        "presentation",
+        "生成下周组会汇报PPT",
+    )
     return sched
 
 

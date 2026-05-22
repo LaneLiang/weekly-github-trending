@@ -4,6 +4,7 @@ from lanes_ceo.contracts import Job, TaskRequest
 from lanes_ceo.enums import JobStatus
 from lanes_ceo.notifications.outbox import NotificationOutbox
 from lanes_ceo.storage.sqlite_store import SQLiteStore
+from lanes_ceo.subagent.manager import SubAgentManager
 from lanes_ceo.workflows.registry import WorkflowRegistry
 
 
@@ -21,6 +22,7 @@ class Orchestrator:
         self.store = store
         self.registry = registry
         self.outbox = outbox
+        self.subagents = SubAgentManager(registry)
 
     def handle(self, request: TaskRequest, role_group: str) -> Job:
         if request.idempotency_key and self.store.has_idempotency_key(
@@ -42,10 +44,17 @@ class Orchestrator:
             workspace=f"runtime/jobs/{request.request_id}",
         )
         self.store.save_job(job)
+
+        # Spawn actor sub-agent and execute
         self.store.update_job_status(job.job_id, JobStatus.RUNNING_ACTOR)
-        artifact = workflow.run_actor(job)
+        actor = self.subagents.spawn(role_group, "actor")
+        artifact = actor.run(job, {})
+
+        # Spawn critic sub-agent and execute
         self.store.update_job_status(job.job_id, JobStatus.WAITING_REVIEW)
-        review = workflow.run_critic(job, artifact)
+        critic = self.subagents.spawn(role_group, "critic")
+        review = critic.run(job, {"artifact": artifact})
+
         self.store.save_review(review)
         if not review.approved:
             self.store.update_job_status(job.job_id, JobStatus.RETURNED_TO_ACTOR)
