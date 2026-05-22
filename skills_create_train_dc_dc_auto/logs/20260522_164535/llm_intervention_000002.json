@@ -1,0 +1,9 @@
+{
+  "analysis": "Test intervention",
+  "sac_updates": {
+    "actor_lr": 0.0005
+  },
+  "weight_updates": {
+    "w_vr": 1.2
+  }
+}
