@@ -25,7 +25,7 @@ def test_idempotency_key_prevents_duplicate_requests(tmp_path) -> None:
         idempotency_key="daily-briefing-20260522-0900",
     )
 
-    job1 = orchestrator.handle(request, "fake")
+    job1, _ = orchestrator.handle(request, "fake")
     assert job1.status is JobStatus.NOTIFIED
 
     duplicate = TaskRequest(
@@ -72,8 +72,8 @@ def test_requests_without_idempotency_key_are_not_deduped(tmp_path) -> None:
         priority="normal",
     )
 
-    job1 = orchestrator.handle(req1, "fake")
-    job2 = orchestrator.handle(req2, "fake")
+    job1, _ = orchestrator.handle(req1, "fake")
+    job2, _ = orchestrator.handle(req2, "fake")
 
     assert job1.job_id != job2.job_id
     assert job1.status is JobStatus.NOTIFIED

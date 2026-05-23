@@ -37,7 +37,7 @@ def test_approved_job_is_notified(tmp_path) -> None:
     store.initialize()
     orchestrator = Orchestrator(store, WorkflowRegistry(), NotificationOutbox(store))
 
-    job = orchestrator.handle(make_request(), "fake")
+    job, _ = orchestrator.handle(make_request(), "fake")
 
     assert store.get_job(job.job_id).status is JobStatus.NOTIFIED
     assert store.list_notifications(job.job_id)[0].payload["status"] == "approved"
@@ -50,7 +50,7 @@ def test_rejected_job_returns_to_actor_without_notification(tmp_path) -> None:
     registry._workflows["fake"] = RejectingWorkflow()
     orchestrator = Orchestrator(store, registry, NotificationOutbox(store))
 
-    job = orchestrator.handle(make_request(), "fake")
+    job, _ = orchestrator.handle(make_request(), "fake")
 
     assert store.get_job(job.job_id).status is JobStatus.RETURNED_TO_ACTOR
     assert store.list_notifications(job.job_id) == []
