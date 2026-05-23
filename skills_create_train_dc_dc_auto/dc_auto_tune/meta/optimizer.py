@@ -6,6 +6,7 @@ from dc_auto_tune.utils.types_ import MetaOptConfig
 from dc_auto_tune.meta.hyperparam_space import HyperparamSpace
 from dc_auto_tune.meta.llm_client import LLMClient
 from dc_auto_tune.meta import llm_client as _llm_client_mod
+from dc_auto_tune.eval.metrics import TIER_SPECS
 
 SYSTEM_PROMPT = """You are an expert in reinforcement learning training optimization for power electronics control.
 Your task is to analyze the training progress of a SAC agent controlling a DC-DC buck converter,
@@ -73,6 +74,7 @@ PREFERENCE_MAP: dict[str, str] = {
         "USER PREFERENCE: Prioritize efficiency above all else.\n"
         "IMPORTANT: If P0 vo_error is not met (<0.5%), first bring vo_error under "
         "control by increasing w_ev before optimizing efficiency.\n"
+        "Do NOT decrease w_ev while vo_error > 0.5%.\n"
         "Increase w_eff significantly and reduce w_vr, w_tr.\n"
         "Accept slightly higher ripple and slower recovery if efficiency improves "
         "ONLY IF vo_error stays < 0.5%."
@@ -81,6 +83,7 @@ PREFERENCE_MAP: dict[str, str] = {
         "USER PREFERENCE: Prioritize transient response (fast recovery, low overshoot).\n"
         "IMPORTANT: If P0 vo_error is not met (<0.5%), first bring vo_error under "
         "control by increasing w_ev before optimizing transient response.\n"
+        "Do NOT decrease w_ev while vo_error > 0.5%.\n"
         "Increase w_tr, w_os, w_us significantly.\n"
         "Accept slightly lower efficiency if transient performance improves "
         "ONLY IF vo_error stays < 0.5%."
@@ -89,6 +92,7 @@ PREFERENCE_MAP: dict[str, str] = {
         "USER PREFERENCE: Prioritize low output voltage ripple.\n"
         "IMPORTANT: If P0 vo_error is not met (<0.5%), first bring vo_error under "
         "control by increasing w_ev before optimizing ripple.\n"
+        "Do NOT decrease w_ev while vo_error > 0.5%.\n"
         "Increase w_vr significantly and w_ev moderately.\n"
         "Accept slightly slower startup and lower efficiency if ripple decreases "
         "ONLY IF vo_error stays < 0.5%."
@@ -97,6 +101,7 @@ PREFERENCE_MAP: dict[str, str] = {
         "USER PREFERENCE: Prioritize fast startup time.\n"
         "IMPORTANT: If P0 vo_error is not met (<0.5%), first bring vo_error under "
         "control by increasing w_ev before optimizing startup.\n"
+        "Do NOT decrease w_ev while vo_error > 0.5%.\n"
         "Increase w_ts significantly.\n"
         "Accept higher overshoot during startup if settling is faster "
         "ONLY IF vo_error stays < 0.5%."
@@ -105,8 +110,8 @@ PREFERENCE_MAP: dict[str, str] = {
         "USER PREFERENCE: Balanced optimization across all 7 objectives.\n"
         "IMPORTANT: If P0 vo_error is not met (<0.5%), first bring vo_error under "
         "control by increasing w_ev. Keep all weights roughly equal afterward.\n"
-        "Focus on the metric furthest from P0 threshold.\n"
-        "Never decrease w_ev before vo_error P0 is satisfied."
+        "Do NOT decrease w_ev while vo_error > 0.5%.\n"
+        "Focus on the metric furthest from P0 threshold."
     ),
 }
 
@@ -172,6 +177,24 @@ class LLMMetaOptimizer:
             result["weight_updates"] = self.space.validate_and_clamp_weights(
                 result["weight_updates"]
             )
+
+        # P0 gate: vo_error FAIL, forcing w_ev increase — code-level backstop
+        # to catch any LLM output that attempts to decrease w_ev while the
+        # primary gate is failing (reinforcement against reward hacking).
+        current_metrics = training_state.get("metrics", {})
+        vo_error = current_metrics.get("vo_error_pct", None)
+        if vo_error is not None and vo_error >= 0.5:
+            current_w_ev = training_state.get("current_weights", None)
+            if current_w_ev is not None and hasattr(current_w_ev, "w_ev"):
+                old_w_ev = current_w_ev.w_ev
+                if (
+                    "weight_updates" in result
+                    and result["weight_updates"].get("w_ev", old_w_ev) < old_w_ev * 0.95
+                ):
+                    result["weight_updates"]["w_ev"] = min(
+                        old_w_ev * 1.2,
+                        self.space.WEIGHT_BOUNDS.get("w_ev", (0.1, 5.0))[1],
+                    )
         return result
 
     def _call_with_retry(self, system: str, user: str, max_retries: int = 2) -> dict:
@@ -207,19 +230,32 @@ class LLMMetaOptimizer:
         p0_checks = self._check_p0_status(metrics)
 
         # Detect whether the primary gate (vo_error P0) is failing
-        vo_error = metrics.get("vo_error_pct")
-        vo_error_fail = vo_error is not None and vo_error >= 0.5
-        critical_warning = ""
-        if vo_error_fail:
+        vo_error = metrics.get("vo_error_pct", None)
+        if vo_error is None:
+            # Missing data = assume worst case
+            vo_error_fail = True
             critical_warning = (
                 "\n"
                 "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
-                "  CRITICAL: vo_error P0 FAIL — this is the PRIMARY gate.\n"
-                "  vo_error = {:.2f}% (P0 threshold: < 0.5%)\n"
-                "  Fix this before optimizing anything else.\n"
-                "  You MUST increase w_ev. Do NOT decrease w_ev.\n"
+                "  CRITICAL: vo_error data NOT AVAILABLE — treat as P0 FAIL,"
+                " assume worst case.\n"
+                "  Do NOT decrease w_ev.\n"
                 "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
-            ).format(vo_error)
+            )
+        else:
+            vo_error_fail = vo_error >= 0.5
+            if vo_error_fail:
+                critical_warning = (
+                    "\n"
+                    "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+                    "  CRITICAL: vo_error P0 FAIL — this is the PRIMARY gate.\n"
+                    "  vo_error = {:.2f}% (P0 threshold: < 0.5%)\n"
+                    "  Fix this before optimizing anything else.\n"
+                    "  You MUST increase w_ev. Do NOT decrease w_ev.\n"
+                    "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+                ).format(vo_error)
+            else:
+                critical_warning = ""
 
         return f"""Training progress report:
 Episode: {state['episode']}
@@ -249,20 +285,21 @@ Please analyze the training progress and suggest adjustments."""
     @staticmethod
     def _check_p0_status(metrics: dict) -> str:
         """Render which P0 thresholds are currently met."""
-        from dc_auto_tune.eval.metrics import TIER_SPECS
         p0 = TIER_SPECS.get("P0", {})
         lines = []
         for key, (limit, direction) in p0.items():
             val = metrics.get(key)
             if val is None:
-                lines.append(f"  {key}: N/A (target {'<' if direction == 'lt' else '>'} {limit})")
+                prefix = "[PRIMARY GATE] " if key == "vo_error_pct" else ""
+                lines.append(f"  {prefix}{key}: N/A (target {'<' if direction == 'lt' else '>'} {limit})")
                 continue
             if direction == "lt":
                 ok = val < limit
             else:
                 ok = val > limit
             status = "OK" if ok else "FAIL"
-            lines.append(f"  {key}: {val} ({'<' if direction == 'lt' else '>'} {limit}) [{status}]")
+            prefix = "[PRIMARY GATE] " if key == "vo_error_pct" else ""
+            lines.append(f"  {prefix}{key}: {val} ({'<' if direction == 'lt' else '>'} {limit}) [{status}]")
         return "\n".join(lines)
 
     def _apply_magnitude_limit(self, updates: dict, state: dict) -> dict:

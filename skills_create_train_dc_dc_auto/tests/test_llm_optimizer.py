@@ -54,3 +54,81 @@ class TestLLMMetaOptimizer:
         assert result["sac_updates"]["actor_lr"] <= HyperparamSpace.SAC_BOUNDS["actor_lr"][1]
         assert result["sac_updates"]["gamma"] <= HyperparamSpace.SAC_BOUNDS["gamma"][1]
         assert result["weight_updates"]["w_vr"] >= 0.0
+
+    # ---- P0 gate tests (Reviewer Fix 4) ----
+
+    @patch("dc_auto_tune.meta.llm_client.LLMClient")
+    def test_vo_error_fail_prevents_w_ev_decrease(self, mock_llm, optimizer):
+        """When vo_error P0 FAIL (>=0.5%), LLM-suggested w_ev decrease is blocked."""
+        current_weights = RewardWeights(w_ev=1.0)
+        state = {
+            "episode": 200,
+            "recent_rewards": [0.5, 0.6, 0.55, 0.7, 0.65],
+            "metrics": {
+                "vo_error_pct": 0.8,
+                "vo_ripple_pct": 1.2,
+                "efficiency_pct": 85.0,
+                "overshoot_pct": 3.5,
+                "undershoot_pct": 2.1,
+                "recovery_time_ms": 0.45,
+                "startup_time_ms": 8.0,
+            },
+            "current_sac": SACParams(),
+            "current_weights": current_weights,
+        }
+        # LLM tries to decrease w_ev from 1.0 to 0.5 (reward hacking)
+        mock_llm.return_value.chat.return_value = (
+            '{"analysis": "decrease w_ev to boost other metrics", '
+            '"weight_updates": {"w_ev": 0.5, "w_vr": 2.0}}'
+        )
+        result = optimizer.analyze_and_suggest(state)
+        # P0 gate must force w_ev to at least 0.95 * old_w_ev
+        assert "weight_updates" in result
+        assert result["weight_updates"]["w_ev"] >= 0.95
+
+    @patch("dc_auto_tune.meta.llm_client.LLMClient")
+    def test_vo_error_pass_allows_w_ev_adjustment(self, mock_llm, optimizer):
+        """When vo_error P0 PASS (<0.5%), w_ev can be freely adjusted (up or down)."""
+        current_weights = RewardWeights(w_ev=1.0)
+        state = {
+            "episode": 200,
+            "recent_rewards": [0.7, 0.75, 0.72, 0.78, 0.8],
+            "metrics": {
+                "vo_error_pct": 0.3,
+                "vo_ripple_pct": 1.2,
+                "efficiency_pct": 90.0,
+                "overshoot_pct": 3.5,
+                "undershoot_pct": 2.1,
+                "recovery_time_ms": 0.45,
+                "startup_time_ms": 8.0,
+            },
+            "current_sac": SACParams(),
+            "current_weights": current_weights,
+        }
+        # LLM suggests decreasing w_ev — allowed since P0 is PASS
+        mock_llm.return_value.chat.return_value = (
+            '{"analysis": "vo_error is good, shift focus", '
+            '"weight_updates": {"w_ev": 0.6, "w_vr": 3.0}}'
+        )
+        result = optimizer.analyze_and_suggest(state)
+        # vo_error PASS: the suggested decrease should be respected
+        assert "weight_updates" in result
+        assert result["weight_updates"]["w_ev"] < 1.0
+
+    def test_vo_error_missing_triggers_critical_warning(self, optimizer):
+        """When vo_error_pct is missing from metrics, critical_warning fires
+        (assume worst case)."""
+        state = {
+            "episode": 100,
+            "recent_rewards": [0.5, 0.55],
+            "metrics": {
+                "vo_ripple_pct": 1.2,
+                # vo_error_pct intentionally absent
+            },
+            "current_sac": SACParams(),
+            "current_weights": RewardWeights(),
+        }
+        prompt = optimizer._build_prompt(state)
+        assert "CRITICAL" in prompt
+        assert "NOT AVAILABLE" in prompt
+        assert "P0 FAIL" in prompt
