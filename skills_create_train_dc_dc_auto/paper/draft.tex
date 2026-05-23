@@ -43,19 +43,23 @@ PWM duty-cycle commands, while an LLM periodically inspects training curves and
 reconfigures both RL hyperparameters and multi-objective reward weights.
 We further introduce an event-triggered intervention mechanism that invokes the LLM
 only when training plateaus, reducing unnecessary API calls.
-In a four-strategy ablation across 200 episodes, the LLM-driven strategies converge
-15\% faster than random search (972\,s vs.\ 1,150\,s) while achieving equivalent
-regulation accuracy ($<$0.1\% voltage error), with the event-triggered variant invoking the LLM only when
-training progress stalls rather than on a fixed schedule.
-Under domain-randomized component aging (ESR, inductance, capacitance, input voltage,
-and load all perturbed simultaneously), the system improves reward 5.9$\times$ over
-100 episodes, reducing voltage error from 8.5\,V to 0.19\,V.
-The LLM exhibits emergent staged coaching behavior---restrained observation, then
-exploration promotion, then exploitation-focused fine-tuning---without explicit
-programming.
-These results indicate that LLM-based continuous meta-optimization is a promising
-paradigm for automated power converter synthesis, with potential extension to other
-physics-constrained control domains.
+In a four-strategy ablation across 200 episodes (3 trials each), LLM-driven and
+random-search strategies converge to essentially identical final performance
+($\approx$$-$0.037 reward, $<$0.1\% voltage error), demonstrating that the SAC agent
+learns the task robustly under diverse meta-optimizers. Bayesian optimization, by
+contrast, diverged on one of three trials, exposing a fundamental brittleness of
+sample-efficient surrogates in noisy RL settings. The event-triggered plateau
+detector produced the lowest trial-to-trial variance ($\pm$0.0003), suggesting that
+targeted intervention improves reproducibility. Under domain-randomized component
+aging (ESR, inductance, capacitance, input voltage, and load all perturbed
+simultaneously), the system improves reward 5.9$\times$ over 100 episodes, reducing
+voltage error from 8.5\,V to 0.19\,V. The LLM exhibits emergent staged coaching
+behavior---restrained observation, then exploration promotion, then
+exploitation-focused fine-tuning---without explicit programming. These results
+indicate that LLM-based continuous meta-optimization, while not yet outperforming
+simpler baselines on this benchmark, offers interpretable reasoning, reduces
+trial-to-trial variance, and opens a new architectural direction for automated
+power converter synthesis.
 \end{abstract}
 
 \section{Introduction}
@@ -110,10 +114,12 @@ Our specific contributions are:
     with LLM-driven meta-optimization (upper layer), connected through a
     PyTorch-native ODE circuit simulator supporting both Buck and Boost
     topologies with automatic CCM/DCM mode detection;
-    \item A four-strategy ablation study comparing random search, Bayesian
-    optimization with Gaussian Process surrogates, LLM fixed-interval, and
-    LLM event-triggered meta-optimization, demonstrating 15\% faster convergence
-    for the LLM-driven strategies;
+    \item A four-strategy ablation study (3 trials $\times$ 200 episodes each)
+    comparing random search, Bayesian optimization with GP surrogates, LLM
+    fixed-interval, and LLM event-triggered meta-optimization, revealing that
+    (a) LLM-guided training is competitive with traditional methods, (b) BO
+    surrogates can be brittle in noisy RL settings, and (c) plateau-aware
+    intervention reduces trial-to-trial variance;
     \item A plateau-detection mechanism for event-triggered LLM intervention that
     replaces fixed-interval scheduling with need-driven coaching, reducing
     unnecessary API calls during periods of steady improvement;
@@ -340,42 +346,55 @@ and LLM API call count for the two LLM-driven variants.}
 
 \begin{table}[H]
 \centering
-\caption{Ablation study results: four meta-optimization strategies compared over 200 episodes.
-Values are from single representative trials; multi-trial statistics at 50 episodes are
-reported in Supplementary Table~S1.}
+\caption{Ablation study results: four meta-optimization strategies compared over 200 episodes
+with 3 independent trials each. Mean $\pm$ std reported.}
 \label{tab:ablation}
-\begin{tabular}{lcccc}
+\begin{tabular}{lccccc}
 \toprule
-\textbf{Strategy} & \textbf{Final Reward} & \textbf{Vo Error \%} & \textbf{Ripple \%} & \textbf{Time (s)} \\
+\textbf{Strategy} & \textbf{Final Reward} & \textbf{Vo Error \%} & \textbf{Ripple \%} & \textbf{Time (s)} & \textbf{LLM Calls} \\
 \midrule
-Random Search      & $-0.0367$ & 0.03 & 0.17 & 1,150 \\
-Bayesian Opt (GP)  & $-0.0378$ & 0.06 & 0.27 & 1,095 \\
-\textbf{LLM Fixed (Ours)} & $\mathbf{-0.0370}$ & \textbf{0.07} & \textbf{0.21} & \textbf{972} \\
-\textbf{LLM Event (Ours)}  & $-0.0372$ & 0.05 & 0.18 & 960 \\
+Random Search      & $-0.0370 \pm 0.0006$ & $0.05 \pm 0.01$ & $0.18 \pm 0.01$ & $946 \pm 54$ & $4 \pm 0$ \\
+Bayesian Opt (GP)  & $-0.0881 \pm 0.0697$ & $2.48 \pm 3.43$ & $2.22 \pm 2.58$ & $1006 \pm 33$ & $4 \pm 0$ \\
+LLM Fixed-Interval & $-0.0369 \pm 0.0004$ & $0.07 \pm 0.04$ & $0.17 \pm 0.02$ & $1026 \pm 54$ & $4 \pm 0$ \\
+LLM Event-Triggered& $-0.0368 \pm 0.0003$ & $0.06 \pm 0.05$ & $0.19 \pm 0.03$ & $1084 \pm 14$ & $7 \pm 1$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-All four strategies converge to comparable final voltage regulation accuracy
-($<$0.1\% error, $<$0.3\% ripple), indicating that the task is learnable
-regardless of the meta-optimization strategy.
-The key difference lies in \textit{convergence speed}: the LLM fixed-interval
-strategy achieves equivalent performance 15\% faster than random search (972\,s vs.\
-1,150\,s), while the LLM event-triggered variant invokes the LLM only when
-the reward plateau detector fires rather than on a fixed clock, reducing
-unnecessary API calls during periods of steady improvement.
+Three of the four strategies---random search, LLM fixed-interval, and LLM
+event-triggered---converge to essentially indistinguishable final performance
+($\approx$$-0.037$ reward, $<$0.1\% voltage error, $<$0.2\% ripple), indicating
+that the SAC agent learns the Buck converter task robustly regardless of the
+meta-optimization approach, provided the hyperparameter perturbations remain
+within reasonable bounds.
 
-We further conducted a 3-trial multi-trial validation at the 50-episode horizon
+Bayesian optimization, by contrast, failed catastrophically on one of three
+trials (final reward $-$0.177, voltage error 7.3\%; the other two trials
+converged normally), producing a wide performance spread ($\pm$0.07).
+This failure mode arises because the GP surrogate model, operating on only
+4--5 observations, can propose configurations that lie far from the safe
+region---and once training destabilizes, subsequent surrogate updates
+compound the error. This finding highlights a fundamental brittleness of
+sample-efficient black-box optimizers in the RL meta-optimization setting,
+where reward surfaces are noisy and highly non-stationary.
+
+The LLM event-triggered strategy invoked the LLM more frequently (7$\pm$1 calls
+vs.\ 4$\pm$0 for fixed-interval), demonstrating that the plateau detector
+identifies training stagnation beyond the fixed schedule. That this produces
+the lowest variance across trials ($\pm$0.0003, roughly half that of random
+search) suggests that targeted, plateau-aware intervention may improve
+reproducibility even when aggregate reward means are similar.
+
+We further conducted a 3-trial validation at the 50-episode horizon
 (Supplementary Table~S1).
-At this shorter horizon, the LLM-driven strategies underperform non-LLM baselines
+At this shorter horizon, LLM-driven strategies underperform non-LLM baselines
 (random: $-$0.0427$\pm$0.0007; LLM fixed: $-$0.0593$\pm$0.0045), and the
-event-triggered variant makes zero LLM calls across all trials, as the
-plateau detector correctly identifies that the agent is still improving.
-This finding corroborates the ``restrained observation'' phase identified
-in our coaching behavior analysis (Section~4.4): early-stage LLM intervention
-provides no benefit and may mildly disrupt training, while the plateau
-detector successfully defers intervention until meaningful convergence
-stagnation occurs.
+event-triggered variant makes zero LLM calls, as the plateau detector correctly
+identifies that the agent is still improving rapidly. This finding corroborates
+the ``restrained observation'' phase identified in our coaching behavior
+analysis (Section~4.4): premature LLM intervention provides no benefit and may
+mildly disrupt training, while the plateau detector successfully defers action
+until meaningful convergence stagnation occurs.
 
 \subsection{Full Training with Domain Randomization}
 
@@ -477,70 +496,86 @@ suggesting that the LLM-SAC architecture generalizes across converter topologies
 
 \section{Discussion}
 
-Our results indicate that LLM-based continuous meta-optimization provides
-measurable convergence benefits over both random search and Bayesian
-optimization for DRL-based DC-DC converter control.
-The 15\% speed improvement over random search, while modest in absolute terms,
-reflects the LLM's ability to draw on general knowledge about RL training
-dynamics---recognizing stagnation, suggesting exploration increases, and
-identifying appropriate moments for exploitation-focused fine-tuning.
-We note that the quantitative speedup must be weighed against the per-call
-latency and API cost of LLM inference (approximately 2--5\,s per intervention
-in our setup); however, the paradigm value lies less in the raw 15\% speedup
-than in replacing manually designed reward-weight and hyperparameter schedules
-with an automated, general-purpose mechanism that transfers across topologies
-without per-task engineering.
+Our 200-episode multi-trial ablation reveals a more nuanced picture than a simple
+``LLM is better'' narrative. Three strategies---random search, LLM fixed-interval,
+and LLM event-triggered---converge to statistically indistinguishable final
+performance ($\approx$$-$0.037 reward, $<$0.1\% voltage error). This indicates that
+the SAC agent learns the Buck converter control task robustly under many
+hyperparameter configurations, and that no meta-optimizer---LLM-based or
+otherwise---conferred a decisive edge at this training horizon on this benchmark.
+
+The fourth strategy, Bayesian optimization with GP surrogates, failed on one of
+three trials, producing final voltage errors exceeding 7\%. This failure mode is
+instructive: when operating with only 4--5 observations in a noisy,
+non-stationary reward landscape, the GP's acquisition function can propose
+configurations far from the safe manifold. Once training destabilizes, subsequent
+surrogate updates reinforce the error rather than correcting it. This highlights
+an underappreciated fragility of sample-efficient black-box optimizers in
+RL meta-optimization settings, where reward surfaces are significantly more
+hostile than in standard hyperparameter optimization benchmarks.
+
+That said, the LLM-driven strategies offer two advantages not captured by raw
+reward means. First, the event-triggered variant achieved the lowest
+trial-to-trial variance ($\pm$0.0003 vs.\ $\pm$0.0006 for random search), suggesting
+that plateau-aware, targeted intervention may improve reproducibility---a property
+of practical value when deploying trained controllers to hardware. Second, the
+LLM produces human-readable reasoning traces at each intervention, providing
+interpretability that random search and GP surrogates cannot offer. This
+transparency may accelerate expert debugging and trust-building in
+safety-critical power applications.
 
 The domain-randomization experiment demonstrates that the combined LLM-SAC
 system can learn robust policies under significant parametric uncertainty.
 The 5.9$\times$ reward improvement under simultaneous five-parameter
-perturbation is particularly encouraging, as it suggests the policy
-generalizes across the aging envelope rather than memorizing a single
-operating point.
+perturbation indicates that the policy generalizes across the aging envelope
+rather than memorizing a single operating point.
 
 Several limitations merit discussion.
-First, the 200-episode training horizon used in the main ablation is shorter than
-typical production RL training; multi-trial validation at 50 episodes confirms
-that LLM coaching benefits only emerge after sufficient training history---at
-50 episodes, LLM-driven strategies underperform random search and Bayesian
-optimization (Supplementary Table~S1), consistent with the ``restrained
-observation'' phase observed in our coaching analysis.
-Longer-horizon multi-trial experiments (200--500+ episodes) would better
-quantify the convergence advantage.
-Second, LLM inference introduces per-intervention latency (2--5\,s) and API cost,
-which partially offsets the wall-clock speedup; the primary benefit is therefore
-automation of reward and hyperparameter engineering rather than raw runtime
-reduction. Our event-triggered intervention mode mitigates this by successfully
-eliminating premature LLM calls---in our 50-episode multi-trial runs, the
-plateau detector made zero unnecessary calls across all three trials while the
-fixed-interval schedule incurred three interventions.
-Third, our domain-randomization ranges, while grounded in aging physics, have
-not been validated against hardware degradation measurements.
-Fourth, the current reward function uses a simplified efficiency proxy
-(conduction loss) rather than a full switching-loss model, and the evaluation
-uses simulation rather than physical hardware.
+First, our main ablation uses 200 episodes; while this is sufficient for
+the SAC agent to converge on the Buck task, it may be insufficient to reveal
+meta-optimizer advantages that manifest only at longer horizons or on harder
+problems. Second, LLM inference introduces per-intervention latency (2--5\,s)
+and API cost, which partially offsets automation benefits. The event-triggered
+mode mitigates premature calls---at 50 episodes it correctly made zero calls
+across all trials---but at 200 episodes it actually increased the call count
+(7 vs.\ 4), as the plateau detector identified more stagnation events during
+extended training. Third, our domain-randomization ranges, while grounded in
+aging physics, have not been validated against hardware degradation
+measurements. Fourth, the current reward function uses a simplified efficiency
+proxy (conduction loss) rather than a full switching-loss model. Fifth, and
+most critically, the current benchmark task (Buck CCM regulation) may simply
+be too easy for meta-optimization to matter: the SAC agent converges reliably
+under almost any reasonable hyperparameter configuration. More challenging
+benchmarks---multi-output converters, wide-range DCM/CCM transitions,
+simultaneous topology selection---are needed to stress-test the meta-optimizer
+and reveal where LLM guidance provides genuine advantage over random search.
 
 \section{Conclusion}
 
 We have demonstrated a dual-layer architecture for DC-DC converter controller
 synthesis in which an LLM serves as a continuous training meta-optimizer for
 a SAC-based RL agent.
-In controlled ablation experiments, the LLM-driven strategy converges 15\%
-faster than random-search meta-optimization while achieving comparable
-steady-state performance ($<$0.1\% voltage error).
+A four-strategy ablation study (3 trials $\times$ 200 episodes) shows that LLM-guided
+strategies are competitive with---though not yet superior to---random search on the
+Buck converter benchmark, while Bayesian optimization with GP surrogates proved
+unreliable, diverging on one of three trials.
+The event-triggered plateau detector achieved the lowest trial-to-trial variance
+($\pm$0.0003), suggesting that targeted intervention improves reproducibility.
 Under domain-randomized aging conditions, the system achieves 5.9$\times$
 reward improvement, reducing voltage error from 8.5\,V to 0.19\,V.
 Qualitative analysis reveals that the LLM adopts a human-like staged coaching
 strategy without explicit programming.
 
-These findings suggest that LLM-based continuous meta-optimization is a viable
-paradigm for automated power converter control synthesis.
+These findings suggest that LLM-based continuous meta-optimization is a
+scientifically interesting architectural direction for automated power
+converter control synthesis, though its quantitative advantage over simpler
+methods remains to be demonstrated on harder benchmarks.
 The architecture is topology-agnostic (demonstrated on both Buck and Boost)
-and mode-agnostic (CCM and DCM handled transparently), suggesting applicability
-to a broader class of physics-constrained control problems.
+and mode-agnostic (CCM and DCM handled transparently).
 The event-triggered intervention mechanism introduced here addresses the
-cost--benefit trade-off inherent in LLM-based meta-optimization by reducing
-unnecessary API calls during periods of steady improvement.
+cost--benefit trade-off inherent in LLM-based meta-optimization by aligning
+LLM calls with actual training need: suppressing intervention during periods
+of rapid improvement and issuing targeted suggestions when convergence stalls.
 Future work should pursue hardware-in-the-loop validation with real power
 converters and extension to more complex topologies such as LLC resonant
 converters and multiphase interleaved designs.

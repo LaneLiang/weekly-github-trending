@@ -212,6 +212,8 @@ def main():
                         help="Steps per episode (default: 200)")
     parser.add_argument("--strategies", type=str, default="all",
                         help="Comma-separated: random,bayesopt,llm_fixed,llm_event or 'all'")
+    parser.add_argument("--output", type=str, default=None,
+                        help="Output JSON path (default: logs/ablation/results_expanded.json)")
     args = parser.parse_args()
 
     config = load_config("dc_auto_tune/configs/default.yaml")
@@ -300,7 +302,11 @@ def main():
               f"time={aggregated['elapsed_s_mean']:.0f}±{aggregated['elapsed_s_std']:.0f}s")
 
     # Save aggregated results
-    out_path = out_dir / "results_expanded.json"
+    if args.output:
+        out_path = Path(args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+    else:
+        out_path = out_dir / "results_expanded.json"
     with open(out_path, "w") as f:
         json.dump(all_results, f, indent=2)
     print(f"\nResults saved to {out_path}")
