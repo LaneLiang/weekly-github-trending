@@ -6,11 +6,27 @@ This is the "main entry point" for the Feishu communication channel.
 from __future__ import annotations
 
 import logging
-from threading import Thread
-from typing import Callable
+import threading
 
+from lanes_ceo.contracts import TaskRequest
 from lanes_ceo.ingress.feishu_server import FeishuServer
 from lanes_ceo.ingress.hermes import HermesFeishuAdapter
+from lanes_ceo.ingress.shared import (
+    HELP_FOOTER,
+    HELP_TEXT,
+    build_response,
+    check_permission,
+    general_chat,
+    handle_task_history,
+    handle_unknown_intent,
+    infer_intent,
+    infer_role_group,
+    is_history_query,
+    json_parse_post,
+    json_parse_text,
+    split_long_message,
+    truncate,
+)
 from lanes_ceo.notifications.feishu_sender import FeishuSender, FeishuConfig
 
 logger = logging.getLogger("lanes_ceo.feishu")
@@ -71,6 +87,7 @@ class FeishuBridge:
         chat_id = message.get("chat_id", "")
         message_id = event_body.get("sender", {}).get("id", "")
         message_type = message.get("message_type", "text")
+        sender_id = event_body.get("sender", {}).get("sender_id", {}).get("user_id", "unknown")
 
         # Extract text content
         text = ""
@@ -83,31 +100,63 @@ class FeishuBridge:
             self.send_response(chat_id, "收到空消息，请输入具体指令。")
             return None
 
-        logger.info("Feishu message from chat=%s: %s", chat_id, text[:100])
+        logger.info("Feishu message from chat=%s sender=%s: %s", chat_id, sender_id, text[:100])
 
         # Parse into TaskRequest via Hermes adapter
         raw_event = {
             "event_id": event.get("header", {}).get("event_id", ""),
             "message_id": message_id,
-            "sender_id": event_body.get("sender", {}).get("sender_id", {}).get("user_id", "unknown"),
+            "sender_id": sender_id,
             "text": text,
-            "intent": _infer_intent(text),
+            "intent": infer_intent(text),
             "chat_id": chat_id,
             "attachments": [],
         }
-        task_request = self._adapter.receive(raw_event)
-
-        # Route to orchestrator
-        role_group = _infer_role_group(text)
         try:
-            job = self._orchestrator.handle(task_request, role_group)
-            status = job.status.value
-            self.send_response(
-                chat_id,
-                f"任务已提交 | 角色组: {role_group}\n"
-                f"状态: {status}\n"
-                f"Job ID: {job.job_id}",
+            task_request = self._adapter.receive(raw_event)
+        except Exception as exc:
+            logger.error("Adapter parse failed: %s", exc)
+            self.send_response(chat_id, "消息解析失败，请稍后重试。")
+            return None
+
+        # Route to orchestrator, or handle unknown intent
+        role_group = infer_role_group(text)
+        if role_group is None:
+            handle_unknown_intent(chat_id, text, self.send_response)
+            return None
+
+        # Task history — handled directly, no orchestrator needed
+        if role_group == "claude_task" and is_history_query(text):
+            handle_task_history(chat_id, self.send_response)
+            return None
+
+        # Permission check for claude_task
+        if role_group == "claude_task" and not check_permission(sender_id):
+            logger.warning("Permission denied for sender=%s", sender_id)
+            self.send_response(chat_id, "你没有权限执行此操作。")
+            return None
+
+        # Async execution for claude_task: ack now, send result later
+        if role_group == "claude_task":
+            self.send_response(chat_id, "任务已提交，正在执行中…\n预计需要1-3分钟，完成后会自动推送结果。")
+            t = threading.Thread(
+                target=self._run_and_respond,
+                args=(chat_id, task_request, role_group),
+                daemon=True,
             )
+            t.start()
+            return None
+
+        # Sync execution for all other roles
+        self._run_and_respond(chat_id, task_request, role_group)
+        return None
+
+    def _run_and_respond(self, chat_id: str, task_request: TaskRequest, role_group: str) -> None:
+        """Run orchestrator and send result, with long output splitting."""
+        try:
+            job, artifact = self._orchestrator.handle(task_request, role_group)
+            response_text = build_response(role_group, job, artifact)
+            self._send_long_message(chat_id, response_text)
         except Exception as exc:
             logger.error("Orchestrator failed: %s", exc)
             self.send_response(
@@ -115,75 +164,11 @@ class FeishuBridge:
                 f"处理请求时出错: {str(exc)[:200]}\n请稍后重试。",
             )
 
-        return None
+    def _send_long_message(self, chat_id: str, text: str) -> None:
+        """Send a message, splitting into chunks if it exceeds Feishu's limit."""
+        chunks = split_long_message(text, max_len=3500)
+        for i, chunk in enumerate(chunks):
+            prefix = f"({i+1}/{len(chunks)})\n" if len(chunks) > 1 else ""
+            self.send_response(chat_id, f"{prefix}{chunk}")
 
 
-def _infer_intent(text: str) -> str:
-    """Naive intent classifier based on keywords."""
-    kw_map = {
-        "周报": "weekly_report",
-        "日报": "daily_report",
-        "总结": "daily_report",
-        "PPT": "presentation",
-        "汇报": "presentation",
-        "论文": "paper_writing",
-        "文献": "paper_research",
-        "邮件": "mail_digest",
-        "反思": "reflection",
-        "GitHub": "github_trending",
-        "AI新闻": "ai_news",
-        "新闻": "ai_news",
-    }
-    for kw, intent in kw_map.items():
-        if kw in text:
-            return intent
-    return "daily_report"
-
-
-def _infer_role_group(text: str) -> str:
-    """Map natural language trigger words to role_group."""
-    kw_map = {
-        "周报": "weekly_report",
-        "周总结": "weekly_report",
-        "PPT": "presentation",
-        "汇报": "presentation",
-        "日报": "daily_report",
-        "总结": "daily_report",
-        "反思": "reflection",
-        "论文": "paper_writing",
-        "写论文": "paper_writing",
-        "文献": "paper_research",
-        "调研": "paper_research",
-        "邮件": "mail_digest",
-        "收件箱": "mail_digest",
-        "GitHub": "github_trending",
-        "hot": "github_trending",
-        "新闻": "ai_news",
-        "AI新闻": "ai_news",
-    }
-    for kw, role in kw_map.items():
-        if kw in text:
-            return role
-    return "daily_report"
-
-
-def json_parse_text(content_str: str) -> str:
-    import json
-    try:
-        return json.loads(content_str).get("text", "")
-    except Exception:
-        return content_str
-
-
-def json_parse_post(content_str: str) -> str:
-    import json
-    try:
-        data = json.loads(content_str)
-        parts = []
-        for block in data.get("content", []):
-            for elem in block:
-                if isinstance(elem, dict) and "text" in elem:
-                    parts.append(elem["text"])
-        return " ".join(parts)
-    except Exception:
-        return ""

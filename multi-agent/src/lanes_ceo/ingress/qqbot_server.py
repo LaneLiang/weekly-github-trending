@@ -1,15 +1,7 @@
-"""Feishu/Lark HTTP webhook server — receives bot events and returns responses.
+"""QQ Bot HTTP webhook server — receives bot events and returns responses.
 
-Flow:
-  User sends message in Feishu group
-  → Feishu sends HTTP POST to our webhook URL
-  → FeishuServer receives event, HermesFeishuAdapter parses into TaskRequest
-  → Orchestrator orchestrates the workflow
-  → FeishuSender sends the result back to the group chat
-
-Feishu event subscription requires:
-  - URL verification (challenge) on first setup
-  - Message receive events (im.message.receive_v1)
+QQ Bot supports both WebSocket and HTTP webhook modes.
+This implements the HTTP webhook mode for consistency with the existing architecture.
 """
 
 from __future__ import annotations
@@ -20,15 +12,20 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from threading import Thread
 from typing import Callable
 
-from lanes_ceo.ingress.hermes import HermesFeishuAdapter
-
-logger = logging.getLogger("lanes_ceo.feishu_server")
+logger = logging.getLogger("lanes_ceo.qqbot_server")
 
 EventCallback = Callable[[dict], dict | None]
 
 
-class _FeishuHandler(BaseHTTPRequestHandler):
-    """HTTP handler for Feishu event callbacks."""
+def _compute_qqbot_signature(plain_token: str, event_ts: str, app_secret: str) -> str:
+    """Compute QQ Bot webhook validation signature: sha256(plain_token + event_ts + app_secret)."""
+    import hashlib
+    raw = f"{plain_token}{event_ts}{app_secret}"
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+class _QQBotHandler(BaseHTTPRequestHandler):
+    """HTTP handler for QQ Bot webhook callbacks."""
 
     def do_POST(self) -> None:
         content_length = int(self.headers.get("Content-Length", 0))
@@ -43,18 +40,22 @@ class _FeishuHandler(BaseHTTPRequestHandler):
             self._send_json(400, {"error": "invalid json"})
             return
 
-        event_type = payload.get("header", {}).get("event_type", "")
-        logger.info("Feishu event received: type=%s", event_type)
-
-        # ── URL verification challenge ──
-        challenge = payload.get("challenge")
-        if challenge:
-            logger.info("Feishu URL verification challenge received")
-            token = payload.get("token", "")
-            self._send_json(200, {"challenge": challenge})
+        # QQ Bot may send a challenge/verification payload
+        opcode = payload.get("op")
+        if opcode == 13:  # Validation challenge
+            logger.info("QQ Bot validation challenge received")
+            d = payload.get("d", {})
+            plain_token = d.get("plain_token", "")
+            event_ts = d.get("event_ts", "")
+            app_secret = getattr(self.server, "qqbot_app_secret", "")
+            signature = _compute_qqbot_signature(plain_token, event_ts, app_secret)
+            self._send_json(200, {"plain_token": plain_token, "signature": signature})
             return
 
-        # ── Route to orchestrator callback ──
+        # QQ Bot message event: opcode 0 = dispatch
+        event_type = payload.get("t", "")
+        logger.info("QQ Bot event: type=%s op=%s", event_type, opcode)
+
         callback = getattr(self.server, "orchestrator_callback", None)
         if callback:
             try:
@@ -64,7 +65,7 @@ class _FeishuHandler(BaseHTTPRequestHandler):
                 else:
                     self._send_json(200, {})
             except Exception as exc:
-                logger.error("Orchestrator callback failed: %s", exc)
+                logger.error("QQ Bot callback failed: %s", exc)
                 self._send_json(500, {"error": str(exc)})
         else:
             self._send_json(200, {})
@@ -77,43 +78,43 @@ class _FeishuHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
-    # Suppress default request logging noise
     def log_message(self, format, *args):
         logger.debug("HTTP: %s", format % args)
 
 
-class FeishuServer:
-    """Embeddable HTTP server for receiving Feishu event callbacks.
+class QQBotServer:
+    """Embeddable HTTP server for receiving QQ Bot webhook callbacks.
 
     Usage:
-        server = FeishuServer(host="0.0.0.0", port=8080)
+        server = QQBotServer(host="0.0.0.0", port=8082)
         server.set_callback(lambda event: handle_event(event))
         server.start()
-        # ... later ...
         server.stop()
     """
 
-    def __init__(self, host: str = "127.0.0.1", port: int = 8080) -> None:
+    def __init__(self, host: str = "127.0.0.1", port: int = 8082, app_secret: str = "") -> None:
         self.host = host
         self.port = port
+        self.app_secret = app_secret
         self._httpd: HTTPServer | None = None
         self._thread: Thread | None = None
         self._running = False
 
     def set_callback(self, callback: EventCallback) -> None:
-        """Set the function called for each incoming Feishu event."""
+        """Set the function called for each incoming QQ Bot event."""
         self._callback = callback
         if self._httpd:
             self._httpd.orchestrator_callback = callback  # type: ignore[attr-defined]
 
     def start(self) -> None:
         """Start the HTTP server in a background thread."""
-        self._httpd = HTTPServer((self.host, self.port), _FeishuHandler)
+        self._httpd = HTTPServer((self.host, self.port), _QQBotHandler)
+        self._httpd.qqbot_app_secret = self.app_secret  # type: ignore[attr-defined]
         self._httpd.orchestrator_callback = getattr(self, "_callback", None)  # type: ignore[attr-defined]
-        self._thread = Thread(target=self._httpd.serve_forever, daemon=True, name="feishu-server")
+        self._thread = Thread(target=self._httpd.serve_forever, daemon=True, name="qqbot-server")
         self._thread.start()
         self._running = True
-        logger.info("Feishu webhook server started on %s:%d", self.host, self.port)
+        logger.info("QQ Bot webhook server started on %s:%d", self.host, self.port)
 
     def stop(self) -> None:
         """Shut down the HTTP server."""
@@ -121,7 +122,7 @@ class FeishuServer:
             self._httpd.shutdown()
             self._httpd = None
         self._running = False
-        logger.info("Feishu webhook server stopped")
+        logger.info("QQ Bot webhook server stopped")
 
     @property
     def is_running(self) -> bool:

@@ -22,7 +22,8 @@ def run_local_request(message: str, role_group: str, db_path: str | Path):
         priority="normal",
     )
     orchestrator = Orchestrator(store, WorkflowRegistry(), NotificationOutbox(store))
-    return orchestrator.handle(request, role_group)
+    job, _ = orchestrator.handle(request, role_group)
+    return job
 
 
 def main() -> None:

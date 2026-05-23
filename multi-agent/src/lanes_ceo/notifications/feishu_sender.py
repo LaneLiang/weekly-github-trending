@@ -38,17 +38,20 @@ class FeishuSender:
         if self._client is not None:
             return self._client
 
+        # Prefer HTTP fallback for reliability — avoids SDK version mismatches
         try:
             import lark_oapi as lark
             client = lark.Client.builder() \
                 .app_id(self.app_id) \
                 .app_secret(self.app_secret) \
                 .build()
+            # Test that the required classes exist
+            _ = lark.api.im.v1.CreateMessageReqBody
             self._client = client
             logger.info("Feishu client initialized via lark-oapi SDK")
             return client
-        except ImportError:
-            logger.info("lark-oapi not installed; using HTTP fallback")
+        except (ImportError, AttributeError):
+            logger.info("lark-oapi SDK unavailable or incompatible; using HTTP fallback")
             self._client = "http-fallback"
             return self._client
 
