@@ -29,6 +29,10 @@ The 7 objectives have a strict lexicographic priority order. This means:
 
   3. WEIGHT ADJUSTMENT RULES:
      - If vo_error P0 FAIL: INCREASE w_ev aggressively. Do not decrease w_ev for any reason.
+       When vo_error P0 FAIL: you MUST NOT increase any other weight (w_vr, w_eff, w_os,
+       w_us, w_tr, w_ts). Only w_ev may increase. Other weights may only stay the same
+       or decrease. Increasing other weights dilutes w_ev's relative importance and
+       constitutes REWARD HACKING.
      - If vo_error P0 PASS but other P0 metrics FAIL: adjust weights to fix the worst
        failing P0 metric while keeping vo_error < 0.5%. Never let a weight decrease
        on the failing metric.
@@ -181,20 +185,33 @@ class LLMMetaOptimizer:
         # P0 gate: vo_error FAIL, forcing w_ev increase — code-level backstop
         # to catch any LLM output that attempts to decrease w_ev while the
         # primary gate is failing (reinforcement against reward hacking).
+        # Also freeze all non-w_ev weights to prevent reward hacking via
+        # dilution (massively increasing other weights to swamp w_ev).
+        OTHER_WEIGHT_KEYS = ("w_vr", "w_eff", "w_os", "w_us", "w_tr", "w_ts")
         current_metrics = training_state.get("metrics", {})
         vo_error = current_metrics.get("vo_error_pct", None)
         if vo_error is None or vo_error >= 0.5:
-            current_w_ev = training_state.get("current_weights", None)
-            if current_w_ev is not None and hasattr(current_w_ev, "w_ev"):
-                old_w_ev = current_w_ev.w_ev
-                if (
-                    "weight_updates" in result
-                    and result["weight_updates"].get("w_ev", old_w_ev) < old_w_ev * 0.95
-                ):
-                    result["weight_updates"]["w_ev"] = min(
-                        old_w_ev * 1.2,
-                        self.space.WEIGHT_BOUNDS.get("w_ev", (0.1, 5.0))[1],
-                    )
+            current_weights = training_state.get("current_weights", None)
+            if current_weights is not None:
+                # (a) Force w_ev increase if LLM tried to decrease it
+                if hasattr(current_weights, "w_ev"):
+                    old_w_ev = current_weights.w_ev
+                    if (
+                        "weight_updates" in result
+                        and result["weight_updates"].get("w_ev", old_w_ev) < old_w_ev * 0.95
+                    ):
+                        result["weight_updates"]["w_ev"] = min(
+                            old_w_ev * 1.2,
+                            self.space.WEIGHT_BOUNDS.get("w_ev", (0.1, 5.0))[1],
+                        )
+                # (b) Freeze non-w_ev weights: prevent increase, allow decrease
+                if "weight_updates" in result:
+                    for key in OTHER_WEIGHT_KEYS:
+                        if key in result["weight_updates"] and hasattr(current_weights, key):
+                            current_val = getattr(current_weights, key)
+                            result["weight_updates"][key] = min(
+                                result["weight_updates"][key], current_val
+                            )
         return result
 
     def _call_with_retry(self, system: str, user: str, max_retries: int = 2) -> dict:

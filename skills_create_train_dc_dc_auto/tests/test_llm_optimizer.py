@@ -156,3 +156,126 @@ class TestLLMMetaOptimizer:
         result = optimizer.analyze_and_suggest(state)
         assert "weight_updates" in result
         assert result["weight_updates"]["w_ev"] >= 1.0  # forced increase
+
+    @patch("dc_auto_tune.meta.llm_client.LLMClient")
+    def test_vo_error_fail_freezes_other_weights(self, mock_llm, optimizer):
+        """When vo_error P0 FAIL, non-w_ev weights cannot increase (freeze gate)."""
+        current_weights = RewardWeights(w_ev=1.0, w_vr=1.0, w_eff=0.5,
+                                        w_os=0.8, w_us=0.8, w_tr=0.8, w_ts=0.5)
+        state = {
+            "episode": 200,
+            "recent_rewards": [0.5, 0.6, 0.55, 0.7, 0.65],
+            "metrics": {
+                "vo_error_pct": 0.8,
+                "vo_ripple_pct": 1.2,
+                "efficiency_pct": 85.0,
+                "overshoot_pct": 3.5,
+                "undershoot_pct": 2.1,
+                "recovery_time_ms": 0.45,
+                "startup_time_ms": 8.0,
+            },
+            "current_sac": SACParams(),
+            "current_weights": current_weights,
+        }
+        # LLM tries to massively increase w_vr (reward hacking via dilution)
+        mock_llm.return_value.chat.return_value = (
+            '{"analysis": "boost vr to inflate reward", '
+            '"weight_updates": {"w_ev": 1.5, "w_vr": 5.0, "w_eff": 0.5, '
+            '"w_os": 0.8, "w_us": 0.8, "w_tr": 0.8, "w_ts": 0.5}}'
+        )
+        result = optimizer.analyze_and_suggest(state)
+        assert "weight_updates" in result
+        # w_ev may increase (forced by existing P0 gate)
+        assert result["weight_updates"]["w_ev"] >= 1.0
+        # w_vr should be clamped to current value (1.0), NOT increased to 5.0
+        assert result["weight_updates"]["w_vr"] == 1.0
+
+    @patch("dc_auto_tune.meta.llm_client.LLMClient")
+    def test_vo_error_pass_allows_other_weight_increase(self, mock_llm, optimizer):
+        """When vo_error P0 PASS, non-w_ev weights can increase freely."""
+        current_weights = RewardWeights(w_ev=1.0, w_vr=1.0, w_eff=0.5,
+                                        w_os=0.8, w_us=0.8, w_tr=0.8, w_ts=0.5)
+        state = {
+            "episode": 200,
+            "recent_rewards": [0.7, 0.75, 0.72, 0.78, 0.8],
+            "metrics": {
+                "vo_error_pct": 0.3,
+                "vo_ripple_pct": 1.2,
+                "efficiency_pct": 90.0,
+                "overshoot_pct": 3.5,
+                "undershoot_pct": 2.1,
+                "recovery_time_ms": 0.45,
+                "startup_time_ms": 8.0,
+            },
+            "current_sac": SACParams(),
+            "current_weights": current_weights,
+        }
+        # LLM increases w_vr — allowed since vo_error P0 PASS
+        mock_llm.return_value.chat.return_value = (
+            '{"analysis": "vo_error is good, boost vr", '
+            '"weight_updates": {"w_vr": 5.0}}'
+        )
+        result = optimizer.analyze_and_suggest(state)
+        assert "weight_updates" in result
+        # w_vr should be allowed to increase to 5.0
+        assert result["weight_updates"]["w_vr"] == 5.0
+
+    @patch("dc_auto_tune.meta.llm_client.LLMClient")
+    def test_vo_error_fail_allows_other_weight_decrease(self, mock_llm, optimizer):
+        """When vo_error P0 FAIL, non-w_ev weights CAN still decrease (only increases blocked)."""
+        current_weights = RewardWeights(w_ev=1.0, w_vr=1.0, w_eff=0.5,
+                                        w_os=0.8, w_us=0.8, w_tr=0.8, w_ts=0.5)
+        state = {
+            "episode": 200,
+            "recent_rewards": [0.5, 0.6, 0.55, 0.7, 0.65],
+            "metrics": {
+                "vo_error_pct": 0.8,
+                "vo_ripple_pct": 1.2,
+                "efficiency_pct": 85.0,
+                "overshoot_pct": 3.5,
+                "undershoot_pct": 2.1,
+                "recovery_time_ms": 0.45,
+                "startup_time_ms": 8.0,
+            },
+            "current_sac": SACParams(),
+            "current_weights": current_weights,
+        }
+        # LLM tries to decrease w_tr — allowed even during P0 FAIL
+        mock_llm.return_value.chat.return_value = (
+            '{"analysis": "reduce transient weight", '
+            '"weight_updates": {"w_ev": 1.5, "w_tr": 0.3}}'
+        )
+        result = optimizer.analyze_and_suggest(state)
+        assert "weight_updates" in result
+        assert result["weight_updates"]["w_tr"] == 0.3  # decrease allowed
+
+    @patch("dc_auto_tune.meta.llm_client.LLMClient")
+    def test_vo_error_at_exact_boundary_freezes_weights(self, mock_llm, optimizer):
+        """vo_error == 0.5 (exact P0 boundary) triggers freeze gate."""
+        current_weights = RewardWeights(w_ev=1.0, w_vr=1.0, w_eff=0.5,
+                                        w_os=0.8, w_us=0.8, w_tr=0.8, w_ts=0.5)
+        state = {
+            "episode": 200,
+            "recent_rewards": [0.5, 0.6, 0.55, 0.7, 0.65],
+            "metrics": {
+                "vo_error_pct": 0.5,  # exact boundary
+                "vo_ripple_pct": 1.2,
+                "efficiency_pct": 85.0,
+                "overshoot_pct": 3.5,
+                "undershoot_pct": 2.1,
+                "recovery_time_ms": 0.45,
+                "startup_time_ms": 8.0,
+            },
+            "current_sac": SACParams(),
+            "current_weights": current_weights,
+        }
+        mock_llm.return_value.chat.return_value = (
+            '{"analysis": "test boundary", '
+            '"weight_updates": {"w_ev": 0.8, "w_vr": 3.0}}'
+        )
+        result = optimizer.analyze_and_suggest(state)
+        assert "weight_updates" in result
+        # w_ev: LLM tried 0.8 (< old * 0.95 = 0.95), gate forces increase
+        assert result["weight_updates"]["w_ev"] >= 1.0
+        # w_vr: freeze gate clamps to current (1.0)
+        assert result["weight_updates"]["w_vr"] == 1.0
