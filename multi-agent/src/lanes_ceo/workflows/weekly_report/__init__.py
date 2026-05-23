@@ -104,14 +104,61 @@ class WeeklyReportWorkflow:
         )
 
 
+def _find_recent_literature_survey() -> dict | None:
+    """Scan literature_survey output dir for recent session results to inject into weekly report."""
+    from lanes_ceo.workflows.utils import PROJECT_OUTPUT_BASE
+    import json
+
+    survey_base = PROJECT_OUTPUT_BASE / "literature_survey"
+    if not survey_base.exists():
+        return None
+
+    sessions = sorted([d for d in survey_base.iterdir() if d.is_dir()], key=lambda d: d.stat().st_mtime, reverse=True)
+    for session_dir in sessions[:3]:  # Check 3 most recent
+        matrix_path = session_dir / "literature_matrix.json"
+        summary_path = session_dir / "session_summary.md"
+        if matrix_path.exists():
+            try:
+                data = json.loads(matrix_path.read_text(encoding="utf-8"))
+                return {
+                    "query": data.get("query", ""),
+                    "query_en": data.get("query_en", ""),
+                    "total_found": data.get("total_found", 0),
+                    "total_downloaded": data.get("total_downloaded", 0),
+                    "top_titles": [
+                        p.get("title", "")[:80]
+                        for p in sorted(data.get("papers", []), key=lambda x: x.get("relevance_score", 0), reverse=True)[:5]
+                    ],
+                    "session_summary": summary_path.read_text(encoding="utf-8")[:500] if summary_path.exists() else "",
+                }
+            except (json.JSONDecodeError, KeyError, OSError):
+                continue
+    return None
+
+
 def _build_weekly_report_prompt(message: str) -> str:
     sections_text = "\n".join(
         f"{i + 1}. {s}" for i, s in enumerate(WEEKLY_REPORT_SECTIONS)
     )
+
+    # Inject recent literature survey findings if available
+    lit_context = ""
+    lit_data = _find_recent_literature_survey()
+    if lit_data:
+        lit_context = (
+            "\n\n【文献调研动态（自动注入）】\n"
+            f"本周文献调研主题: {lit_data['query'][:100]}\n"
+            f"检索命中: {lit_data['total_found']} 篇，全文下载: {lit_data['total_downloaded']} 篇\n"
+            f"高相关论文:\n" +
+            "\n".join(f"  - {t}" for t in lit_data.get("top_titles", [])) +
+            "\n\n请将以上文献调研进展融入「科研进度复盘」和「工作亮点」章节。"
+        )
+
     return (
         f"请根据以下主题生成一份完整的周报，严格按以下8个章节撰写，每章内容充实（100-200字）：\n\n"
         f"{sections_text}\n\n"
-        f"主题：{message}\n\n"
+        f"主题：{message}\n"
+        f"{lit_context}\n"
         f"格式要求：使用正式学术语言，图表需附题注（如：图1-1 xxx），公式需编号（如：(1-1)）。"
     )
 

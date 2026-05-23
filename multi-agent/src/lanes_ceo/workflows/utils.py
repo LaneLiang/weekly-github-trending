@@ -52,7 +52,12 @@ _ARTIFACT_TYPE_DIR_MAP: dict[str, str] = {
     "mail_digest": "mail_digests",
     "github_trending": "briefings",
     "ai_news": "briefings",
+    "update_check": "update_checks",
+    "memory_curation": "memory_curation",
+    "literature_survey": "literature_survey",
     "fake": "debug",
+    "eda_testbench": "eda_testbench",
+    "deepseek_monitor": "deepseek_monitor",
 }
 
 

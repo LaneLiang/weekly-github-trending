@@ -90,36 +90,63 @@ def _fetch_recent_emails(hours: int = 48) -> list[dict[str, str]] | None:
         from lanes_ceo.config import Config
 
         cfg = Config.from_env()
-        if not cfg.email_enabled or not cfg.email_address or not cfg.email_password:
+        if not cfg.email_enabled:
             return None
 
-        server = _connect_imap(cfg)
-        if not server:
-            return None
-
-        try:
-            return _search_recent(server, hours)
-        finally:
+        # Build account list: primary + extras from JSON
+        accounts: list[dict] = []
+        if cfg.email_address and cfg.email_password:
+            accounts.append({
+                "address": cfg.email_address,
+                "password": cfg.email_password,
+                "imap_server": cfg.email_imap_server or "imap.gmail.com",
+            })
+        if cfg.email_extra:
+            import json
             try:
-                server.logout()
+                extras = json.loads(cfg.email_extra)
+                accounts.extend(extras)
             except Exception:
-                pass
+                logger.warning("email_extra JSON parse failed, using primary account only")
+
+        if not accounts:
+            return None
+
+        all_emails: list[dict[str, str]] = []
+        for acct in accounts:
+            try:
+                server = _connect_account(acct["imap_server"], acct["address"], acct["password"])
+                if server:
+                    try:
+                        emails = _search_recent(server, hours)
+                        # Tag with account source
+                        for e in emails:
+                            e["from"] = f"[{acct['address'].split('@')[0]}@{acct['address'].split('@')[1][:4]}…] {e['from']}"
+                        all_emails.extend(emails)
+                    finally:
+                        try:
+                            server.logout()
+                        except Exception:
+                            pass
+            except Exception as exc:
+                logger.warning("Mail fetch failed for %s: %s", acct["address"], exc)
+
+        return all_emails if all_emails else None
     except Exception as exc:
         logger.warning("Mail fetch failed: %s", exc)
         return None
 
 
-def _connect_imap(cfg: Any):
-    server_addr = cfg.email_imap_server or "imap.gmail.com"
+def _connect_account(server_addr: str, address: str, password: str):
     try:
-        if server_addr == "imap.gmail.com":
+        if "gmail" in server_addr:
             server = imaplib.IMAP4_SSL(server_addr, 993)
         else:
             server = imaplib.IMAP4_SSL(server_addr)
-        server.login(cfg.email_address, cfg.email_password)
+        server.login(address, password)
         return server
     except Exception as exc:
-        logger.warning("IMAP connect/login failed: %s", exc)
+        logger.warning("IMAP connect/login failed for %s: %s", address, exc)
         return None
 
 

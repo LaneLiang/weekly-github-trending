@@ -1,0 +1,23 @@
+schema_version: "1.0"
+journal:
+  name: "Science"
+  article_types:
+    research_article:
+      max_pages: null
+      max_words: 6000
+      max_figures: 6
+      required_sections: [abstract, introduction, results, discussion, materials_and_methods, references]
+    report:
+      max_pages: null
+      max_words: 2500
+      max_figures: 4
+      required_sections: [abstract, introduction, results, conclusion, references]
+  default_type: "research_article"
+  figure_dpi_min: 300
+  figure_colorspace: "CMYK"
+  figure_formats: [".eps", ".pdf", ".png", ".jpg", ".tiff"]
+  figure_width_max_inches: 5.5
+  max_tables: 4
+  citation_style: "science"
+  supplementary_required: true
+  supplementary_extensions: [".pdf", ".xlsx", ".zip", ".csv", ".docx", ".mp4", ".mov", ".avi"]

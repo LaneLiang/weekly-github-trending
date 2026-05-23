@@ -1,0 +1,23 @@
+schema_version: "1.0"
+journal:
+  name: "Nature"
+  article_types:
+    article:
+      max_pages: null
+      max_words: 5000
+      max_figures: 8
+      required_sections: [abstract, introduction, results, discussion, methods, references]
+    letter:
+      max_pages: 6
+      max_words: 3000
+      max_figures: 6
+      required_sections: [abstract, introduction, results, discussion, references]
+  default_type: "letter"
+  figure_dpi_min: 300
+  figure_colorspace: "CMYK"
+  figure_formats: [".eps", ".pdf", ".png", ".jpg", ".tiff"]
+  figure_width_max_inches: 7.08
+  max_tables: 4
+  citation_style: "nature"
+  supplementary_required: true
+  supplementary_extensions: [".pdf", ".xlsx", ".zip", ".csv", ".docx", ".mp4", ".mov", ".avi"]

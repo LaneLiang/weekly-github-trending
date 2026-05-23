@@ -1,0 +1,18 @@
+schema_version: "1.0"
+journal:
+  name: "IEEE Journal of Solid-State Circuits (JSSC)"
+  article_types:
+    regular_paper:
+      max_pages: 13
+      max_words: null
+      max_figures: null
+      required_sections: [abstract, introduction, body, conclusion, references]
+  default_type: "regular_paper"
+  figure_dpi_min: 300
+  figure_colorspace: "RGB"
+  figure_formats: [".eps", ".pdf", ".png", ".jpg", ".tiff"]
+  figure_width_max_inches: 7.0
+  max_tables: null
+  citation_style: "ieee"
+  supplementary_required: false
+  supplementary_extensions: [".pdf"]
