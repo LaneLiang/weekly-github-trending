@@ -1,0 +1,171 @@
+=== Expanded Ablation Study ===
+Episodes: 200, Steps/ep: 200, Trials: 3
+Total: 40000 steps per trial
+LLM: deepseek-chat
+
+============================================================
+Strategy: Random Search (3 trials ¡Á 200 ep)
+Event-triggered: False
+============================================================
+
+--- Trial 1/3 (seed=92) ---
+  [random][seed=92] ep    1/200 | avg_r=-2.1503 | verr=13.7% rip=80.7% eff=81% | calls=0 | t=0s
+  [random][seed=92] ep   10/200 | avg_r=+0.3122 | verr=0.3% rip=3.8% eff=98% | calls=0 | t=31s
+  [random][seed=92] ep   20/200 | avg_r=+0.4418 | verr=0.4% rip=2.2% eff=99% | calls=1 | t=76s
+  [random][seed=92] ep   30/200 | avg_r=+0.5854 | verr=0.4% rip=2.0% eff=99% | calls=1 | t=129s
+  [random][seed=92] ep   40/200 | avg_r=+0.6118 | verr=0.4% rip=1.2% eff=99% | calls=2 | t=173s
+  [random][seed=92] ep   50/200 | avg_r=+0.6672 | verr=0.5% rip=1.5% eff=99% | calls=2 | t=220s
+  [random][seed=92] ep   60/200 | avg_r=+0.6718 | verr=0.7% rip=1.3% eff=99% | calls=3 | t=264s
+  [random][seed=92] ep   70/200 | avg_r=+0.5576 | verr=0.2% rip=1.7% eff=99% | calls=3 | t=304s
+  [random][seed=92] ep   80/200 | avg_r=+0.5305 | verr=0.2% rip=0.9% eff=99% | calls=4 | t=354s
+  [random][seed=92] ep   90/200 | avg_r=+0.5454 | verr=0.3% rip=1.4% eff=99% | calls=4 | t=395s
+  [random][seed=92] ep  100/200 | avg_r=+0.5564 | verr=0.4% rip=1.0% eff=99% | calls=5 | t=440s
+  [random][seed=92] ep  110/200 | avg_r=+0.6344 | verr=0.6% rip=0.8% eff=99% | calls=5 | t=485s
+  [random][seed=92] ep  120/200 | avg_r=+0.6364 | verr=0.8% rip=1.2% eff=99% | calls=6 | t=530s
+  [random][seed=92] ep  130/200 | avg_r=+0.5290 | verr=0.5% rip=1.1% eff=99% | calls=6 | t=573s
+  [random][seed=92] ep  140/200 | avg_r=+0.5343 | verr=0.4% rip=0.8% eff=99% | calls=7 | t=615s
+  [random][seed=92] ep  150/200 | avg_r=+0.4576 | verr=0.3% rip=0.7% eff=99% | calls=7 | t=662s
+  [random][seed=92] ep  160/200 | avg_r=+0.4564 | verr=0.4% rip=1.2% eff=99% | calls=8 | t=710s
+  [random][seed=92] ep  170/200 | avg_r=+0.4768 | verr=0.6% rip=1.0% eff=99% | calls=8 | t=755s
+  [random][seed=92] ep  180/200 | avg_r=+0.4755 | verr=0.8% rip=1.3% eff=99% | calls=9 | t=803s
+  [random][seed=92] ep  190/200 | avg_r=+0.4564 | verr=0.1% rip=1.2% eff=99% | calls=9 | t=851s
+  [random][seed=92] ep  200/200 | avg_r=+0.4561 | verr=0.1% rip=1.0% eff=99% | calls=10 | t=907s
+  Trial 1 done: 907s, 10 LLM calls
+
+--- Trial 2/3 (seed=192) ---
+  [random][seed=192] ep    1/200 | avg_r=-1.7447 | verr=22.6% rip=59.9% eff=85% | calls=0 | t=0s
+  [random][seed=192] ep   10/200 | avg_r=+0.3264 | verr=1.1% rip=2.7% eff=98% | calls=0 | t=37s
+  [random][seed=192] ep   20/200 | avg_r=+0.5228 | verr=0.3% rip=2.6% eff=99% | calls=1 | t=79s
+  [random][seed=192] ep   30/200 | avg_r=+0.4906 | verr=1.7% rip=2.0% eff=98% | calls=1 | t=125s
+  [random][seed=192] ep   40/200 | avg_r=+0.5293 | verr=1.4% rip=1.2% eff=99% | calls=2 | t=169s
+  [random][seed=192] ep   50/200 | avg_r=+0.6489 | verr=0.7% rip=1.3% eff=99% | calls=2 | t=217s
+  [random][seed=192] ep   60/200 | avg_r=+0.6529 | verr=0.8% rip=1.0% eff=99% | calls=3 | t=261s
+  [random][seed=192] ep   70/200 | avg_r=+0.5546 | verr=1.2% rip=0.7% eff=99% | calls=3 | t=313s
+  [random][seed=192] ep   80/200 | avg_r=+0.5492 | verr=1.2% rip=0.9% eff=99% | calls=4 | t=360s
+  [random][seed=192] ep   90/200 | avg_r=+0.5779 | verr=1.3% rip=0.5% eff=99% | calls=4 | t=408s
+  [random][seed=192] ep  100/200 | avg_r=+0.5694 | verr=1.2% rip=0.8% eff=99% | calls=5 | t=458s
+  [random][seed=192] ep  110/200 | avg_r=+0.7110 | verr=1.2% rip=0.6% eff=99% | calls=5 | t=508s
+  [random][seed=192] ep  120/200 | avg_r=+0.7123 | verr=1.2% rip=0.6% eff=99% | calls=6 | t=560s
+  [random][seed=192] ep  130/200 | avg_r=+0.4626 | verr=1.3% rip=0.7% eff=99% | calls=6 | t=608s
+  [random][seed=192] ep  140/200 | avg_r=+0.4639 | verr=1.2% rip=0.5% eff=99% | calls=7 | t=658s
+  [random][seed=192] ep  150/200 | avg_r=+0.7260 | verr=1.2% rip=0.6% eff=99% | calls=7 | t=707s
+  [random][seed=192] ep  160/200 | avg_r=+0.7304 | verr=1.2% rip=0.7% eff=99% | calls=8 | t=759s
+  [random][seed=192] ep  170/200 | avg_r=+0.8228 | verr=1.1% rip=0.5% eff=99% | calls=8 | t=807s
+  [random][seed=192] ep  180/200 | avg_r=+0.8057 | verr=1.1% rip=0.8% eff=99% | calls=9 | t=859s
+  [random][seed=192] ep  190/200 | avg_r=+0.9306 | verr=1.1% rip=0.7% eff=99% | calls=9 | t=910s
+  [random][seed=192] ep  200/200 | avg_r=+0.9232 | verr=1.1% rip=0.8% eff=98% | calls=10 | t=960s
+  Trial 2 done: 960s, 10 LLM calls
+
+--- Trial 3/3 (seed=292) ---
+  [random][seed=292] ep    1/200 | avg_r=-2.4384 | verr=20.2% rip=45.5% eff=90% | calls=0 | t=0s
+  [random][seed=292] ep   10/200 | avg_r=+0.1384 | verr=5.1% rip=3.3% eff=98% | calls=0 | t=32s
+  [random][seed=292] ep   20/200 | avg_r=+0.2392 | verr=4.8% rip=3.7% eff=99% | calls=1 | t=82s
+  [random][seed=292] ep   30/200 | avg_r=+0.2713 | verr=4.3% rip=3.7% eff=99% | calls=1 | t=129s
+  [random][seed=292] ep   40/200 | avg_r=+0.2716 | verr=4.4% rip=2.8% eff=98% | calls=2 | t=181s
+  [random][seed=292] ep   50/200 | avg_r=+0.2010 | verr=5.2% rip=1.7% eff=98% | calls=2 | t=229s
+  [random][seed=292] ep   60/200 | avg_r=+0.2345 | verr=4.8% rip=1.8% eff=99% | calls=3 | t=280s
+  [random][seed=292] ep   70/200 | avg_r=+0.1978 | verr=4.7% rip=1.2% eff=100% | calls=3 | t=327s
+  [random][seed=292] ep   80/200 | avg_r=+0.1968 | verr=4.4% rip=1.3% eff=100% | calls=4 | t=375s
+  [random][seed=292] ep   90/200 | avg_r=+0.1860 | verr=4.6% rip=1.5% eff=99% | calls=4 | t=426s
+  [random][seed=292] ep  100/200 | avg_r=+0.1891 | verr=4.6% rip=1.3% eff=100% | calls=5 | t=478s
+  [random][seed=292] ep  110/200 | avg_r=+0.3126 | verr=3.8% rip=1.3% eff=99% | calls=5 | t=528s
+  [random][seed=292] ep  120/200 | avg_r=+0.3182 | verr=3.7% rip=0.9% eff=99% | calls=6 | t=581s
+  [random][seed=292] ep  130/200 | avg_r=+0.1690 | verr=4.2% rip=0.9% eff=99% | calls=6 | t=627s
+  [random][seed=292] ep  140/200 | avg_r=+0.1683 | verr=4.1% rip=1.1% eff=99% | calls=7 | t=676s
+  [random][seed=292] ep  150/200 | avg_r=+0.0656 | verr=4.3% rip=1.4% eff=98% | calls=7 | t=727s
+  [random][seed=292] ep  160/200 | avg_r=+0.0616 | verr=3.7% rip=1.2% eff=99% | calls=8 | t=773s
+  [random][seed=292] ep  170/200 | avg_r=+0.1823 | verr=0.2% rip=2.3% eff=99% | calls=8 | t=822s
+  [random][seed=292] ep  180/200 | avg_r=-0.0788 | verr=4.4% rip=1.1% eff=99% | calls=9 | t=874s
+  [random][seed=292] ep  190/200 | avg_r=-0.0718 | verr=4.6% rip=1.0% eff=99% | calls=9 | t=920s
+  [random][seed=292] ep  200/200 | avg_r=-0.0619 | verr=4.2% rip=0.9% eff=99% | calls=10 | t=968s
+  Trial 3 done: 968s, 10 LLM calls
+
+  Aggregate: final_reward=+0.4328¡À0.4040 | vo_err=1.79¡À1.72% | time=945¡À27s
+============================================================
+Strategy: LLM Fixed-Interval (Ours) (3 trials ¡Á 200 ep)
+Event-triggered: False
+============================================================
+
+--- Trial 1/3 (seed=1016) ---
+  [llm_fixed][seed=1016] ep    1/200 | avg_r=-3.9390 | verr=26.6% rip=41.3% eff=104% | calls=0 | t=0s
+  [llm_fixed][seed=1016] ep   10/200 | avg_r=+0.1777 | verr=2.2% rip=6.2% eff=99% | calls=0 | t=34s
+  [llm_fixed][seed=1016] ep   20/200 | avg_r=+0.2186 | verr=3.8% rip=4.3% eff=99% | calls=1 | t=79s
+  [llm_fixed][seed=1016] ep   30/200 | avg_r=+0.3529 | verr=4.2% rip=3.0% eff=99% | calls=1 | t=122s
+  [llm_fixed][seed=1016] ep   40/200 | avg_r=+0.3514 | verr=4.4% rip=1.5% eff=99% | calls=2 | t=165s
+  [llm_fixed][seed=1016] ep   50/200 | avg_r=+0.4815 | verr=4.6% rip=1.2% eff=99% | calls=2 | t=208s
+  [llm_fixed][seed=1016] ep   60/200 | avg_r=+0.4587 | verr=4.8% rip=1.3% eff=99% | calls=3 | t=254s
+  [llm_fixed][seed=1016] ep   70/200 | avg_r=+0.7302 | verr=6.1% rip=1.2% eff=99% | calls=3 | t=301s
+  [llm_fixed][seed=1016] ep   80/200 | avg_r=+0.7075 | verr=6.4% rip=1.2% eff=99% | calls=4 | t=350s
+  [llm_fixed][seed=1016] ep   90/200 | avg_r=+0.6453 | verr=7.6% rip=1.2% eff=99% | calls=4 | t=393s
+  [llm_fixed][seed=1016] ep  100/200 | avg_r=+0.7237 | verr=7.4% rip=1.0% eff=99% | calls=5 | t=440s
+  [llm_fixed][seed=1016] ep  110/200 | avg_r=+1.1410 | verr=7.2% rip=1.4% eff=99% | calls=5 | t=480s
+  [llm_fixed][seed=1016] ep  120/200 | avg_r=+1.0405 | verr=7.2% rip=0.9% eff=99% | calls=6 | t=523s
+  [llm_fixed][seed=1016] ep  130/200 | avg_r=+1.2621 | verr=7.0% rip=0.9% eff=99% | calls=6 | t=566s
+  [llm_fixed][seed=1016] ep  140/200 | avg_r=+1.2521 | verr=6.9% rip=0.9% eff=99% | calls=7 | t=614s
+  [llm_fixed][seed=1016] ep  150/200 | avg_r=+1.2119 | verr=6.9% rip=0.9% eff=99% | calls=7 | t=662s
+  [llm_fixed][seed=1016] ep  160/200 | avg_r=+1.2578 | verr=7.0% rip=0.6% eff=99% | calls=8 | t=719s
+  [llm_fixed][seed=1016] ep  170/200 | avg_r=+1.3523 | verr=7.0% rip=0.9% eff=99% | calls=8 | t=768s
+  [llm_fixed][seed=1016] ep  180/200 | avg_r=+1.3519 | verr=7.0% rip=0.6% eff=99% | calls=9 | t=824s
+  [llm_fixed][seed=1016] ep  190/200 | avg_r=+1.3706 | verr=7.1% rip=0.7% eff=99% | calls=9 | t=874s
+  [llm_fixed][seed=1016] ep  200/200 | avg_r=+1.4115 | verr=6.9% rip=0.5% eff=99% | calls=10 | t=924s
+  Trial 1 done: 924s, 10 LLM calls
+
+--- Trial 2/3 (seed=1116) ---
+  [llm_fixed][seed=1116] ep    1/200 | avg_r=-3.5133 | verr=12.9% rip=30.5% eff=106% | calls=0 | t=0s
+  [llm_fixed][seed=1116] ep   10/200 | avg_r=+0.2308 | verr=0.5% rip=10.3% eff=100% | calls=0 | t=43s
+  [llm_fixed][seed=1116] ep   20/200 | avg_r=+0.3360 | verr=3.0% rip=4.3% eff=98% | calls=1 | t=94s
+  [llm_fixed][seed=1116] ep   30/200 | avg_r=+0.4198 | verr=2.3% rip=2.2% eff=99% | calls=1 | t=140s
+  [llm_fixed][seed=1116] ep   40/200 | avg_r=+0.5188 | verr=1.5% rip=1.5% eff=99% | calls=2 | t=193s
+  [llm_fixed][seed=1116] ep   50/200 | avg_r=+1.7723 | verr=0.4% rip=0.9% eff=99% | calls=2 | t=247s
+  [llm_fixed][seed=1116] ep   60/200 | avg_r=+1.7340 | verr=0.4% rip=1.3% eff=99% | calls=3 | t=295s
+  [llm_fixed][seed=1116] ep   70/200 | avg_r=+0.9622 | verr=0.3% rip=0.9% eff=99% | calls=3 | t=339s
+  [llm_fixed][seed=1116] ep   80/200 | avg_r=+0.9714 | verr=0.1% rip=0.7% eff=99% | calls=4 | t=393s
+  [llm_fixed][seed=1116] ep   90/200 | avg_r=+0.2337 | verr=0.4% rip=0.6% eff=99% | calls=4 | t=445s
+  [llm_fixed][seed=1116] ep  100/200 | avg_r=+0.2600 | verr=0.5% rip=1.2% eff=99% | calls=5 | t=499s
+  [llm_fixed][seed=1116] ep  110/200 | avg_r=+0.1509 | verr=0.8% rip=0.8% eff=99% | calls=5 | t=548s
+  [llm_fixed][seed=1116] ep  120/200 | avg_r=+0.1852 | verr=0.1% rip=1.7% eff=98% | calls=6 | t=605s
+  [llm_fixed][seed=1116] ep  130/200 | avg_r=-0.0973 | verr=1.0% rip=0.9% eff=99% | calls=6 | t=653s
+  [llm_fixed][seed=1116] ep  140/200 | avg_r=-0.1237 | verr=0.8% rip=1.3% eff=99% | calls=7 | t=709s
+  [llm_fixed][seed=1116] ep  150/200 | avg_r=+1.6559 | verr=0.4% rip=1.0% eff=99% | calls=7 | t=764s
+  [llm_fixed][seed=1116] ep  160/200 | avg_r=+1.6948 | verr=0.2% rip=0.6% eff=99% | calls=8 | t=812s
+  [llm_fixed][seed=1116] ep  170/200 | avg_r=+1.6940 | verr=0.2% rip=0.5% eff=99% | calls=8 | t=867s
+  [llm_fixed][seed=1116] ep  180/200 | avg_r=+1.7264 | verr=0.3% rip=0.9% eff=99% | calls=9 | t=921s
+  [llm_fixed][seed=1116] ep  190/200 | avg_r=+1.6612 | verr=0.2% rip=0.6% eff=99% | calls=9 | t=966s
+  [llm_fixed][seed=1116] ep  200/200 | avg_r=+1.6130 | verr=0.2% rip=0.6% eff=99% | calls=10 | t=1018s
+  Trial 2 done: 1018s, 10 LLM calls
+
+--- Trial 3/3 (seed=1216) ---
+  [llm_fixed][seed=1216] ep    1/200 | avg_r=-4.7922 | verr=36.7% rip=51.8% eff=106% | calls=0 | t=0s
+  [llm_fixed][seed=1216] ep   10/200 | avg_r=+0.1860 | verr=0.8% rip=15.4% eff=96% | calls=0 | t=36s
+  [llm_fixed][seed=1216] ep   20/200 | avg_r=+0.3392 | verr=1.1% rip=4.3% eff=98% | calls=1 | t=81s
+  [llm_fixed][seed=1216] ep   30/200 | avg_r=+0.6189 | verr=1.9% rip=1.2% eff=99% | calls=1 | t=125s
+  [llm_fixed][seed=1216] ep   40/200 | avg_r=+0.6132 | verr=2.0% rip=1.2% eff=99% | calls=2 | t=168s
+  [llm_fixed][seed=1216] ep   50/200 | avg_r=+1.4691 | verr=2.9% rip=0.9% eff=99% | calls=2 | t=212s
+  [llm_fixed][seed=1216] ep   60/200 | avg_r=+1.4389 | verr=4.3% rip=1.3% eff=99% | calls=3 | t=260s
+  [llm_fixed][seed=1216] ep   70/200 | avg_r=+1.6677 | verr=5.7% rip=1.4% eff=100% | calls=3 | t=302s
+  [llm_fixed][seed=1216] ep   80/200 | avg_r=+1.6145 | verr=6.2% rip=1.2% eff=99% | calls=4 | t=353s
+  [llm_fixed][seed=1216] ep   90/200 | avg_r=+2.0451 | verr=6.8% rip=1.2% eff=99% | calls=4 | t=399s
+  [llm_fixed][seed=1216] ep  100/200 | avg_r=+1.9180 | verr=7.4% rip=1.3% eff=99% | calls=5 | t=449s
+  [llm_fixed][seed=1216] ep  110/200 | avg_r=+1.6978 | verr=6.9% rip=1.3% eff=99% | calls=5 | t=501s
+  [llm_fixed][seed=1216] ep  120/200 | avg_r=+1.7685 | verr=6.7% rip=1.3% eff=99% | calls=6 | t=555s
+  [llm_fixed][seed=1216] ep  130/200 | avg_r=+1.3112 | verr=6.5% rip=1.2% eff=99% | calls=6 | t=604s
+  [llm_fixed][seed=1216] ep  140/200 | avg_r=+1.4406 | verr=6.4% rip=1.5% eff=99% | calls=7 | t=655s
+  [llm_fixed][seed=1216] ep  150/200 | avg_r=+1.7209 | verr=5.7% rip=1.9% eff=99% | calls=7 | t=705s
+  [llm_fixed][seed=1216] ep  160/200 | avg_r=+1.9753 | verr=5.1% rip=0.9% eff=99% | calls=8 | t=752s
+  [llm_fixed][seed=1216] ep  170/200 | avg_r=+2.0235 | verr=5.1% rip=0.9% eff=99% | calls=8 | t=806s
+  [llm_fixed][seed=1216] ep  180/200 | avg_r=+2.0399 | verr=4.9% rip=1.0% eff=99% | calls=9 | t=860s
+  [llm_fixed][seed=1216] ep  190/200 | avg_r=+2.0657 | verr=4.9% rip=1.0% eff=98% | calls=9 | t=908s
+  [llm_fixed][seed=1216] ep  200/200 | avg_r=+2.0820 | verr=4.9% rip=1.0% eff=99% | calls=10 | t=961s
+  Trial 3 done: 961s, 10 LLM calls
+
+  Aggregate: final_reward=+1.6845¡À0.2899 | vo_err=3.99¡À2.80% | time=968¡À39s
+
+Results saved to logs\ablation\ablation_200ep_v1.json
+
+========================================================================================================================
+FINAL SUMMARY (200ep ¡Á 3 trials) ¡ª Full Multi-Objective Evaluation
+========================================================================================================================
+Strategy                        Reward   VoErr%     Rip%     Eff%      Ov%      Uv%  Recovms    Startms    P0%  Time(s)  Calls
+------------------------------------------------------------------------------------------------------------------------
+Random Search             +0.433¡À0.40   1.79¡À1.75   0.08¡À0.04   98.8¡À0.5   2.62¡À1.83   0.02¡À0.03   0.10¡À0.12     0.12¡À0.00    33%    945¡À27   10¡À0
+LLM Fixed-Interval (Ours) +1.684¡À0.29   3.99¡À2.78   0.03¡À0.02   98.9¡À0.2   3.99¡À2.96   0.09¡À0.12   0.20¡À0.10     0.13¡À0.01    33%    968¡À39   10¡À0

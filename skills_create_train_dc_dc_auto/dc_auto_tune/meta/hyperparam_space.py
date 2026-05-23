@@ -24,13 +24,12 @@ class HyperparamSpace:
     SAC_INT_PARAMS: set[str] = {"batch_size", "buffer_size"}
 
     WEIGHT_BOUNDS: dict[str, tuple[float, float]] = {
-        "w_vr": (0.0, 5.0),
         "w_ev": (0.0, 5.0),
+        "w_vr": (0.0, 5.0),
         "w_eff": (0.0, 5.0),
-        "w_tr": (0.0, 5.0),
         "w_os": (0.0, 5.0),
         "w_us": (0.0, 5.0),
-        "w_pm": (0.0, 5.0),
+        "w_tr": (0.0, 5.0),
         "w_ts": (0.0, 5.0),
     }
 

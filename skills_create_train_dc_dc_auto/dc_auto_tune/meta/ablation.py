@@ -210,8 +210,9 @@ def _norm_pdf(x: np.ndarray) -> np.ndarray:
 class LLMOptimizerWrapper:
     """Thin wrapper around LLMMetaOptimizer for uniform interface."""
 
-    def __init__(self, meta_config: MetaOptConfig, space: HyperparamSpace):
-        self.opt = LLMMetaOptimizer(meta_config, space)
+    def __init__(self, meta_config: MetaOptConfig, space: HyperparamSpace,
+                 user_preference: str = "balanced"):
+        self.opt = LLMMetaOptimizer(meta_config, space, user_preference=user_preference)
 
     def suggest(self, training_state: dict) -> dict:
         return self.opt.analyze_and_suggest(training_state)
@@ -256,10 +257,12 @@ def run_ablation(
             trial_rewards = []
             for ep in range(1, episodes_per_trial + 1):
                 obs = env.reset()
+                reward_fn.reset()
                 ep_reward = 0.0
                 for step in range(train_config.steps_per_episode):
                     action = agent.select_action(obs, evaluate=False)
-                    next_obs, r, _, _, info = env.step(action)
+                    next_obs, _, _, _, info = env.step(action)
+                    r = reward_fn.compute(info)
                     buffer.push(obs, torch.tensor([action]), r, next_obs, False)
                     obs = next_obs
                     ep_reward += r
@@ -275,7 +278,7 @@ def run_ablation(
                     state = {
                         "episode": ep,
                         "recent_rewards": trial_rewards[-20:],
-                        "metrics": {},
+                        "metrics": reward_fn.get_current_metrics(),
                         "current_sac": agent.params,
                         "current_weights": reward_fn.weights,
                     }

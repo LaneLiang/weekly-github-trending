@@ -35,16 +35,19 @@ class SACParams:
 
 @dataclass
 class RewardWeights:
-    """Multi-objective reward function weights."""
+    """Multi-objective reward function weights (7 active objectives).
 
-    w_vr: float = 1.0   # voltage regulation
-    w_ev: float = 1.0   # error voltage
+    Each weight scales its corresponding reward term in compute().
+    Weights are L1-normalized internally to prevent reward-scale drift.
+    """
+
+    w_ev: float = 1.0   # voltage error
+    w_vr: float = 1.0   # voltage ripple
     w_eff: float = 0.5  # efficiency
-    w_tr: float = 0.8   # transient response
     w_os: float = 0.8   # overshoot
     w_us: float = 0.8   # undershoot
-    w_pm: float = 0.3   # phase margin
-    w_ts: float = 0.5   # settling time
+    w_tr: float = 0.8   # transient recovery
+    w_ts: float = 0.5   # startup time
 
 
 @dataclass

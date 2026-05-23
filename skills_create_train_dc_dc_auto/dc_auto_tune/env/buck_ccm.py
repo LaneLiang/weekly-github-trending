@@ -30,6 +30,7 @@ class BuckCCMEnv(DCDCEnv):
         self.max_steps: int = 2000
         self._in_dcm: bool = False
         self._dcm_entered_this_cycle: bool = False
+        self._i_in_accum: float = 0.0
 
     def reset(self) -> torch.Tensor:
         """Reset environment to zero initial conditions."""
@@ -40,6 +41,7 @@ class BuckCCMEnv(DCDCEnv):
         self.step_count = 0
         self._in_dcm = False
         self._dcm_entered_this_cycle = False
+        self._i_in_accum = 0.0
         return self._get_obs()
 
     def step(self, action: float) -> tuple[torch.Tensor, float, bool, bool, dict]:
@@ -71,6 +73,7 @@ class BuckCCMEnv(DCDCEnv):
                     dvo_dt = -self.vo / (self.p.R_load * self.p.C)
                     self.vo += dvo_dt * self.dt
                     self.step_count += 1
+                    self._i_in_accum += 0.0
                     continue
 
             if is_on:
@@ -89,16 +92,26 @@ class BuckCCMEnv(DCDCEnv):
                 self._in_dcm = True
                 self._dcm_entered_this_cycle = True
 
+            self._i_in_accum += self.iL if is_on else 0.0
             self.step_count += 1
 
         self.d_prev = d
         error = self.p.vout_ref - self.vo
         self.integral_error += error * self.T_sw
+        t = self.step_count * self.dt
+        i_in_avg = self._i_in_accum / self.dt_per_cycle
+        self._i_in_accum = 0.0
+        p_in = self.p.vin * i_in_avg
+        p_out = self.vo * (self.vo / max(self.p.R_load, 1e-6))
         info = {
             "vo": self.vo,
             "iL": self.iL,
             "d": d,
             "mode": "DCM" if self._dcm_entered_this_cycle else "CCM",
+            "t": t,
+            "i_in": i_in_avg,
+            "p_in": p_in,
+            "p_out": p_out,
         }
         terminated = self.step_count >= self.max_steps
         reward = float(-abs(error) / self.p.vout_ref)

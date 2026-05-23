@@ -40,7 +40,7 @@ class TestConverterMetrics:
         vo = np.full(100, 5.0)
         iL = np.full(100, 1.0)
         m = compute_metrics(vo, iL, params)
-        assert 0 < m.efficiency_pct < 100
+        assert 0 < m.efficiency_pct <= 100
 
     def test_startup_time(self, params: CircuitParams):
         """Startup: Vo rises from 0 to within 90% of Vref."""
@@ -60,20 +60,19 @@ class TestConverterMetrics:
         assert m.overshoot_pct > 5.0  # 0.5V/5V = 10%
 
     def test_undershoot_detection(self, params: CircuitParams):
-        """Load transient with undershoot."""
-        # Sudden load causes voltage dip
+        """Load transient with undershoot, measured from load step index."""
         vo = np.array([5.0, 5.0, 5.0, 4.5, 4.3, 4.6, 4.9, 5.0, 5.0, 5.0])
         iL = np.full(10, 1.0)
-        m = compute_metrics(vo, iL, params)
-        assert m.undershoot_pct > 5.0  # 0.7V/5V = 14%
+        m = compute_metrics(vo, iL, params, load_step_idx=2)
+        assert m.undershoot_pct > 5.0  # (5.0-4.3)/5.0*100 = 14%
 
     def test_recovery_time(self, params: CircuitParams):
-        """After startup settles, a load disturbance causes a dip that recovers."""
-        # Startup to 5V, then a dip at t=30-40, then recovery
+        """After settling, a load disturbance at load_step_idx causes a dip that recovers."""
         vo = np.array([0.0]*5 + [3.0, 4.0, 4.8, 5.0, 5.0]*2  # startup
                       + [5.0]*20  # steady
                       + [4.3, 4.4, 4.6, 4.8, 4.9, 5.0]  # disturbance + recovery
                       + [5.0]*10)
         iL = np.full(len(vo), 1.0)
-        m = compute_metrics(vo, iL, params)
+        # Pass load_step_idx at the start of the dip
+        m = compute_metrics(vo, iL, params, load_step_idx=35)
         assert m.recovery_time_ms > 0

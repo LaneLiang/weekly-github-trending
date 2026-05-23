@@ -28,6 +28,7 @@ from dc_auto_tune.env.buck_ccm import BuckCCMEnv
 from dc_auto_tune.env.rewards import MultiObjectiveReward
 from dc_auto_tune.rl.sac_agent import SACAgent
 from dc_auto_tune.rl.replay_buffer import ReplayBuffer
+from dc_auto_tune.eval.metrics import compute_metrics, check_tier
 from dc_auto_tune.meta.hyperparam_space import HyperparamSpace
 from dc_auto_tune.meta.plateau_detector import PlateauDetector
 from dc_auto_tune.meta.ablation import (
@@ -88,12 +89,14 @@ def train_one_trial(
 
     for ep in range(1, episodes + 1):
         obs = env.reset()
+        reward_fn.reset()
         ep_reward = 0.0
         ep_vo = []
 
         for step in range(train_config.steps_per_episode):
             action = agent.select_action(obs, evaluate=False)
-            next_obs, r, _, _, info = env.step(action)
+            next_obs, _, _, _, info = env.step(action)
+            r = reward_fn.compute(info)
             buffer.push(obs, torch.tensor([action]), r, next_obs, False)
             obs = next_obs
             ep_reward += r
@@ -127,13 +130,7 @@ def train_one_trial(
             state = {
                 "episode": ep,
                 "recent_rewards": list(reward_window),
-                "metrics": {
-                    "vo_ripple_pct": vo_ripple,
-                    "vo_error_pct": vo_error,
-                    "recovery_time_ms": 0,
-                    "overshoot_pct": 0,
-                    "undershoot_pct": 0,
-                },
+                "metrics": reward_fn.get_current_metrics(),
                 "current_sac": agent.params,
                 "current_weights": reward_fn.weights,
             }
@@ -151,25 +148,95 @@ def train_one_trial(
             intervention_eps.append(ep)
 
         if ep % 10 == 0 or ep == 1:
+            m = reward_fn.get_current_metrics()
             print(f"  [{name}][seed={seed}] ep {ep:4d}/{episodes} | "
-                  f"avg_r={avg_r:+.4f} | vo_err={vo_error:.2f}% | "
+                  f"avg_r={avg_r:+.4f} | verr={m.get('vo_error_pct',vo_error):.1f}% "
+                  f"rip={m.get('vo_ripple_pct',vo_ripple):.1f}% "
+                  f"eff={m.get('efficiency_pct',0):.0f}% | "
                   f"calls={llm_calls} | t={time.time()-t0:.0f}s")
+
+    # ---- Final 7-metric evaluation on trained policy ----
+    eval_metrics = _evaluate_policy(agent, circuit_config, n_steps=1000)
 
     elapsed = time.time() - t0
     final_vo = vo_readings[-100:] if vo_readings else []
     final_vo_mean = float(np.mean(final_vo)) if final_vo else 0
     final_vo_std = float(np.std(final_vo)) if len(final_vo) >= 10 else 0
 
+    # Check P0/P1/P2 tier pass
+    p0_pass, p0_detail = check_tier(eval_metrics, "P0")
+    p1_pass, p1_detail = check_tier(eval_metrics, "P1")
+    p2_pass, p2_detail = check_tier(eval_metrics, "P2")
+
     return {
         "rewards": rewards,
         "llm_calls": llm_calls,
         "intervention_eps": intervention_eps,
         "elapsed_s": elapsed,
+        # Legacy simple metrics
         "final_vo_error_pct": vo_error,
         "final_vo_ripple_pct": vo_ripple,
         "final_vo_mean": final_vo_mean,
         "final_vo_std": final_vo_std,
+        # Full 7-metric evaluation
+        "eval_metrics": eval_metrics,
+        "p0_pass": p0_pass,
+        "p0_detail": p0_detail,
+        "p1_pass": p1_pass,
+        "p1_detail": p1_detail,
+        "p2_pass": p2_pass,
+        "p2_detail": p2_detail,
     }
+
+
+def _evaluate_policy(
+    agent: SACAgent,
+    circuit: "CircuitParams",
+    n_steps: int = 1000,
+) -> dict:
+    """Run a full evaluation rollout with startup + load-step transient.
+
+    First half: startup from zero initial conditions at nominal load.
+    Midpoint: load step (R_load halved → 2× load current).
+    Second half: recovery under heavy load.
+    """
+    from copy import deepcopy
+    from dc_auto_tune.utils.types_ import CircuitParams
+    env = BuckCCMEnv(circuit)
+    obs = env.reset()
+    vo_history = []
+    il_history = []
+    p_in_history = []
+    p_out_history = []
+    load_step_idx: int | None = None
+
+    half = n_steps // 2
+    nominal_rload = circuit.R_load
+
+    for i in range(n_steps):
+        action = agent.select_action(obs, evaluate=True)
+        obs, _, done, _, info = env.step(action)
+        vo_history.append(info["vo"])
+        il_history.append(info.get("iL", 0.0))
+        p_in_history.append(info.get("p_in", 0.0))
+        p_out_history.append(info.get("p_out", 0.0))
+        if done:
+            break
+        if i == half:
+            load_step_idx = len(vo_history)  # next sample will be post-step
+            env.p.R_load = nominal_rload * 0.5  # 2× load current
+
+    dt = env.T_sw  # one env.step() = one switching cycle
+    m = compute_metrics(
+        np.array(vo_history),
+        np.array(il_history),
+        circuit,
+        dt=dt,
+        p_in_history=np.array(p_in_history),
+        p_out_history=np.array(p_out_history),
+        load_step_idx=load_step_idx,
+    )
+    return m.to_dict()
 
 
 def aggregate_trials(trials: list[dict]) -> dict:
@@ -183,6 +250,20 @@ def aggregate_trials(trials: list[dict]) -> dict:
     calls = [t["llm_calls"] for t in trials]
     vo_errors = [t["final_vo_error_pct"] for t in trials]
     vo_ripples = [t["final_vo_ripple_pct"] for t in trials]
+
+    # Aggregate full 7-metric evaluation
+    eval_keys = ["vo_error_pct", "vo_ripple_pct", "efficiency_pct",
+                 "overshoot_pct", "undershoot_pct", "recovery_time_ms", "startup_time_ms"]
+    eval_agg = {}
+    for key in eval_keys:
+        vals = [t.get("eval_metrics", {}).get(key, 0) for t in trials]
+        eval_agg[f"eval_{key}_mean"] = float(np.mean(vals)) if vals else 0
+        eval_agg[f"eval_{key}_std"] = float(np.std(vals)) if len(vals) > 1 else 0
+
+    # P0/P1/P2 pass rates
+    p0_rate = sum(1 for t in trials if t.get("p0_pass", False)) / len(trials)
+    p1_rate = sum(1 for t in trials if t.get("p1_pass", False)) / len(trials)
+    p2_rate = sum(1 for t in trials if t.get("p2_pass", False)) / len(trials)
 
     return {
         "reward_mean": rewards_matrix.mean(axis=0).tolist(),
@@ -199,6 +280,11 @@ def aggregate_trials(trials: list[dict]) -> dict:
         "vo_ripple_std": float(np.std(vo_ripples)),
         "n_trials": len(trials),
         "per_trial": trials,
+        # Full 7-metric aggregate
+        **eval_agg,
+        "p0_pass_rate": p0_rate,
+        "p1_pass_rate": p1_rate,
+        "p2_pass_rate": p2_rate,
     }
 
 
@@ -212,6 +298,8 @@ def main():
                         help="Steps per episode (default: 200)")
     parser.add_argument("--strategies", type=str, default="all",
                         help="Comma-separated: random,bayesopt,llm_fixed,llm_event or 'all'")
+    parser.add_argument("--interval", type=int, default=None,
+                        help="LLM intervention interval in episodes (default: 50)")
     parser.add_argument("--output", type=str, default=None,
                         help="Output JSON path (default: logs/ablation/results_expanded.json)")
     args = parser.parse_args()
@@ -220,7 +308,7 @@ def main():
     config.train.n_episodes = args.episodes
     config.train.steps_per_episode = args.steps
     config.train.warmup_steps = 500
-    config.meta.intervention_interval = 50
+    config.meta.intervention_interval = args.interval if args.interval is not None else 50
 
     print(f"=== Expanded Ablation Study ===")
     print(f"Episodes: {args.episodes}, Steps/ep: {args.steps}, Trials: {args.trials}")
@@ -312,18 +400,28 @@ def main():
     print(f"\nResults saved to {out_path}")
 
     # Print summary table
-    print(f"\n{'='*80}")
-    print(f"FINAL SUMMARY ({args.episodes}ep × {args.trials} trials)")
-    print(f"{'='*80}")
-    print(f"{'Strategy':<25} {'Final Reward':>16} {'Vo Err %':>10} {'Ripple %':>10} {'Time (s)':>10} {'LLM Calls':>10}")
-    print("-" * 85)
+    print(f"\n{'='*120}")
+    print(f"FINAL SUMMARY ({args.episodes}ep × {args.trials} trials) — Full Multi-Objective Evaluation")
+    print(f"{'='*120}")
+    header = (f"{'Strategy':<25} {'Reward':>12} {'VoErr%':>8} {'Rip%':>8} "
+              f"{'Eff%':>8} {'Ov%':>8} {'Uv%':>8} {'Recovms':>8} {'Startms':>10} "
+              f"{'P0%':>6} {'Time(s)':>8} {'Calls':>6}")
+    print(header)
+    print("-" * 120)
     for name in strategy_names:
         r = all_results[name]
-        print(f"{r['label']:<25} {r['final_reward_mean']:>+8.4f}±{r['final_reward_std']:.4f} "
-              f"{r['vo_error_mean']:>8.2f}±{r['vo_error_std']:.2f} "
-              f"{r['vo_ripple_mean']:>8.2f}±{r['vo_ripple_std']:.2f} "
-              f"{r['elapsed_s_mean']:>8.0f}±{r['elapsed_s_std']:.0f} "
-              f"{r['llm_calls_mean']:>8.0f}±{r['llm_calls_std']:.0f}")
+        print(f"{r['label']:<25} "
+              f"{r['final_reward_mean']:>+6.3f}±{r['final_reward_std']:.2f} "
+              f"{r.get('eval_vo_error_pct_mean', 0):>6.2f}±{r.get('eval_vo_error_pct_std', 0):.2f} "
+              f"{r.get('eval_vo_ripple_pct_mean', 0):>6.2f}±{r.get('eval_vo_ripple_pct_std', 0):.2f} "
+              f"{r.get('eval_efficiency_pct_mean', 0):>6.1f}±{r.get('eval_efficiency_pct_std', 0):.1f} "
+              f"{r.get('eval_overshoot_pct_mean', 0):>6.2f}±{r.get('eval_overshoot_pct_std', 0):.2f} "
+              f"{r.get('eval_undershoot_pct_mean', 0):>6.2f}±{r.get('eval_undershoot_pct_std', 0):.2f} "
+              f"{r.get('eval_recovery_time_ms_mean', 0):>6.2f}±{r.get('eval_recovery_time_ms_std', 0):.2f} "
+              f"{r.get('eval_startup_time_ms_mean', 0):>8.2f}±{r.get('eval_startup_time_ms_std', 0):.2f} "
+              f"{r.get('p0_pass_rate', 0)*100:>5.0f}% "
+              f"{r['elapsed_s_mean']:>6.0f}±{r['elapsed_s_std']:.0f} "
+              f"{r['llm_calls_mean']:>4.0f}±{r['llm_calls_std']:.0f}")
 
 
 if __name__ == "__main__":

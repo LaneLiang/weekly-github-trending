@@ -1,0 +1,55 @@
+=== Expanded Ablation Study ===
+Episodes: 200, Steps/ep: 200, Trials: 3
+Total: 40000 steps per trial
+LLM: deepseek-chat
+
+============================================================
+Strategy: Random Search (3 trials ¡Á 200 ep)
+Event-triggered: False
+============================================================
+
+--- Trial 1/3 (seed=299) ---
+  [random][seed=299] ep    1/200 | avg_r=-4.3655 | verr=32.8% rip=61.0% eff=99% | calls=0 | t=0s
+  [random][seed=299] ep   10/200 | avg_r=+0.4745 | verr=0.1% rip=3.9% eff=100% | calls=0 | t=38s
+  [random][seed=299] ep   20/200 | avg_r=+0.4965 | verr=1.2% rip=1.3% eff=99% | calls=1 | t=85s
+  [random][seed=299] ep   30/200 | avg_r=+0.5519 | verr=1.2% rip=1.1% eff=98% | calls=1 | t=132s
+  [random][seed=299] ep   40/200 | avg_r=+0.5614 | verr=1.3% rip=1.5% eff=99% | calls=2 | t=182s
+  [random][seed=299] ep   50/200 | avg_r=+0.5296 | verr=1.5% rip=0.9% eff=99% | calls=2 | t=232s
+  [random][seed=299] ep   60/200 | avg_r=+0.4061 | verr=1.9% rip=1.2% eff=99% | calls=3 | t=284s
+  [random][seed=299] ep   70/200 | avg_r=+0.3970 | verr=3.0% rip=2.5% eff=99% | calls=3 | t=336s
+  [random][seed=299] ep   80/200 | avg_r=+0.3471 | verr=1.9% rip=1.2% eff=98% | calls=4 | t=386s
+  [random][seed=299] ep   90/200 | avg_r=+0.5600 | verr=1.2% rip=1.2% eff=99% | calls=4 | t=439s
+  [random][seed=299] ep  100/200 | avg_r=+0.4160 | verr=1.7% rip=1.4% eff=99% | calls=5 | t=491s
+  [random][seed=299] ep  110/200 | avg_r=+0.5489 | verr=0.5% rip=3.0% eff=98% | calls=5 | t=538s
+  [random][seed=299] ep  120/200 | avg_r=+0.4771 | verr=1.9% rip=0.7% eff=99% | calls=6 | t=589s
+  [random][seed=299] ep  130/200 | avg_r=+0.5019 | verr=1.7% rip=0.9% eff=99% | calls=6 | t=643s
+  [random][seed=299] ep  140/200 | avg_r=+0.5300 | verr=1.4% rip=0.7% eff=99% | calls=7 | t=691s
+  [random][seed=299] ep  150/200 | avg_r=+0.3894 | verr=1.7% rip=0.6% eff=99% | calls=7 | t=741s
+  [random][seed=299] ep  160/200 | avg_r=+0.4251 | verr=1.6% rip=0.4% eff=99% | calls=8 | t=794s
+  [random][seed=299] ep  170/200 | avg_r=+0.4562 | verr=1.7% rip=0.6% eff=99% | calls=8 | t=843s
+  [random][seed=299] ep  180/200 | avg_r=+0.4778 | verr=1.6% rip=0.8% eff=99% | calls=9 | t=897s
+  [random][seed=299] ep  190/200 | avg_r=+0.4372 | verr=1.0% rip=1.5% eff=100% | calls=9 | t=950s
+  [random][seed=299] ep  200/200 | avg_r=+0.4461 | verr=0.7% rip=2.8% eff=100% | calls=10 | t=1001s
+  Trial 1 done: 1001s, 10 LLM calls
+
+--- Trial 2/3 (seed=399) ---
+  [random][seed=399] ep    1/200 | avg_r=-2.0722 | verr=19.5% rip=63.0% eff=93% | calls=0 | t=0s
+  [random][seed=399] ep   10/200 | avg_r=+0.2737 | verr=1.8% rip=4.0% eff=100% | calls=0 | t=39s
+  [random][seed=399] ep   20/200 | avg_r=+0.5225 | verr=1.3% rip=1.9% eff=99% | calls=1 | t=97s
+  [random][seed=399] ep   30/200 | avg_r=+0.5008 | verr=1.6% rip=1.2% eff=99% | calls=1 | t=151s
+  [random][seed=399] ep   40/200 | avg_r=+0.5342 | verr=1.7% rip=0.9% eff=99% | calls=2 | t=211s
+  [random][seed=399] ep   50/200 | avg_r=+0.3832 | verr=2.0% rip=1.2% eff=99% | calls=2 | t=265s
+  [random][seed=399] ep   60/200 | avg_r=+0.4244 | verr=1.9% rip=0.7% eff=99% | calls=3 | t=315s
+  [random][seed=399] ep   70/200 | avg_r=+0.2083 | verr=1.9% rip=0.7% eff=99% | calls=3 | t=380s
+  [random][seed=399] ep   80/200 | avg_r=+0.3470 | verr=1.8% rip=0.8% eff=99% | calls=4 | t=438s
+  [random][seed=399] ep   90/200 | avg_r=+0.4906 | verr=1.6% rip=2.0% eff=98% | calls=4 | t=501s
+  [random][seed=399] ep  100/200 | avg_r=+0.3497 | verr=1.9% rip=0.6% eff=99% | calls=5 | t=560s
+  [random][seed=399] ep  110/200 | avg_r=+0.4948 | verr=1.9% rip=0.6% eff=99% | calls=5 | t=624s
+  [random][seed=399] ep  120/200 | avg_r=+0.5698 | verr=1.8% rip=0.4% eff=99% | calls=6 | t=681s
+  [random][seed=399] ep  130/200 | avg_r=+0.3780 | verr=1.8% rip=0.6% eff=99% | calls=6 | t=740s
+  [random][seed=399] ep  140/200 | avg_r=+0.4058 | verr=1.7% rip=0.7% eff=99% | calls=7 | t=803s
+  [random][seed=399] ep  150/200 | avg_r=+0.6595 | verr=1.7% rip=0.6% eff=99% | calls=7 | t=862s
+  [random][seed=399] ep  160/200 | avg_r=+0.6556 | verr=1.7% rip=0.8% eff=99% | calls=8 | t=921s
+  [random][seed=399] ep  170/200 | avg_r=+0.7902 | verr=1.5% rip=0.4% eff=99% | calls=8 | t=974s
+  [random][seed=399] ep  180/200 | avg_r=+0.7940 | verr=1.5% rip=0.5% eff=99% | calls=9 | t=1034s
+  [random][seed=399] ep  190/200 | avg_r=+0.9069 | verr=1.4% rip=0.5% eff=99% | calls=9 | t=1101s

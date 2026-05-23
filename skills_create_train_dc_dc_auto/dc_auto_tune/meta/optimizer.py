@@ -183,7 +183,7 @@ class LLMMetaOptimizer:
         # primary gate is failing (reinforcement against reward hacking).
         current_metrics = training_state.get("metrics", {})
         vo_error = current_metrics.get("vo_error_pct", None)
-        if vo_error is not None and vo_error >= 0.5:
+        if vo_error is None or vo_error >= 0.5:
             current_w_ev = training_state.get("current_weights", None)
             if current_w_ev is not None and hasattr(current_w_ev, "w_ev"):
                 old_w_ev = current_w_ev.w_ev

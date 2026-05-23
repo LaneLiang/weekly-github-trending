@@ -30,13 +30,15 @@ class Trainer:
     hyperparameter / reward-weight adjustments.
     """
 
-    def __init__(self, config: Config, api_key: str | None = None):
+    def __init__(self, config: Config, api_key: str | None = None,
+                 user_preference: str = "balanced"):
         self.config = config
         self.env = BuckCCMEnv(config.circuit)
         self.reward_fn = MultiObjectiveReward(config.circuit.vout_ref, config.reward_weights)
         self.agent = SACAgent(obs_dim=8, action_dim=1, params=config.sac)
         self.buffer = ReplayBuffer(config.sac.buffer_size, obs_dim=8, action_dim=1)
-        self.meta_opt = LLMMetaOptimizer(config.meta, HyperparamSpace(), api_key)
+        self.meta_opt = LLMMetaOptimizer(config.meta, HyperparamSpace(), api_key,
+                                          user_preference=user_preference)
         self.randomizer = DomainRandomizer(config.perturbation)
         self.logger = TrainingLogger()
         self.current_episode = 0
@@ -66,12 +68,14 @@ class Trainer:
                 perturbed = self.randomizer.sample(self.config.circuit)
                 self.env.p = perturbed
             obs = self.env.reset()
+            self.reward_fn.reset()
             ep_reward = 0.0
             ep_metrics = {}
 
             for step in range(self.config.train.steps_per_episode):
                 action = self.agent.select_action(obs, evaluate=False)
-                next_obs, reward, done, _, info = self.env.step(action)
+                next_obs, _env_r, done, _, info = self.env.step(action)
+                reward = self.reward_fn.compute(info)
                 self.buffer.push(obs, torch.tensor([action]), reward, next_obs, done)
                 self.global_step += 1
                 obs = next_obs
@@ -87,11 +91,13 @@ class Trainer:
                     break
 
             self.reward_window.append(ep_reward / (step + 1))
+            current_metrics = self.reward_fn.get_current_metrics()
             self.logger.log_episode({
                 "episode": self.current_episode,
                 "avg_reward": np.mean(self.reward_window),
-                "vo_ripple": 0,
-                "vo_error": abs(self.config.circuit.vout_ref - info.get("vo", 0)),
+                "vo_ripple": current_metrics.get("vo_ripple_pct", 0),
+                "vo_error": current_metrics.get("vo_error_pct", 0),
+                "efficiency": current_metrics.get("efficiency_pct", 0),
                 "critic_loss": ep_metrics.get("critic_loss", 0),
                 "actor_loss": ep_metrics.get("actor_loss", 0),
                 "alpha": ep_metrics.get("alpha", 0),
@@ -122,7 +128,7 @@ class Trainer:
         state = {
             "episode": self.current_episode,
             "recent_rewards": list(self.reward_window),
-            "metrics": {},
+            "metrics": self.reward_fn.get_current_metrics(),
             "current_sac": self.agent.params,
             "current_weights": self.reward_fn.weights,
         }

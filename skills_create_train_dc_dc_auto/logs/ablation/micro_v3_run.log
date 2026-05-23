@@ -1,0 +1,81 @@
+=== Expanded Ablation Study ===
+Episodes: 50, Steps/ep: 200, Trials: 3
+Total: 10000 steps per trial
+LLM: deepseek-chat
+
+============================================================
+Strategy: Random Search (3 trials ¡Á 50 ep)
+Event-triggered: False
+============================================================
+
+--- Trial 1/3 (seed=524) ---
+  [random][seed=524] ep    1/50 | avg_r=-0.6610 | verr=5.9% rip=38.5% eff=100% | calls=0 | t=0s
+  [random][seed=524] ep   10/50 | avg_r=+0.3727 | verr=0.6% rip=4.3% eff=100% | calls=0 | t=24s
+  [random][seed=524] ep   20/50 | avg_r=+0.5360 | verr=1.1% rip=1.7% eff=98% | calls=0 | t=66s
+  [random][seed=524] ep   30/50 | avg_r=+0.4231 | verr=1.6% rip=1.3% eff=100% | calls=0 | t=108s
+  [random][seed=524] ep   40/50 | avg_r=+0.5413 | verr=1.2% rip=1.5% eff=99% | calls=0 | t=156s
+  [random][seed=524] ep   50/50 | avg_r=+0.5676 | verr=0.6% rip=0.8% eff=99% | calls=1 | t=202s
+  Trial 1 done: 202s, 1 LLM calls
+
+--- Trial 2/3 (seed=624) ---
+  [random][seed=624] ep    1/50 | avg_r=-0.5269 | verr=1.5% rip=23.5% eff=91% | calls=0 | t=0s
+  [random][seed=624] ep   10/50 | avg_r=+0.1640 | verr=3.0% rip=2.9% eff=100% | calls=0 | t=38s
+  [random][seed=624] ep   20/50 | avg_r=+0.2812 | verr=3.7% rip=2.4% eff=98% | calls=0 | t=88s
+  [random][seed=624] ep   30/50 | avg_r=+0.3178 | verr=4.2% rip=1.5% eff=99% | calls=0 | t=130s
+  [random][seed=624] ep   40/50 | avg_r=+0.3257 | verr=4.4% rip=1.3% eff=99% | calls=0 | t=178s
+  [random][seed=624] ep   50/50 | avg_r=+0.3279 | verr=4.1% rip=1.1% eff=99% | calls=1 | t=227s
+  Trial 2 done: 227s, 1 LLM calls
+
+--- Trial 3/3 (seed=724) ---
+  [random][seed=724] ep    1/50 | avg_r=-4.5481 | verr=34.0% rip=96.9% eff=101% | calls=0 | t=0s
+  [random][seed=724] ep   10/50 | avg_r=+0.2280 | verr=3.3% rip=5.0% eff=97% | calls=0 | t=36s
+  [random][seed=724] ep   20/50 | avg_r=+0.2910 | verr=1.8% rip=3.9% eff=100% | calls=0 | t=77s
+  [random][seed=724] ep   30/50 | avg_r=+0.5602 | verr=0.2% rip=2.9% eff=99% | calls=0 | t=125s
+  [random][seed=724] ep   40/50 | avg_r=+0.5703 | verr=0.6% rip=1.2% eff=98% | calls=0 | t=179s
+  [random][seed=724] ep   50/50 | avg_r=+0.5815 | verr=0.8% rip=0.6% eff=99% | calls=1 | t=240s
+  Trial 3 done: 240s, 1 LLM calls
+
+  Aggregate: final_reward=+0.4893¡À0.1191 | vo_err=1.84¡À1.60% | time=223¡À16s
+============================================================
+Strategy: LLM Fixed-Interval (Ours) (3 trials ¡Á 50 ep)
+Event-triggered: False
+============================================================
+
+--- Trial 1/3 (seed=939) ---
+  [llm_fixed][seed=939] ep    1/50 | avg_r=-3.5412 | verr=34.3% rip=36.1% eff=86% | calls=0 | t=0s
+  [llm_fixed][seed=939] ep   10/50 | avg_r=+0.1579 | verr=1.4% rip=11.7% eff=98% | calls=0 | t=45s
+  [llm_fixed][seed=939] ep   20/50 | avg_r=+0.2399 | verr=3.9% rip=4.1% eff=98% | calls=0 | t=88s
+  [llm_fixed][seed=939] ep   30/50 | avg_r=+0.2654 | verr=4.3% rip=2.5% eff=98% | calls=0 | t=133s
+  [llm_fixed][seed=939] ep   40/50 | avg_r=+0.2731 | verr=3.8% rip=2.3% eff=99% | calls=0 | t=177s
+  [llm_fixed][seed=939] ep   50/50 | avg_r=+0.2656 | verr=3.7% rip=2.5% eff=99% | calls=1 | t=230s
+  Trial 1 done: 230s, 1 LLM calls
+
+--- Trial 2/3 (seed=1039) ---
+  [llm_fixed][seed=1039] ep    1/50 | avg_r=-5.0762 | verr=42.9% rip=67.5% eff=87% | calls=0 | t=0s
+  [llm_fixed][seed=1039] ep   10/50 | avg_r=+0.2724 | verr=1.4% rip=7.5% eff=97% | calls=0 | t=34s
+  [llm_fixed][seed=1039] ep   20/50 | avg_r=+0.2524 | verr=0.2% rip=6.5% eff=98% | calls=0 | t=85s
+  [llm_fixed][seed=1039] ep   30/50 | avg_r=+0.3822 | verr=1.5% rip=3.3% eff=98% | calls=0 | t=135s
+  [llm_fixed][seed=1039] ep   40/50 | avg_r=+0.4803 | verr=1.1% rip=2.8% eff=99% | calls=0 | t=192s
+  [llm_fixed][seed=1039] ep   50/50 | avg_r=+0.5163 | verr=1.1% rip=0.9% eff=98% | calls=1 | t=244s
+  Trial 2 done: 244s, 1 LLM calls
+
+--- Trial 3/3 (seed=1139) ---
+  [llm_fixed][seed=1139] ep    1/50 | avg_r=-0.6376 | verr=3.7% rip=50.4% eff=110% | calls=0 | t=0s
+  [llm_fixed][seed=1139] ep   10/50 | avg_r=+0.2263 | verr=0.1% rip=8.6% eff=97% | calls=0 | t=32s
+  [llm_fixed][seed=1139] ep   20/50 | avg_r=+0.2809 | verr=1.8% rip=5.1% eff=98% | calls=0 | t=86s
+  [llm_fixed][seed=1139] ep   30/50 | avg_r=+0.4930 | verr=0.9% rip=1.9% eff=99% | calls=0 | t=136s
+  [llm_fixed][seed=1139] ep   40/50 | avg_r=+0.5860 | verr=0.8% rip=0.9% eff=100% | calls=0 | t=193s
+  [llm_fixed][seed=1139] ep   50/50 | avg_r=+0.6160 | verr=0.9% rip=0.7% eff=99% | calls=1 | t=249s
+  Trial 3 done: 249s, 1 LLM calls
+
+  Aggregate: final_reward=+0.4396¡À0.1393 | vo_err=1.90¡À1.25% | time=241¡À8s
+
+Results saved to logs\ablation\micro_v3_fixed_eval.json
+
+========================================================================================================================
+FINAL SUMMARY (50ep ¡Á 3 trials) ¡ª Full Multi-Objective Evaluation
+========================================================================================================================
+Strategy                        Reward   VoErr%     Rip%     Eff%      Ov%      Uv%  Recovms    Startms    P0%  Time(s)  Calls
+------------------------------------------------------------------------------------------------------------------------
+Random Search             +0.489¡À0.12   1.88¡À1.68   0.17¡À0.16   98.4¡À1.1   2.57¡À1.35   9.09¡À0.60   0.11¡À0.11     0.14¡À0.02     0%    223¡À16    1¡À0
+LLM Fixed-Interval (Ours) +0.440¡À0.14   1.65¡À0.73   0.84¡À0.59   94.0¡À3.7   0.00¡À0.00   8.53¡À0.89   0.13¡À0.06     0.18¡À0.02     0%    241¡À8    1¡À0

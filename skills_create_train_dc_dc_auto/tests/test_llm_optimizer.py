@@ -82,9 +82,9 @@ class TestLLMMetaOptimizer:
             '"weight_updates": {"w_ev": 0.5, "w_vr": 2.0}}'
         )
         result = optimizer.analyze_and_suggest(state)
-        # P0 gate must force w_ev to at least 0.95 * old_w_ev
+        # P0 gate forces w_ev to min(old * 1.2, bound_max) = min(1.2, 5.0) = 1.2
         assert "weight_updates" in result
-        assert result["weight_updates"]["w_ev"] >= 0.95
+        assert result["weight_updates"]["w_ev"] >= 1.0  # must increase, not just stay flat
 
     @patch("dc_auto_tune.meta.llm_client.LLMClient")
     def test_vo_error_pass_allows_w_ev_adjustment(self, mock_llm, optimizer):
@@ -132,3 +132,27 @@ class TestLLMMetaOptimizer:
         assert "CRITICAL" in prompt
         assert "NOT AVAILABLE" in prompt
         assert "P0 FAIL" in prompt
+
+    @patch("dc_auto_tune.meta.llm_client.LLMClient")
+    def test_vo_error_none_prevents_w_ev_decrease(self, mock_llm, optimizer):
+        """Code-level gate: when vo_error_pct is None (missing data),
+        treat as worst case and force w_ev increase."""
+        current_weights = RewardWeights(w_ev=1.0)
+        state = {
+            "episode": 50,
+            "recent_rewards": [0.3, 0.35, 0.4],
+            "metrics": {
+                "vo_ripple_pct": 2.0,
+                "efficiency_pct": 90.0,
+                # vo_error_pct intentionally absent
+            },
+            "current_sac": SACParams(),
+            "current_weights": current_weights,
+        }
+        mock_llm.return_value.chat.return_value = (
+            '{"analysis": "try to reduce w_ev", '
+            '"weight_updates": {"w_ev": 0.3, "w_vr": 2.0}}'
+        )
+        result = optimizer.analyze_and_suggest(state)
+        assert "weight_updates" in result
+        assert result["weight_updates"]["w_ev"] >= 1.0  # forced increase
