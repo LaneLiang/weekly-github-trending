@@ -1,0 +1,109 @@
+% \IEEEPARstart{O}{ver} the past several decades, artificial intelligence (AI) has evolved into a transformative paradigm across scientific and engineering disciplines, fundamentally reshaping perception, control, and autonomous decision-making. Among its subfields, deep reinforcement learning (DRL), which combines the representational capacity of deep neural networks with the policy optimization framework of reinforcement learning, has demonstrated exceptional capability in solving sequential decision-making problems within complex and nonlinear environments~\cite{mnih2015human,8103164}. Owing to its model-free adaptability and interaction-driven learning mechanism, DRL has been increasingly recognized as a promising framework for real-time control and optimization in cyber-physical and energy-conversion systems.
+
+% \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=\linewidth]{fig/AI_Stacked_Above_DRL.pdf}
+%   \caption{Annual number of publications on AI and DRL in power electronic converter systems since 1993.}
+%   \label{fig:AI_Stacked_Above_DRL}
+% \end{figure}
+
+% Power electronic converters (PECs) underpin modern energy infrastructures by enabling renewable integration, electrified transportation, smart grids, and industrial automation. Their operation, however, involves strong nonlinearities, hybrid switching behavior, and time-varying operating conditions, which introduce inherent trade-offs among efficiency, robustness, and implementation cost. A wide spectrum of classical model-based control techniques, such as proportional integral differential (PID), model predictive control (MPC), sliding-mode control (SMC), linear quadratic regulation (LQR), fuzzy logic, and adaptive control, has been extensively employed to address these challenges. Although each method provides distinct advantages, such as robustness in SMC, computational efficiency in PID, or optimality in LQR, most remain constrained by their reliance on accurate system models, sensitivity to parameter variations, or high implementation complexity, which limits scalability in highly nonlinear or uncertain environments.
+
+% To overcome these limitations, DRL offers a data-driven and model-independent alternative capable of autonomously learning optimal policies through closed-loop interaction with the environment. From a lifecycle perspective, DRL can be leveraged across three complementary domains of PEC development: design, control, and maintenance. In the design domain, DRL enables topology exploration, parameter tuning, and multi-objective optimization to balance efficiency, power density, and thermal performance. In the control domain, DRL facilitates both independent learning-based control and hybrid architectures that combine classical and learning-based schemes. In the maintenance domain, DRL has been applied to condition monitoring, anomaly detection, fault diagnosis, and remaining useful life (RUL) prediction. Taken together, these capabilities indicate that DRL can serve as an integrative framework for converter design optimization, adaptive control, and health management within a unified learning-based paradigm.
+
+% \begin{figure}[!t]
+%   \centering
+%   \includegraphics[width=\linewidth]{fig/DRL_Task_Distribution.pdf}
+%   \caption{Distribution of DRL-related publications across design, control, and maintenance tasks in PECs.}
+%   \label{fig:DRL_Distribution}
+% \end{figure}
+
+% Despite rapid progress, existing studies on DRL applications for PECs remain fragmented and lack methodological consistency. As illustrated in Fig.~\ref{fig:AI_Stacked_Above_DRL}, research interest in AI-driven converter technologies has increased steadily since the early 1990s, with a pronounced surge in DRL-focused publications after 2019. However, as shown in Fig.~\ref{fig:DRL_Distribution}, more than 95\% of DRL-related papers published between 2018 and 2025 concentrate on converter control, whereas comparatively few address topology optimization or predictive maintenance.\footnote{Data source: Google Scholar, filtered by the keywords “deep reinforcement learning,” “power electronic converter systems,” and domain-specific task terms. The complete publication list is provided in the supplementary material.} This imbalance underscores the absence of a unified framework that systematically connects DRL methodologies with all phases of the converter lifecycle. Such fragmentation is not confined to individual studies but is also reflected in existing survey literature. 
+
+% Previous reviews on AI-based PECs technologies~\cite{cheng2019new,tang2021artificial} recognized the potential of DRL yet primarily treated it as a subset of broader AI paradigms. As a result, algorithmic structures, implementation challenges, and deployment strategies specific to DRL received limited analysis. Other surveys have focused on narrower application domains. For instance, Zhou \textit{et al.}~\cite{zhou2024leveraging} examined DRL for microgrid energy management and coordination, wwhereas Bui \textit{et al.}~\cite{bui2024critical} discussed safety-constrained reinforcement learning in smart-grid environments. These works offer valuable insights within their respective scopes but fail to capture the full spectrum of converter-oriented applications.
+
+% Furthermore, Chen \textit{et al.}~\cite{chen2024review} reviewed RL control strategies for various converter topologies and analyzed the transition from simulation to practical implementation. Glavic \textit{et al.}~\cite{glavic2019deep} presented a detailed classification of DRL-based control strategies encompassing normal, preventive, emergency, and resilient operation modes. Although these studies advanced the understanding of DRL-based control, their coverage remains largely restricted to the control domain.
+
+% Beyond control, converter design and maintenance involve topology exploration, parameter optimization, anomaly detection and fault diagnosis, and RUL estimation. Several recent works have addressed these aspects~\cite{zhao2020overview,mo2024power,fassi2023toward}. Zhao \textit{et al.}~\cite{zhao2020overview} discussed converter design, control, and maintenance but offered limited attention to DRL-oriented techniques. Mo \textit{et al.}~\cite{mo2024power} reviewed topology exploration approaches, ranging from expert-knowledge-based and computational enumeration methods to DRL and large language models (LLMs), yet without detailed algorithmic comparison. Fassi \textit{et al.}~\cite{fassi2023toward} investigated data-driven predictive maintenance, identifying DRL as an emerging but insufficiently explored approach.
+
+% Collectively, these studies highlight that current research remains fragmented and lacks a unified methodological framework that bridges DRL algorithms, application domains, and deployment strategies across the converter lifecycle. 
+% To address this gap, the present review provides a comprehensive and structured synthesis of DRL research in PECs from a full-lifecycle perspective, offering an integrative framework that links design, control, and maintenance methodologies with methodological consistency and cross-domain relevance. 
+% The main contributions of this study are summarized as follows:
+
+% \begin{enumerate}
+%   \item A systematic and lifecycle-oriented investigation of DRL methodologies for power electronic converters (PECs), identifying representative algorithms and application patterns across design, control, and maintenance domains.  
+%   \item A quantitative and chronological analysis of publication trends and technological milestones, offering a data-driven perspective on the evolution of DRL development within converter systems.  
+%   \item A critical and integrative assessment of the advantages, limitations, and prospective research directions of DRL-based converter applications, outlining pathways toward intelligent, adaptive, and self-optimizing converter systems that integrate learning-based decision mechanisms into practical power electronic applications.  
+% \end{enumerate}
+
+% Following this introduction, the remainder of the paper is organized as follows. Section~II reviews the fundamental DRL algorithms employed in PECs. Section~III examines their historical evolution and utilization trends. Sections~IV through VI discuss DRL applications in converter design, control, and maintenance, respectively. Section~VII summarizes future opportunities and challenges, and Section~VIII presents the concluding remarks.
+
+% -v2
+\IEEEPARstart{O}{ver} the past several decades, artificial intelligence (AI) has evolved into a transformative paradigm across science and engineering, redefining perception, optimization, and autonomous decision-making. 
+Among its subfields, deep reinforcement learning (DRL), which integrates the representational power of deep neural networks with the policy optimization framework of reinforcement learning, has achieved remarkable success in sequential decision-making under nonlinear and uncertain environments~\cite{mnih2015human,8103164}. 
+Through model-free adaptability and interaction-driven learning, DRL has demonstrated increasing capability in addressing design optimization, real-time control, and health management challenges across cyber–physical and energy-conversion systems.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{fig/AI_Stacked_Above_DRL.pdf}
+  \caption{Annual number of publications on AI and DRL in PECs since 1993.}
+  \label{fig:AI_Stacked_Above_DRL}
+\end{figure}
+
+Power electronic converters (PECs) form the backbone of modern energy infrastructures, enabling renewable integration, electrified transportation, microgrids, and industrial automation. 
+Their design, control, and maintenance processes, however, are inherently coupled and complicated by strong nonlinearities, hybrid switching behavior, and time-varying operating conditions. 
+A wide spectrum of classical model-based methods, including proportional–integral–derivative (PID), model predictive control (MPC), sliding-mode control (SMC), linear–quadratic regulation (LQR), fuzzy logic, and adaptive control, has been extensively employed to enhance converter performance. 
+Although each technique offers specific benefits such as robustness in SMC, computational efficiency in PID, or optimality in LQR, most remain constrained by model dependence, parameter sensitivity, or implementation complexity, which limits scalability in highly nonlinear or uncertain operating regimes.
+
+To overcome these limitations, DRL provides a unified data-driven framework capable of autonomously learning optimal design and control policies through closed-loop interaction with the environment. 
+From a lifecycle perspective, DRL can be leveraged across three complementary domains of PEC development, namely design, control, and maintenance, offering an integrative paradigm that unifies topology optimization, adaptive decision-making, and reliability management. 
+In the design domain, DRL enables topology exploration, parameter tuning, and multi-objective optimization to balance efficiency, power density, and thermal performance. 
+In the control domain, it supports both fully learning-based and hybrid architectures that combine model-driven and data-driven strategies. 
+In the maintenance domain, DRL facilitates condition monitoring, anomaly detection, fault diagnosis, and remaining useful life (RUL) prediction. 
+These advances position DRL as a versatile framework linking converter design, operation, and health management within a consistent learning-based ecosystem.
+
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=\linewidth]{fig/DRL_Task_Distribution.pdf}
+  \caption{Distribution of DRL-related publications across design, control, and maintenance tasks in PECs.}
+  \label{fig:DRL_Distribution}
+\end{figure}
+
+Despite rapid progress, existing studies on DRL for PECs remain fragmented and lack methodological coherence. 
+As illustrated in Fig.~\ref{fig:AI_Stacked_Above_DRL}, research activity in AI-driven converter technologies has expanded steadily since the 1990s, with a pronounced surge in DRL-oriented publications after 2019. 
+However, Fig.~\ref{fig:DRL_Distribution} shows that more than 95\% of DRL-related papers published from 2018 to 2025 focus on converter control, while a relatively small number address topology optimization or predictive maintenance.\footnote{Data source: Google Scholar, filtered by the keywords ``deep reinforcement learning,'' ``power electronic converter systems,'' and domain-specific task terms. } 
+% The complete publication list is provided in the supplementary material.
+This imbalance highlights the absence of a comprehensive, lifecycle-oriented framework that systematically integrates DRL methodologies with all stages of the converter lifecycle—a gap that remains unaddressed across individual studies and existing survey literature.
+
+Earlier reviews on AI-based PEC technologies~\cite{cheng2019new,tang2021artificial} acknowledged the potential of DRL but treated it mainly as a subset of broader AI paradigms. 
+Consequently, algorithmic mechanisms, implementation issues, and deployment strategies specific to DRL received limited discussion. 
+Other surveys have targeted narrower domains. 
+For instance, Zhou \textit{et al.}~\cite{zhou2024leveraging} examined DRL for microgrid energy management, while Bui \textit{et al.}~\cite{bui2024critical} analyzed safety-constrained reinforcement learning in smart-grid contexts. 
+Although valuable within their respective scopes, these works do not capture the full range of converter-oriented applications. 
+Similarly, Chen \textit{et al.}~\cite{chen2024review} reviewed RL control strategies for various converter topologies and discussed the transition from simulation to hardware, while Glavic \textit{et al.}~\cite{glavic2019deep} proposed a taxonomy of DRL-based control modes. 
+Despite advancing understanding within the control domain, these studies largely omit design and maintenance perspectives.
+
+Beyond control, converter design and maintenance encompass topology exploration, parameter optimization, anomaly detection, fault diagnosis, and RUL estimation. 
+Several recent reviews have begun to address these topics~\cite{zhao2020overview,mo2024power,fassi2023toward}. 
+Zhao \textit{et al.}~\cite{zhao2020overview} discussed converter design, control, and maintenance but devoted limited attention to DRL-specific methods. 
+Mo \textit{et al.}~\cite{mo2024power} surveyed topology-exploration techniques ranging from expert-knowledge heuristics to DRL and large-language-model (LLM)-based approaches, yet offered little comparative algorithmic insight. 
+Fassi \textit{et al.}~\cite{fassi2023toward} investigated data-driven predictive maintenance, identifying DRL as an emerging but under-explored solution. 
+Collectively, these studies confirm that existing research remains fragmented and lacks a unified methodology bridging DRL algorithms, application domains, and hardware deployment strategies across the converter lifecycle.
+
+To address this gap, this review provides a comprehensive and structured synthesis of DRL research in PECs from a full-lifecycle perspective. 
+It establishes an integrative framework connecting design, control, and maintenance methodologies with methodological coherence and cross-domain relevance. 
+The main contributions are summarized as follows:
+
+\begin{enumerate}
+  \item \textbf{Lifecycle-oriented synthesis:} A systematic investigation of DRL methodologies for PECs, identifying representative algorithms and application patterns across design, control, and maintenance domains.  
+  \item \textbf{Quantitative and chronological analysis:} A data-driven assessment of publication trends and technological milestones, revealing the historical evolution of DRL adoption within converter systems.  
+  \item \textbf{Critical evaluation and outlook:} An integrative discussion of the advantages, limitations, and prospective research directions of DRL-based converter applications, outlining pathways toward intelligent, adaptive, and self-optimizing power-electronic systems that embed learning-based decision mechanisms into practical operation.  
+\end{enumerate}
+
+The remainder of this paper is organized as follows. 
+Section~\ref{sec:mainstream_drl} reviews the fundamental DRL algorithms applied in PECs. 
+Section~\ref{sec_timeline} analyzes their historical evolution and utilization trends. 
+Sections~\ref{sec_prop}--\ref{sec_maintenance} discuss DRL applications in converter design, control, and maintenance, respectively. 
+Section~\ref{sec_future} summarizes future opportunities and challenges, and Section~\ref{sec_conclusion} concludes the paper.
+
+

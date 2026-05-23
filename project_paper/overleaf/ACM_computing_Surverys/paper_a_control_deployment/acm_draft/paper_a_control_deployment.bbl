@@ -1,0 +1,1168 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{80}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{} and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showURL}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showURL #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[Alshiekh et~al\mbox{.}(2018)]%
+        {alshiekh2018safe}
+\bibfield{author}{\bibinfo{person}{Mohammed Alshiekh},
+  \bibinfo{person}{Roderick Bloem}, \bibinfo{person}{R{\"u}diger Ehlers},
+  \bibinfo{person}{Bettina K{\"o}nighofer}, \bibinfo{person}{Scott Niekum},
+  {and} \bibinfo{person}{Ufuk Topcu}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Safe Reinforcement Learning via Shielding}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 32nd AAAI Conference on
+  Artificial Intelligence (AAAI)}}. \bibinfo{pages}{2669--2678}.
+\newblock
+\href{https://doi.org/10.1609/aaai.v32i1.11797}{doi:\nolinkurl{10.1609/aaai.v32i1.11797}}
+
+
+\bibitem[Ames et~al\mbox{.}(2019)]%
+        {ames2019control}
+\bibfield{author}{\bibinfo{person}{Aaron~D. Ames}, \bibinfo{person}{Samuel
+  Coogan}, \bibinfo{person}{Magnus Egerstedt}, \bibinfo{person}{Gennaro
+  Notomista}, \bibinfo{person}{Koushil Sreenath}, {and} \bibinfo{person}{Paulo
+  Tabuada}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Control Barrier Functions: Theory and
+  Applications}. In \bibinfo{booktitle}{\emph{Proceedings of the 18th European
+  Control Conference (ECC)}}. \bibinfo{pages}{3420--3431}.
+\newblock
+\href{https://doi.org/10.23919/ECC.2019.8796030}{doi:\nolinkurl{10.23919/ECC.2019.8796030}}
+
+
+\bibitem[Book et~al\mbox{.}(2021a)]%
+        {book2021transferring}
+\bibfield{author}{\bibinfo{person}{Gerrit Book}, \bibinfo{person}{Arne Traue},
+  \bibinfo{person}{Praneeth Balakrishna}, \bibinfo{person}{Anian Brosch},
+  \bibinfo{person}{Maximilian Schenke}, \bibinfo{person}{S{\"o}ren Hanke},
+  \bibinfo{person}{Wilhelm Kirchg{\"a}ssner}, {and} \bibinfo{person}{Oliver
+  Wallscheid}.} \bibinfo{year}{2021}\natexlab{a}.
+\newblock \showarticletitle{Transferring Online Reinforcement Learning for
+  Electric Motor Control from Simulation to Real-World Experiments}.
+\newblock \bibinfo{journal}{\emph{IEEE Open Journal of Power Electronics}}
+  \bibinfo{volume}{2} (\bibinfo{year}{2021}), \bibinfo{pages}{187--201}.
+\newblock
+\href{https://doi.org/10.1109/OJPEL.2021.3065877}{doi:\nolinkurl{10.1109/OJPEL.2021.3065877}}
+
+
+\bibitem[Book et~al\mbox{.}(2021b)]%
+        {book2021safe}
+\bibfield{author}{\bibinfo{person}{Gerrit Book}, \bibinfo{person}{Arne Traue},
+  \bibinfo{person}{Praneeth Balakrishna}, \bibinfo{person}{Maximilian Schenke},
+  \bibinfo{person}{S{\"o}ren Hanke}, \bibinfo{person}{Wilhelm
+  Kirchg{\"a}ssner}, {and} \bibinfo{person}{Oliver Wallscheid}.}
+  \bibinfo{year}{2021}\natexlab{b}.
+\newblock \showarticletitle{Safe Bayesian Optimization for Data-Driven Power
+  Electronics Control Design in Microgrids}.
+\newblock \bibinfo{journal}{\emph{IEEE Access}}  \bibinfo{volume}{9}
+  (\bibinfo{year}{2021}), \bibinfo{pages}{42791--42803}.
+\newblock
+\href{https://doi.org/10.1109/ACCESS.2021.3062144}{doi:\nolinkurl{10.1109/ACCESS.2021.3062144}}
+
+
+\bibitem[Chen et~al\mbox{.}(2024a)]%
+        {chen2024asynchronous}
+\bibfield{author}{\bibinfo{person}{Pengcheng Chen}, \bibinfo{person}{Shichao
+  Liu}, \bibinfo{person}{Hicham Chaoui}, \bibinfo{person}{Bo Chen}, {and}
+  \bibinfo{person}{Li Yu}.} \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{Asynchronous Deep Reinforcement Learning with
+  Gradient Sharing for State of Charge Balancing of Multiple Batteries in
+  Cyber-Physical Electric Vehicles}.
+\newblock \bibinfo{journal}{\emph{Journal of the Franklin Institute}}
+  \bibinfo{volume}{361}, \bibinfo{number}{6} (\bibinfo{year}{2024}),
+  \bibinfo{pages}{106717}.
+\newblock
+\href{https://doi.org/10.1016/j.jfranklin.2024.106717}{doi:\nolinkurl{10.1016/j.jfranklin.2024.106717}}
+
+
+\bibitem[Chen et~al\mbox{.}(2024b)]%
+        {chen2024review}
+\bibfield{author}{\bibinfo{person}{Peng Chen}, \bibinfo{person}{Jianfeng Zhao},
+  \bibinfo{person}{Kangli Liu}, \bibinfo{person}{Kun Dong},
+  \bibinfo{person}{Jingyang Zhou}, \bibinfo{person}{Yufan Li},
+  \bibinfo{person}{Xirui Guo}, {and} \bibinfo{person}{Xin Pan}.}
+  \bibinfo{year}{2024}\natexlab{b}.
+\newblock \showarticletitle{A Review on the Applications of Reinforcement
+  Learning Control for Power Electronic Converters}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Industry Applications}}
+  \bibinfo{volume}{60}, \bibinfo{number}{6} (\bibinfo{year}{2024}),
+  \bibinfo{pages}{8430--8450}.
+\newblock
+\href{https://doi.org/10.1109/TIA.2024.3435170}{doi:\nolinkurl{10.1109/TIA.2024.3435170}}
+
+
+\bibitem[Cheng et~al\mbox{.}(2018)]%
+        {cheng2018survey}
+\bibfield{author}{\bibinfo{person}{Yu Cheng}, \bibinfo{person}{Duo Wang},
+  \bibinfo{person}{Pan Zhou}, {and} \bibinfo{person}{Tao Zhang}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{A Survey of Model Compression and Acceleration for
+  Deep Neural Networks}.
+\newblock \bibinfo{journal}{\emph{IEEE Signal Processing Magazine}}
+  \bibinfo{volume}{35}, \bibinfo{number}{1} (\bibinfo{year}{2018}),
+  \bibinfo{pages}{126--136}.
+\newblock
+\href{https://doi.org/10.1109/MSP.2017.2765695}{doi:\nolinkurl{10.1109/MSP.2017.2765695}}
+
+
+\bibitem[Chou et~al\mbox{.}(2019)]%
+        {chou2019maximum}
+\bibfield{author}{\bibinfo{person}{Kuan-Yu Chou}, \bibinfo{person}{Shu-Ting
+  Yang}, {and} \bibinfo{person}{Yon-Ping Chen}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Maximum Power Point Tracking of Photovoltaic System
+  Based on Reinforcement Learning}.
+\newblock \bibinfo{journal}{\emph{Sensors}} \bibinfo{volume}{19},
+  \bibinfo{number}{22} (\bibinfo{year}{2019}), \bibinfo{pages}{5054}.
+\newblock
+\href{https://doi.org/10.3390/s19225054}{doi:\nolinkurl{10.3390/s19225054}}
+
+
+\bibitem[Chow et~al\mbox{.}(2018)]%
+        {chow2018lyapunov}
+\bibfield{author}{\bibinfo{person}{Yinlam Chow}, \bibinfo{person}{Ofir Nachum},
+  \bibinfo{person}{Edgar Duenez-Guzman}, {and} \bibinfo{person}{Mohammad
+  Ghavamzadeh}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{A Lyapunov-based Approach to Safe Reinforcement
+  Learning}. In \bibinfo{booktitle}{\emph{Advances in Neural Information
+  Processing Systems (NeurIPS)}}, Vol.~\bibinfo{volume}{31}.
+  \bibinfo{pages}{8092--8101}.
+\newblock
+\href{https://doi.org/10.48550/arXiv.1805.07708}{doi:\nolinkurl{10.48550/arXiv.1805.07708}}
+
+
+\bibitem[Cui et~al\mbox{.}(2023)]%
+        {cui2023adaptive}
+\bibfield{author}{\bibinfo{person}{Chenggang Cui}, \bibinfo{person}{Yinfeng
+  Dong}, \bibinfo{person}{Xin Dong}, \bibinfo{person}{Chuanlin Zhang}, {and}
+  \bibinfo{person}{Amer~MYM Ghias}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Adaptive Horizon Seeking for Generalized Predictive
+  Control via Deep Reinforcement Learning with Application to DC/DC
+  Converters}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Circuits and Systems I:
+  Regular Papers}} \bibinfo{volume}{71}, \bibinfo{number}{5}
+  (\bibinfo{year}{2023}), \bibinfo{pages}{2217--2228}.
+\newblock
+\href{https://doi.org/10.1109/TCSI.2023.3290176}{doi:\nolinkurl{10.1109/TCSI.2023.3290176}}
+
+
+\bibitem[Fathollahidehkordi et~al\mbox{.}(2023)]%
+        {fathollahi2023robust}
+\bibfield{author}{\bibinfo{person}{Arman Fathollahidehkordi},
+  \bibinfo{person}{Meysam Gheisarnejad~Chirani}, \bibinfo{person}{Bjorn
+  Andresen}, \bibinfo{person}{Hamed Farsizadeh}, {and}
+  \bibinfo{person}{Mohammad~Hassan Khooban}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Robust Artificial Intelligence Controller for
+  Stabilization of Full-Bridge Converters Feeding Constant Power Loads}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Circuits and Systems II:
+  Express Briefs}} \bibinfo{volume}{70}, \bibinfo{number}{9}
+  (\bibinfo{year}{2023}), \bibinfo{pages}{3504--3508}.
+\newblock
+\href{https://doi.org/10.1109/TCSII.2023.3270751}{doi:\nolinkurl{10.1109/TCSII.2023.3270751}}
+
+
+\bibitem[Fisac et~al\mbox{.}(2019)]%
+        {fisac2019general}
+\bibfield{author}{\bibinfo{person}{Jaime~F. Fisac}, \bibinfo{person}{Anayo~K.
+  Akametalu}, \bibinfo{person}{Melanie~N. Zeilinger}, \bibinfo{person}{Shahab
+  Kaynama}, \bibinfo{person}{Jeremy~H. Gillula}, {and}
+  \bibinfo{person}{Claire~J. Tomlin}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{A General Safety Framework for Learning-Based
+  Control in Uncertain Robotic Systems}.
+\newblock \bibinfo{journal}{\emph{IEEE Trans. Automat. Control}}
+  \bibinfo{volume}{64}, \bibinfo{number}{7} (\bibinfo{year}{2019}),
+  \bibinfo{pages}{2737--2752}.
+\newblock
+\href{https://doi.org/10.1109/TAC.2018.2876389}{doi:\nolinkurl{10.1109/TAC.2018.2876389}}
+
+
+\bibitem[Foerster et~al\mbox{.}(2016)]%
+        {foerster2016learning}
+\bibfield{author}{\bibinfo{person}{Jakob~N. Foerster},
+  \bibinfo{person}{Yannis~M. Assael}, \bibinfo{person}{Nando de Freitas}, {and}
+  \bibinfo{person}{Shimon Whiteson}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Learning to Communicate with Deep Multi-Agent
+  Reinforcement Learning}. In \bibinfo{booktitle}{\emph{Advances in Neural
+  Information Processing Systems (NeurIPS)}}, Vol.~\bibinfo{volume}{29}.
+  \bibinfo{pages}{2137--2145}.
+\newblock
+\href{https://doi.org/10.48550/arXiv.1605.06676}{doi:\nolinkurl{10.48550/arXiv.1605.06676}}
+
+
+\bibitem[Fujimoto et~al\mbox{.}(2018)]%
+        {fujimoto2018addressing}
+\bibfield{author}{\bibinfo{person}{Scott Fujimoto}, \bibinfo{person}{Herke van
+  Hoof}, {and} \bibinfo{person}{David Meger}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Addressing Function Approximation Error in
+  Actor-Critic Methods}. In \bibinfo{booktitle}{\emph{Proceedings of the 35th
+  International Conference on Machine Learning (ICML)}},
+  Vol.~\bibinfo{volume}{80}. \bibinfo{pages}{1587--1596}.
+\newblock
+\href{https://doi.org/10.48550/arXiv.1802.09477}{doi:\nolinkurl{10.48550/arXiv.1802.09477}}
+
+
+\bibitem[Garc{\'i}a and Fern{\'a}ndez(2015)]%
+        {garcia2015comprehensive}
+\bibfield{author}{\bibinfo{person}{Javier Garc{\'i}a} {and}
+  \bibinfo{person}{Fernando Fern{\'a}ndez}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{A Comprehensive Survey on Safe Reinforcement
+  Learning}.
+\newblock \bibinfo{journal}{\emph{Journal of Machine Learning Research}}
+  \bibinfo{volume}{16}, \bibinfo{number}{42} (\bibinfo{year}{2015}),
+  \bibinfo{pages}{1437--1480}.
+\newblock
+\urldef\tempurl%
+\url{http://jmlr.org/papers/v16/garcia15a.html}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Gheisarnejad and Khooban(2020)]%
+        {gheisarnejad2020iot}
+\bibfield{author}{\bibinfo{person}{Meysam Gheisarnejad} {and}
+  \bibinfo{person}{Mohammad~Hassan Khooban}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{IoT-Based DC/DC Deep Learning Power Converter
+  Control: Real-Time Implementation}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Power Electronics}}
+  \bibinfo{volume}{35}, \bibinfo{number}{12} (\bibinfo{year}{2020}),
+  \bibinfo{pages}{13621--13630}.
+\newblock
+\href{https://doi.org/10.1109/TPEL.2020.2988504}{doi:\nolinkurl{10.1109/TPEL.2020.2988504}}
+
+
+\bibitem[Gheisarnejad~Chirani et~al\mbox{.}(2022)]%
+        {gheisarnejad2022reducing}
+\bibfield{author}{\bibinfo{person}{Meysam Gheisarnejad~Chirani},
+  \bibinfo{person}{Allahyar Akhbari}, \bibinfo{person}{Mohsen Rahimi},
+  \bibinfo{person}{Bjorn Andresen}, {and} \bibinfo{person}{Mohammad~Hassan
+  Khooban}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Reducing Impact of Constant Power Loads on DC
+  Energy Systems by Artificial Intelligence}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Circuits and Systems II:
+  Express Briefs}} \bibinfo{volume}{69}, \bibinfo{number}{12}
+  (\bibinfo{year}{2022}), \bibinfo{pages}{4974--4978}.
+\newblock
+\href{https://doi.org/10.1109/TCSII.2022.3194271}{doi:\nolinkurl{10.1109/TCSII.2022.3194271}}
+
+
+\bibitem[Gholami et~al\mbox{.}(2021)]%
+        {gholami2021survey}
+\bibfield{author}{\bibinfo{person}{Amir Gholami}, \bibinfo{person}{Sehoon Kim},
+  \bibinfo{person}{Zhen Dong}, \bibinfo{person}{Zhewei Yao},
+  \bibinfo{person}{Michael~W. Mahoney}, {and} \bibinfo{person}{Kurt Keutzer}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{A Survey of Quantization Methods for Efficient
+  Neural Network Inference}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2103.13630}}
+  (\bibinfo{year}{2021}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.2103.13630}{doi:\nolinkurl{10.48550/arXiv.2103.13630}}
+
+
+\bibitem[Haarnoja et~al\mbox{.}(2018)]%
+        {haarnoja2018soft}
+\bibfield{author}{\bibinfo{person}{Tuomas Haarnoja}, \bibinfo{person}{Aurick
+  Zhou}, \bibinfo{person}{Pieter Abbeel}, {and} \bibinfo{person}{Sergey
+  Levine}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Soft Actor-Critic: Off-Policy Maximum Entropy Deep
+  Reinforcement Learning with a Stochastic Actor}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 35th International Conference on
+  Machine Learning (ICML)}}, Vol.~\bibinfo{volume}{80}.
+  \bibinfo{pages}{1856--1865}.
+\newblock
+\href{https://doi.org/10.48550/arXiv.1801.01290}{doi:\nolinkurl{10.48550/arXiv.1801.01290}}
+
+
+\bibitem[Hajihosseini et~al\mbox{.}(2020)]%
+        {hajihosseini2020dc}
+\bibfield{author}{\bibinfo{person}{Mojtaba Hajihosseini},
+  \bibinfo{person}{Milad Andalibi}, \bibinfo{person}{Meysam Gheisarnejad},
+  \bibinfo{person}{Hamed Farsizadeh}, {and} \bibinfo{person}{Mohammad-Hassan
+  Khooban}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{DC/DC Power Converter Control-Based Deep Machine
+  Learning Techniques: Real-Time Implementation}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Power Electronics}}
+  \bibinfo{volume}{35}, \bibinfo{number}{10} (\bibinfo{year}{2020}),
+  \bibinfo{pages}{9971--9977}.
+\newblock
+\href{https://doi.org/10.1109/TPEL.2020.2977765}{doi:\nolinkurl{10.1109/TPEL.2020.2977765}}
+
+
+\bibitem[He et~al\mbox{.}(2021)]%
+        {he2021weighting}
+\bibfield{author}{\bibinfo{person}{Jinsong He}, \bibinfo{person}{Lantao Xing},
+  {and} \bibinfo{person}{Changyun Wen}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Weighting Factors' Real-Time Updating for Finite
+  Control Set Model Predictive Control of Power Converters via Reinforcement
+  Learning}. In \bibinfo{booktitle}{\emph{2021 IEEE 16th Conference on
+  Industrial Electronics and Applications (ICIEA)}}. \bibinfo{address}{Chengdu,
+  China}, \bibinfo{pages}{707--712}.
+\newblock
+\href{https://doi.org/10.1109/ICIEA51954.2021.9516099}{doi:\nolinkurl{10.1109/ICIEA51954.2021.9516099}}
+
+
+\bibitem[Henderson et~al\mbox{.}(2018)]%
+        {henderson2018deep}
+\bibfield{author}{\bibinfo{person}{Peter Henderson}, \bibinfo{person}{Riashat
+  Islam}, \bibinfo{person}{Philip Bachman}, \bibinfo{person}{Joelle Pineau},
+  \bibinfo{person}{Doina Precup}, {and} \bibinfo{person}{David Meger}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Deep Reinforcement Learning That Matters}.
+\newblock \bibinfo{journal}{\emph{Proceedings of the AAAI Conference on
+  Artificial Intelligence}} \bibinfo{volume}{32}, \bibinfo{number}{1}
+  (\bibinfo{year}{2018}).
+\newblock
+\href{https://doi.org/10.1609/aaai.v32i1.11694}{doi:\nolinkurl{10.1609/aaai.v32i1.11694}}
+
+
+\bibitem[Hinton et~al\mbox{.}(2015)]%
+        {hinton2015distilling}
+\bibfield{author}{\bibinfo{person}{Geoffrey Hinton}, \bibinfo{person}{Oriol
+  Vinyals}, {and} \bibinfo{person}{Jeff Dean}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Distilling the Knowledge in a Neural Network}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:1503.02531}}
+  (\bibinfo{year}{2015}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.1503.02531}{doi:\nolinkurl{10.48550/arXiv.1503.02531}}
+
+
+\bibitem[Huangfu et~al\mbox{.}(2022)]%
+        {huangfu2022learning}
+\bibfield{author}{\bibinfo{person}{Baixiang Huangfu},
+  \bibinfo{person}{Chenggang Cui}, \bibinfo{person}{Chuanlin Zhang}, {and}
+  \bibinfo{person}{Long Xu}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Learning-Based Optimal Large-Signal Stabilization
+  for DC/DC Boost Converters Feeding CPLs via Deep Reinforcement Learning}.
+\newblock \bibinfo{journal}{\emph{IEEE Journal of Emerging and Selected Topics
+  in Power Electronics}} \bibinfo{volume}{11}, \bibinfo{number}{6}
+  (\bibinfo{year}{2022}), \bibinfo{pages}{5592--5601}.
+\newblock
+\href{https://doi.org/10.1109/JESTPE.2022.3223417}{doi:\nolinkurl{10.1109/JESTPE.2022.3223417}}
+
+
+\bibitem[Jiang et~al\mbox{.}(2023)]%
+        {jiang2023stability}
+\bibfield{author}{\bibinfo{person}{Shan Jiang}, \bibinfo{person}{Yu Zeng},
+  \bibinfo{person}{Ye Zhu}, \bibinfo{person}{Josep Pou}, {and}
+  \bibinfo{person}{Georgios Konstantinou}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Stability-Oriented Multiobjective Control Design
+  for Power Converters Assisted by Deep Reinforcement Learning}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Power Electronics}}
+  \bibinfo{volume}{38}, \bibinfo{number}{10} (\bibinfo{year}{2023}),
+  \bibinfo{pages}{12394--12400}.
+\newblock
+\href{https://doi.org/10.1109/TPEL.2023.3299979}{doi:\nolinkurl{10.1109/TPEL.2023.3299979}}
+
+
+\bibitem[Jung et~al\mbox{.}(2022)]%
+        {jung2022reinforcement}
+\bibfield{author}{\bibinfo{person}{Jun-Hyung Jung}, \bibinfo{person}{Ehsan
+  Hosseini}, \bibinfo{person}{Marco Liserre}, {and} \bibinfo{person}{Luis~M.
+  Fern{\'a}ndez-Ram{\'i}rez}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Reinforcement Learning Based Modulation for
+  Balancing Capacitor Voltage and Thermal Stress to Enhance Current Capability
+  of {MMCs}}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE 13th
+  International Symposium on Power Electronics for Distributed Generation
+  Systems (PEDG)}}. \bibinfo{pages}{1--6}.
+\newblock
+\href{https://doi.org/10.1109/PEDG54999.2022.9923188}{doi:\nolinkurl{10.1109/PEDG54999.2022.9923188}}
+
+
+\bibitem[Khooban(2023)]%
+        {khooban2022smartenance}
+\bibfield{author}{\bibinfo{person}{Mohammad~Hassan Khooban}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Smartenance DC-DC On-Board Power Converters}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Circuits and Systems II:
+  Express Briefs}} \bibinfo{volume}{70}, \bibinfo{number}{1}
+  (\bibinfo{year}{2023}), \bibinfo{pages}{191--195}.
+\newblock
+\href{https://doi.org/10.1109/TCSII.2022.3206230}{doi:\nolinkurl{10.1109/TCSII.2022.3206230}}
+\newblock
+\shownote{Published online 2022 (DOI prefix 2022); print issue January 2023.
+  Key uses online-first year.}.
+
+
+\bibitem[Lazaric(2012)]%
+        {lazaric2012transfer}
+\bibfield{author}{\bibinfo{person}{Alessandro Lazaric}.}
+  \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Transfer in Reinforcement Learning: A Framework and
+  a Survey}.
+\newblock \bibinfo{journal}{\emph{Reinforcement Learning: State-of-the-Art}}
+  (\bibinfo{year}{2012}), \bibinfo{pages}{143--173}.
+\newblock
+\href{https://doi.org/10.1007/978-3-642-27645-3_5}{doi:\nolinkurl{10.1007/978-3-642-27645-3_5}}
+
+
+\bibitem[Li et~al\mbox{.}(2023)]%
+        {li2023deep}
+\bibfield{author}{\bibinfo{person}{Yuanzheng Li}, \bibinfo{person}{Chaofan Yu},
+  \bibinfo{person}{Mohammad Shahidehpour}, \bibinfo{person}{Tao Yang},
+  \bibinfo{person}{Zhigang Zeng}, {and} \bibinfo{person}{Tianyou Chai}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Deep Reinforcement Learning for Smart Grid
+  Operations: Algorithms, Applications, and Prospects}.
+\newblock \bibinfo{journal}{\emph{Proc. IEEE}} \bibinfo{volume}{111},
+  \bibinfo{number}{9} (\bibinfo{year}{2023}), \bibinfo{pages}{1055--1096}.
+\newblock
+\href{https://doi.org/10.1109/JPROC.2023.3303358}{doi:\nolinkurl{10.1109/JPROC.2023.3303358}}
+
+
+\bibitem[Liang et~al\mbox{.}(2022)]%
+        {liang2022multiagent}
+\bibfield{author}{\bibinfo{person}{Yanchang Liang}, \bibinfo{person}{Xiaowei
+  Zhao}, {and} \bibinfo{person}{Li Sun}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{A Multiagent Reinforcement Learning Approach for
+  Wind Farm Frequency Control}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Industrial Informatics}}
+  \bibinfo{volume}{19}, \bibinfo{number}{2} (\bibinfo{year}{2022}),
+  \bibinfo{pages}{1725--1734}.
+\newblock
+\href{https://doi.org/10.1109/TII.2022.3182328}{doi:\nolinkurl{10.1109/TII.2022.3182328}}
+
+
+\bibitem[Lillicrap et~al\mbox{.}(2016)]%
+        {lillicrap2016continuous}
+\bibfield{author}{\bibinfo{person}{Timothy~P. Lillicrap},
+  \bibinfo{person}{Jonathan~J. Hunt}, \bibinfo{person}{Alexander Pritzel},
+  \bibinfo{person}{Nicolas Heess}, \bibinfo{person}{Tom Erez},
+  \bibinfo{person}{Yuval Tassa}, \bibinfo{person}{David Silver}, {and}
+  \bibinfo{person}{Daan Wierstra}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Continuous Control with Deep Reinforcement
+  Learning}. In \bibinfo{booktitle}{\emph{Proceedings of the 4th International
+  Conference on Learning Representations (ICLR)}}.
+\newblock
+\href{https://doi.org/10.48550/arXiv.1509.02971}{doi:\nolinkurl{10.48550/arXiv.1509.02971}}
+
+
+\bibitem[Liu et~al\mbox{.}(2023)]%
+        {liu2023reinforcement}
+\bibfield{author}{\bibinfo{person}{Xing Liu}, \bibinfo{person}{Li Qiu},
+  \bibinfo{person}{Youtong Fang}, {and} \bibinfo{person}{Jose Rodriguez}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Reinforcement Learning-Based Event-Triggered
+  {FCS-MPC} for Power Converters}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Industrial Electronics}}
+  \bibinfo{volume}{70}, \bibinfo{number}{12} (\bibinfo{year}{2023}),
+  \bibinfo{pages}{11841--11852}.
+\newblock
+\href{https://doi.org/10.1109/TIE.2023.3239865}{doi:\nolinkurl{10.1109/TIE.2023.3239865}}
+
+
+\bibitem[Lowe et~al\mbox{.}(2017)]%
+        {lowe2017multi}
+\bibfield{author}{\bibinfo{person}{Ryan Lowe}, \bibinfo{person}{Yi Wu},
+  \bibinfo{person}{Aviv Tamar}, \bibinfo{person}{Jean Harb},
+  \bibinfo{person}{Pieter Abbeel}, {and} \bibinfo{person}{Igor Mordatch}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Multi-Agent Actor-Critic for Mixed
+  Cooperative-Competitive Environments}. In \bibinfo{booktitle}{\emph{Advances
+  in Neural Information Processing Systems (NeurIPS)}},
+  Vol.~\bibinfo{volume}{30}. \bibinfo{pages}{6379--6390}.
+\newblock
+\href{https://doi.org/10.48550/arXiv.1706.02275}{doi:\nolinkurl{10.48550/arXiv.1706.02275}}
+
+
+\bibitem[Mahazabeen and Nademi(2022)]%
+        {mahazabeen2022performance}
+\bibfield{author}{\bibinfo{person}{Afrin Mahazabeen} {and}
+  \bibinfo{person}{Hamed Nademi}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Performance Evaluation of an {RL}-Aided {DAB}-Based
+  {EV} Charger Control}. In \bibinfo{booktitle}{\emph{Proceedings of the 2022
+  North American Power Symposium (NAPS)}}.
+\newblock
+\href{https://doi.org/10.1109/NAPS56150.2022.10012228}{doi:\nolinkurl{10.1109/NAPS56150.2022.10012228}}
+
+
+\bibitem[Meng et~al\mbox{.}(2023)]%
+        {meng2022novel}
+\bibfield{author}{\bibinfo{person}{Xiangqi Meng}, \bibinfo{person}{Yanbing
+  Jia}, \bibinfo{person}{Qianwen Xu}, \bibinfo{person}{Chunguang Ren},
+  \bibinfo{person}{Xiaoqing Han}, {and} \bibinfo{person}{Peng Wang}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{A Novel Intelligent Nonlinear Controller for Dual
+  Active Bridge Converter With Constant Power Loads}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Industrial Electronics}}
+  \bibinfo{volume}{70}, \bibinfo{number}{3} (\bibinfo{year}{2023}),
+  \bibinfo{pages}{2887--2896}.
+\newblock
+\href{https://doi.org/10.1109/TIE.2022.3170608}{doi:\nolinkurl{10.1109/TIE.2022.3170608}}
+
+
+\bibitem[Mnih et~al\mbox{.}(2015)]%
+        {mnih2015human}
+\bibfield{author}{\bibinfo{person}{Volodymyr Mnih}, \bibinfo{person}{Koray
+  Kavukcuoglu}, \bibinfo{person}{David Silver}, \bibinfo{person}{Andrei~A.
+  Rusu}, \bibinfo{person}{Joel Veness}, \bibinfo{person}{Marc~G. Bellemare},
+  \bibinfo{person}{Alex Graves}, \bibinfo{person}{Martin Riedmiller},
+  \bibinfo{person}{Andreas~K. Fidjeland}, \bibinfo{person}{Georg Ostrovski},
+  \bibinfo{person}{Stig Petersen}, \bibinfo{person}{Charles Beattie},
+  \bibinfo{person}{Amir Sadik}, \bibinfo{person}{Ioannis Antonoglou},
+  \bibinfo{person}{Helen King}, \bibinfo{person}{Dharshan Kumaran},
+  \bibinfo{person}{Daan Wierstra}, \bibinfo{person}{Shane Legg}, {and}
+  \bibinfo{person}{Demis Hassabis}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Human-Level Control Through Deep Reinforcement
+  Learning}.
+\newblock \bibinfo{journal}{\emph{Nature}} \bibinfo{volume}{518},
+  \bibinfo{number}{7540} (\bibinfo{year}{2015}), \bibinfo{pages}{529--533}.
+\newblock
+\href{https://doi.org/10.1038/nature14236}{doi:\nolinkurl{10.1038/nature14236}}
+
+
+\bibitem[Moerland et~al\mbox{.}(2023)]%
+        {moerland2023model}
+\bibfield{author}{\bibinfo{person}{Thomas~M. Moerland}, \bibinfo{person}{Joost
+  Broekens}, \bibinfo{person}{Aske Plaat}, {and} \bibinfo{person}{Catholijn~M.
+  Jonker}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Model-Based Reinforcement Learning: A Survey}.
+\newblock \bibinfo{journal}{\emph{Foundations and Trends in Machine Learning}}
+  \bibinfo{volume}{16}, \bibinfo{number}{1} (\bibinfo{year}{2023}),
+  \bibinfo{pages}{1--118}.
+\newblock
+\href{https://doi.org/10.1561/2200000086}{doi:\nolinkurl{10.1561/2200000086}}
+
+
+\bibitem[Moldovan and Abbeel(2012)]%
+        {moldovan2012safe}
+\bibfield{author}{\bibinfo{person}{Teodor~Mihai Moldovan} {and}
+  \bibinfo{person}{Pieter Abbeel}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Safe Exploration in Markov Decision Processes}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 29th International Conference on
+  Machine Learning (ICML)}}. \bibinfo{pages}{1451--1458}.
+\newblock
+\href{https://doi.org/10.48550/arXiv.1205.4810}{doi:\nolinkurl{10.48550/arXiv.1205.4810}}
+
+
+\bibitem[Nicola et~al\mbox{.}(2022)]%
+        {nicola2022comparative}
+\bibfield{author}{\bibinfo{person}{Marcel Nicola},
+  \bibinfo{person}{Claudiu-Ionel Nicola}, \bibinfo{person}{Dan
+  Seli{\c{s}}teanu}, {and} \bibinfo{person}{Marian Popescu}.}
+  \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{{DC-AC} Converter Control Based on Robust {PCH}
+  Controller and Reinforcement Learning Agent}.
+\newblock \bibinfo{journal}{\emph{Mathematics}} \bibinfo{volume}{10},
+  \bibinfo{number}{23} (\bibinfo{year}{2022}), \bibinfo{pages}{4525}.
+\newblock
+\href{https://doi.org/10.3390/math10234525}{doi:\nolinkurl{10.3390/math10234525}}
+
+
+\bibitem[Oliehoek and Amato(2016)]%
+        {oliehoek2016concise}
+\bibfield{author}{\bibinfo{person}{Frans~A. Oliehoek} {and}
+  \bibinfo{person}{Christopher Amato}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{A Concise Introduction to Decentralized
+  POMDPs}}.
+\newblock \bibinfo{publisher}{Springer}.
+\newblock
+\href{https://doi.org/10.1007/978-3-319-28929-8}{doi:\nolinkurl{10.1007/978-3-319-28929-8}}
+
+
+\bibitem[Parisotto et~al\mbox{.}(2016)]%
+        {parisotto2016actor}
+\bibfield{author}{\bibinfo{person}{Emilio Parisotto},
+  \bibinfo{person}{Jimmy~Lei Ba}, {and} \bibinfo{person}{Ruslan
+  Salakhutdinov}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Actor-Mimic: Deep Multitask and Transfer
+  Reinforcement Learning}.
+\newblock \bibinfo{journal}{\emph{Proceedings of the International Conference
+  on Learning Representations (ICLR)}} (\bibinfo{year}{2016}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.1511.06342}{doi:\nolinkurl{10.48550/arXiv.1511.06342}}
+
+
+\bibitem[Peng et~al\mbox{.}(2018)]%
+        {peng2018sim}
+\bibfield{author}{\bibinfo{person}{Xue~Bin Peng}, \bibinfo{person}{Marcin
+  Andrychowicz}, \bibinfo{person}{Wojciech Zaremba}, {and}
+  \bibinfo{person}{Pieter Abbeel}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Sim-to-Real Transfer of Robotic Control with
+  Dynamics Randomization}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE
+  International Conference on Robotics and Automation (ICRA)}}.
+  \bibinfo{pages}{3803--3810}.
+\newblock
+\href{https://doi.org/10.1109/ICRA.2018.8460528}{doi:\nolinkurl{10.1109/ICRA.2018.8460528}}
+
+
+\bibitem[Pineau et~al\mbox{.}(2021)]%
+        {pineau2021improving}
+\bibfield{author}{\bibinfo{person}{Joelle Pineau}, \bibinfo{person}{Philippe
+  Vincent-Lamarre}, \bibinfo{person}{Koustuv Sinha}, \bibinfo{person}{Vincent
+  Larivi{\`e}re}, \bibinfo{person}{Alina Beygelzimer},
+  \bibinfo{person}{Florence d'Alch{\'e} Buc}, \bibinfo{person}{Emily Fox},
+  {and} \bibinfo{person}{Hugo Larochelle}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Improving Reproducibility in Machine Learning
+  Research (A Report from the {NeurIPS} 2019 Reproducibility Program)}.
+\newblock \bibinfo{journal}{\emph{Journal of Machine Learning Research}}
+  \bibinfo{volume}{22}, \bibinfo{number}{164} (\bibinfo{year}{2021}),
+  \bibinfo{pages}{1--20}.
+\newblock
+\urldef\tempurl%
+\url{http://jmlr.org/papers/v22/20-303.html}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Qashqai et~al\mbox{.}(2023)]%
+        {qashqai2023model}
+\bibfield{author}{\bibinfo{person}{Pouria Qashqai}, \bibinfo{person}{Mohammad
+  Babaie}, \bibinfo{person}{Rawad Zgheib}, {and} \bibinfo{person}{Kamal
+  Al-Haddad}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{A Model-Free Switching and Control Method for
+  Three-Level Neutral Point Clamped Converter Using Deep Reinforcement
+  Learning}.
+\newblock \bibinfo{journal}{\emph{IEEE Access}}  \bibinfo{volume}{11}
+  (\bibinfo{year}{2023}), \bibinfo{pages}{105394--105409}.
+\newblock
+\href{https://doi.org/10.1109/ACCESS.2023.3299987}{doi:\nolinkurl{10.1109/ACCESS.2023.3299987}}
+
+
+\bibitem[Qie et~al\mbox{.}(2022)]%
+        {qie2022new}
+\bibfield{author}{\bibinfo{person}{Tianhao Qie}, \bibinfo{person}{Xinan Zhang},
+  \bibinfo{person}{Chaoqun Xiang}, \bibinfo{person}{Yang Yu},
+  \bibinfo{person}{Herbert Ho~Ching Iu}, {and} \bibinfo{person}{Tyrone
+  Fernando}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{A New Robust Integral Reinforcement Learning Based
+  Control Algorithm for Interleaved DC/DC Boost Converter}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Industrial Electronics}}
+  \bibinfo{volume}{70}, \bibinfo{number}{4} (\bibinfo{year}{2022}),
+  \bibinfo{pages}{3729--3739}.
+\newblock
+\href{https://doi.org/10.1109/TIE.2022.3179558}{doi:\nolinkurl{10.1109/TIE.2022.3179558}}
+
+
+\bibitem[Raffin et~al\mbox{.}(2021)]%
+        {raffin2021stable}
+\bibfield{author}{\bibinfo{person}{Antonin Raffin}, \bibinfo{person}{Ashley
+  Hill}, \bibinfo{person}{Adam Gleave}, \bibinfo{person}{Anssi Kanervisto},
+  \bibinfo{person}{Maximilian Ernestus}, {and} \bibinfo{person}{Noah Dormann}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Stable-{Baselines3}: Reliable Reinforcement
+  Learning Implementations}.
+\newblock \bibinfo{journal}{\emph{Journal of Machine Learning Research}}
+  \bibinfo{volume}{22}, \bibinfo{number}{268} (\bibinfo{year}{2021}),
+  \bibinfo{pages}{1--8}.
+\newblock
+\urldef\tempurl%
+\url{http://jmlr.org/papers/v22/20-1364.html}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Rajamallaiah et~al\mbox{.}(2025)]%
+        {rajamallaiah2025deep}
+\bibfield{author}{\bibinfo{person}{Anugula Rajamallaiah},
+  \bibinfo{person}{S.~V.~K. Naresh}, \bibinfo{person}{Y. Raghuvamsi},
+  \bibinfo{person}{Singamasetty~Manmadha Rao}, \bibinfo{person}{Kishore Bingi},
+  \bibinfo{person}{Anand R}, {and} \bibinfo{person}{Josep~M. Guerrero}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{Deep Reinforcement Learning for Power Converter
+  Control: A Comprehensive Review of Applications and Challenges}.
+\newblock \bibinfo{journal}{\emph{IEEE Open Journal of Power Electronics}}
+  \bibinfo{volume}{6} (\bibinfo{year}{2025}), \bibinfo{pages}{1769--1802}.
+\newblock
+\href{https://doi.org/10.1109/OJPEL.2025.3619673}{doi:\nolinkurl{10.1109/OJPEL.2025.3619673}}
+
+
+\bibitem[Sanchez-Iborra and Skarmeta(2020)]%
+        {sanchez2020tinyml}
+\bibfield{author}{\bibinfo{person}{Ramon Sanchez-Iborra} {and}
+  \bibinfo{person}{Antonio~F. Skarmeta}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{TinyML-Enabled Frugal Smart Objects: Challenges and
+  Opportunities}.
+\newblock \bibinfo{journal}{\emph{IEEE Circuits and Systems Magazine}}
+  \bibinfo{volume}{20}, \bibinfo{number}{3} (\bibinfo{year}{2020}),
+  \bibinfo{pages}{4--18}.
+\newblock
+\href{https://doi.org/10.1109/MCAS.2020.3005467}{doi:\nolinkurl{10.1109/MCAS.2020.3005467}}
+
+
+\bibitem[Schenke and Wallscheid(2021)]%
+        {schenke2021deep}
+\bibfield{author}{\bibinfo{person}{Maximilian Schenke} {and}
+  \bibinfo{person}{Oliver Wallscheid}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{A Deep {Q}-Learning Direct Torque Controller for
+  Permanent Magnet Synchronous Motors}.
+\newblock \bibinfo{journal}{\emph{IEEE Open Journal of the Industrial
+  Electronics Society}}  \bibinfo{volume}{2} (\bibinfo{year}{2021}),
+  \bibinfo{pages}{388--400}.
+\newblock
+\href{https://doi.org/10.1109/OJIES.2021.3075521}{doi:\nolinkurl{10.1109/OJIES.2021.3075521}}
+
+
+\bibitem[Schulman et~al\mbox{.}(2015)]%
+        {schulman2015trust}
+\bibfield{author}{\bibinfo{person}{John Schulman}, \bibinfo{person}{Sergey
+  Levine}, \bibinfo{person}{Pieter Abbeel}, \bibinfo{person}{Michael~I.
+  Jordan}, {and} \bibinfo{person}{Philipp Moritz}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Trust Region Policy Optimization}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 32nd International Conference on
+  Machine Learning (ICML)}}, Vol.~\bibinfo{volume}{37}.
+  \bibinfo{pages}{1889--1897}.
+\newblock
+\href{https://doi.org/10.48550/arXiv.1502.05477}{doi:\nolinkurl{10.48550/arXiv.1502.05477}}
+
+
+\bibitem[Schulman et~al\mbox{.}(2017)]%
+        {schulman2017proximal}
+\bibfield{author}{\bibinfo{person}{John Schulman}, \bibinfo{person}{Filip
+  Wolski}, \bibinfo{person}{Prafulla Dhariwal}, \bibinfo{person}{Alec Radford},
+  {and} \bibinfo{person}{Oleg Klimov}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Proximal Policy Optimization Algorithms}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:1707.06347}}
+  (\bibinfo{year}{2017}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.1707.06347}{doi:\nolinkurl{10.48550/arXiv.1707.06347}}
+
+
+\bibitem[Silver et~al\mbox{.}(2014)]%
+        {silver2014deterministic}
+\bibfield{author}{\bibinfo{person}{David Silver}, \bibinfo{person}{Guy Lever},
+  \bibinfo{person}{Nicolas Heess}, \bibinfo{person}{Thomas Degris},
+  \bibinfo{person}{Daan Wierstra}, {and} \bibinfo{person}{Martin Riedmiller}.}
+  \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Deterministic Policy Gradient Algorithms}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 31st International Conference on
+  Machine Learning (ICML)}}, Vol.~\bibinfo{volume}{32}.
+  \bibinfo{pages}{387--395}.
+\newblock
+\href{https://doi.org/10.5555/3044805.3044850}{doi:\nolinkurl{10.5555/3044805.3044850}}
+
+
+\bibitem[Stapelberg and Malan(2020)]%
+        {stapelberg2020survey}
+\bibfield{author}{\bibinfo{person}{Jacques Stapelberg} {and}
+  \bibinfo{person}{Katherine~M. Malan}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{A Survey of Benchmarking Frameworks for
+  Reinforcement Learning}.
+\newblock \bibinfo{journal}{\emph{South African Computer Journal}}
+  \bibinfo{volume}{32}, \bibinfo{number}{2} (\bibinfo{year}{2020}),
+  \bibinfo{pages}{258--292}.
+\newblock
+\href{https://doi.org/10.18489/sacj.v32i2.746}{doi:\nolinkurl{10.18489/sacj.v32i2.746}}
+
+
+\bibitem[Sutton and Barto(2018)]%
+        {sutton2018reinforcement}
+\bibfield{author}{\bibinfo{person}{Richard~S. Sutton} {and}
+  \bibinfo{person}{Andrew~G. Barto}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Reinforcement Learning: An Introduction}
+  (\bibinfo{edition}{2nd} ed.)}.
+\newblock \bibinfo{publisher}{MIT Press}, \bibinfo{address}{Cambridge, MA}.
+\newblock
+\showISBNx{978-0-262-03924-6}
+
+
+\bibitem[Tan et~al\mbox{.}(2018)]%
+        {tan2018sim}
+\bibfield{author}{\bibinfo{person}{Jie Tan}, \bibinfo{person}{Tingnan Zhang},
+  \bibinfo{person}{Erwin Coumans}, \bibinfo{person}{Atil Iscen},
+  \bibinfo{person}{Yunfei Bai}, \bibinfo{person}{Danijar Hafner},
+  \bibinfo{person}{Steven Bohez}, {and} \bibinfo{person}{Vincent Vanhoucke}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Sim-to-Real: Learning Agile Locomotion for
+  Quadruped Robots}. In \bibinfo{booktitle}{\emph{Proceedings of Robotics:
+  Science and Systems (RSS)}}.
+\newblock
+\href{https://doi.org/10.15607/RSS.2018.XIV.010}{doi:\nolinkurl{10.15607/RSS.2018.XIV.010}}
+
+
+\bibitem[Tang et~al\mbox{.}(2021a)]%
+        {tang2021artificial}
+\bibfield{author}{\bibinfo{person}{Yuanhong Tang}, \bibinfo{person}{Weihao Hu},
+  \bibinfo{person}{Di Cao}, \bibinfo{person}{Nie Hou}, \bibinfo{person}{Yunwei
+  Li}, \bibinfo{person}{Zhe Chen}, {and} \bibinfo{person}{Frede Blaabjerg}.}
+  \bibinfo{year}{2021}\natexlab{a}.
+\newblock \showarticletitle{Artificial Intelligence-Aided Minimum Reactive
+  Power Control for the {DAB} Converter Based on Harmonic Analysis Method}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Power Electronics}}
+  \bibinfo{volume}{36}, \bibinfo{number}{9} (\bibinfo{year}{2021}),
+  \bibinfo{pages}{9704--9710}.
+\newblock
+\href{https://doi.org/10.1109/TPEL.2021.3059750}{doi:\nolinkurl{10.1109/TPEL.2021.3059750}}
+
+
+\bibitem[Tang et~al\mbox{.}(2022)]%
+        {tang2022deep}
+\bibfield{author}{\bibinfo{person}{Yuanhong Tang}, \bibinfo{person}{Weihao Hu},
+  \bibinfo{person}{Di Cao}, \bibinfo{person}{Nie Hou},
+  \bibinfo{person}{Zhuoqiang Li}, \bibinfo{person}{Yun~Wei Li},
+  \bibinfo{person}{Zhe Chen}, {and} \bibinfo{person}{Frede Blaabjerg}.}
+  \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Deep Reinforcement Learning Aided
+  Variable-Frequency Triple-Phase-Shift Control for Dual-Active-Bridge
+  Converter}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Industrial Electronics}}
+  \bibinfo{volume}{70}, \bibinfo{number}{10} (\bibinfo{year}{2022}),
+  \bibinfo{pages}{10506--10515}.
+\newblock
+\href{https://doi.org/10.1109/TIE.2022.3220893}{doi:\nolinkurl{10.1109/TIE.2022.3220893}}
+
+
+\bibitem[Tang et~al\mbox{.}(2020)]%
+        {tang2020reinforcement}
+\bibfield{author}{\bibinfo{person}{Yuanhong Tang}, \bibinfo{person}{Weihao Hu},
+  \bibinfo{person}{Jian Xiao}, \bibinfo{person}{Zhangyong Chen},
+  \bibinfo{person}{Qi Huang}, \bibinfo{person}{Zhe Chen}, {and}
+  \bibinfo{person}{Frede Blaabjerg}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Reinforcement Learning Based Efficiency
+  Optimization Scheme for the DAB DC--DC Converter with Triple-Phase-Shift
+  Modulation}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Industrial Electronics}}
+  \bibinfo{volume}{68}, \bibinfo{number}{8} (\bibinfo{year}{2020}),
+  \bibinfo{pages}{7350--7361}.
+\newblock
+\href{https://doi.org/10.1109/TIE.2020.3007113}{doi:\nolinkurl{10.1109/TIE.2020.3007113}}
+
+
+\bibitem[Tang et~al\mbox{.}(2021b)]%
+        {tang2021deep}
+\bibfield{author}{\bibinfo{person}{Yuanhong Tang}, \bibinfo{person}{Weihao Hu},
+  \bibinfo{person}{Bin Zhang}, \bibinfo{person}{Di Cao}, \bibinfo{person}{Nie
+  Hou}, \bibinfo{person}{Yunwei Li}, \bibinfo{person}{Zhe Chen}, {and}
+  \bibinfo{person}{Frede Blaabjerg}.} \bibinfo{year}{2021}\natexlab{b}.
+\newblock \showarticletitle{Deep Reinforcement Learning-Aided Efficiency
+  Optimized Dual Active Bridge Converter for the Distributed Generation
+  System}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Energy Conversion}}
+  \bibinfo{volume}{37}, \bibinfo{number}{2} (\bibinfo{year}{2021}),
+  \bibinfo{pages}{1251--1262}.
+\newblock
+\href{https://doi.org/10.1109/TEC.2021.3107876}{doi:\nolinkurl{10.1109/TEC.2021.3107876}}
+
+
+\bibitem[Tobin et~al\mbox{.}(2017)]%
+        {tobin2017domain}
+\bibfield{author}{\bibinfo{person}{Josh Tobin}, \bibinfo{person}{Rachel Fong},
+  \bibinfo{person}{Alex Ray}, \bibinfo{person}{Jonas Schneider},
+  \bibinfo{person}{Wojciech Zaremba}, {and} \bibinfo{person}{Pieter Abbeel}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Domain Randomization for Transferring Deep Neural
+  Networks from Simulation to the Real World}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the IEEE/RSJ International
+  Conference on Intelligent Robots and Systems (IROS)}}.
+  \bibinfo{pages}{23--30}.
+\newblock
+\href{https://doi.org/10.1109/IROS.2017.8202133}{doi:\nolinkurl{10.1109/IROS.2017.8202133}}
+
+
+\bibitem[Traue et~al\mbox{.}(2020)]%
+        {traue2020toward}
+\bibfield{author}{\bibinfo{person}{Arne Traue}, \bibinfo{person}{Gerrit Book},
+  \bibinfo{person}{Wilhelm Kirchg{\"a}ssner}, {and} \bibinfo{person}{Oliver
+  Wallscheid}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Toward a Reinforcement Learning Environment Toolbox
+  for Intelligent Electric Motor Control}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Neural Networks and
+  Learning Systems}} \bibinfo{volume}{33}, \bibinfo{number}{3}
+  (\bibinfo{year}{2020}), \bibinfo{pages}{919--928}.
+\newblock
+\href{https://doi.org/10.1109/TNNLS.2020.3029573}{doi:\nolinkurl{10.1109/TNNLS.2020.3029573}}
+
+
+\bibitem[van Hasselt et~al\mbox{.}(2016)]%
+        {van2016deep}
+\bibfield{author}{\bibinfo{person}{Hado van Hasselt}, \bibinfo{person}{Arthur
+  Guez}, {and} \bibinfo{person}{David Silver}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Deep Reinforcement Learning with Double
+  {Q}-Learning}. In \bibinfo{booktitle}{\emph{Proceedings of the 30th AAAI
+  Conference on Artificial Intelligence}}. \bibinfo{pages}{2094--2100}.
+\newblock
+\href{https://doi.org/10.1609/aaai.v30i1.10295}{doi:\nolinkurl{10.1609/aaai.v30i1.10295}}
+
+
+\bibitem[Vazquez et~al\mbox{.}(2022)]%
+        {vazquez2022artificial}
+\bibfield{author}{\bibinfo{person}{Sergio Vazquez}, \bibinfo{person}{David
+  Marino}, \bibinfo{person}{Eduardo Zafra}, \bibinfo{person}{Manuel~Vald{\'e}s
+  Pe{\~n}alosa}, \bibinfo{person}{Ra{\'u}l Andr{\'e}s}, {and}
+  \bibinfo{person}{Leopoldo~G. Franquelo}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{An Artificial Intelligence Approach for Real-Time
+  Tuning of Weighting Factors in {FCS-MPC} for Power Converters}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Industrial Electronics}}
+  \bibinfo{volume}{69}, \bibinfo{number}{12} (\bibinfo{year}{2022}),
+  \bibinfo{pages}{11987--11998}.
+\newblock
+\href{https://doi.org/10.1109/TIE.2021.3127046}{doi:\nolinkurl{10.1109/TIE.2021.3127046}}
+
+
+\bibitem[Wang et~al\mbox{.}(2017)]%
+        {wang2016sample}
+\bibfield{author}{\bibinfo{person}{Ziyu Wang}, \bibinfo{person}{Victor Bapst},
+  \bibinfo{person}{Nicolas Heess}, \bibinfo{person}{Volodymyr Mnih},
+  \bibinfo{person}{Remi Munos}, \bibinfo{person}{Koray Kavukcuoglu}, {and}
+  \bibinfo{person}{Nando de Freitas}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Sample Efficient Actor-Critic with Experience
+  Replay}.
+\newblock \bibinfo{journal}{\emph{Proceedings of the International Conference
+  on Learning Representations (ICLR)}} (\bibinfo{year}{2017}).
+\newblock
+\href{https://doi.org/10.48550/arXiv.1611.01224}{doi:\nolinkurl{10.48550/arXiv.1611.01224}}
+
+
+\bibitem[Weber et~al\mbox{.}(2023)]%
+        {weber2023steady}
+\bibfield{author}{\bibinfo{person}{Daniel Weber}, \bibinfo{person}{Maximilian
+  Schenke}, {and} \bibinfo{person}{Oliver Wallscheid}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Steady-State Error Compensation for Reinforcement
+  Learning-Based Control of Power Electronic Systems}.
+\newblock \bibinfo{journal}{\emph{IEEE Access}}  \bibinfo{volume}{11}
+  (\bibinfo{year}{2023}), \bibinfo{pages}{76524--76536}.
+\newblock
+\href{https://doi.org/10.1109/ACCESS.2023.3297274}{doi:\nolinkurl{10.1109/ACCESS.2023.3297274}}
+
+
+\bibitem[Wei et~al\mbox{.}(2015)]%
+        {wei2015reinforcement}
+\bibfield{author}{\bibinfo{person}{Chun Wei}, \bibinfo{person}{Zhe Zhang},
+  \bibinfo{person}{Wei Qiao}, {and} \bibinfo{person}{Liyan Qu}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Reinforcement-Learning-Based Intelligent Maximum
+  Power Point Tracking Control for Wind Energy Conversion Systems}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Industrial Electronics}}
+  \bibinfo{volume}{62}, \bibinfo{number}{10} (\bibinfo{year}{2015}),
+  \bibinfo{pages}{6360--6370}.
+\newblock
+\href{https://doi.org/10.1109/TIE.2015.2420792}{doi:\nolinkurl{10.1109/TIE.2015.2420792}}
+
+
+\bibitem[Wu et~al\mbox{.}(2021)]%
+        {wu2021innovative}
+\bibfield{author}{\bibinfo{person}{Jing Wu}, \bibinfo{person}{Benfei Wang},
+  {and} \bibinfo{person}{Xinan Zhang}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{An Innovative Deep Reinforcement Learning
+  Controller for {DC/DC} {DAB} Converters Based on Deep Deterministic Policy
+  Gradient}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE International
+  Conference on Electrical Engineering and Mechatronics Technology (ICEEMT)}}.
+  \bibinfo{pages}{329--333}.
+\newblock
+\href{https://doi.org/10.1109/ICEEMT52412.2021.9602911}{doi:\nolinkurl{10.1109/ICEEMT52412.2021.9602911}}
+
+
+\bibitem[Ye et~al\mbox{.}(2024)]%
+        {ye2024deep}
+\bibfield{author}{\bibinfo{person}{Jian Ye}, \bibinfo{person}{Huanyu Guo},
+  \bibinfo{person}{Benfei Wang}, {and} \bibinfo{person}{Xinan Zhang}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Deep Deterministic Policy Gradient Algorithm Based
+  Reinforcement Learning Controller for Single-Inductor Multiple-Output DC-DC
+  Converter}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Power Electronics}}
+  \bibinfo{volume}{39}, \bibinfo{number}{4} (\bibinfo{year}{2024}),
+  \bibinfo{pages}{4078--4090}.
+\newblock
+\href{https://doi.org/10.1109/TPEL.2024.3350181}{doi:\nolinkurl{10.1109/TPEL.2024.3350181}}
+
+
+\bibitem[Ye et~al\mbox{.}(2026)]%
+        {ye2026overview}
+\bibfield{author}{\bibinfo{person}{Jian Ye}, \bibinfo{person}{Weiye Xuan},
+  \bibinfo{person}{Qi Guo}, \bibinfo{person}{Yun Liu}, \bibinfo{person}{Benfei
+  Wang}, \bibinfo{person}{Xinan Zhang}, {and} \bibinfo{person}{Herbert Ho~Ching
+  Iu}.} \bibinfo{year}{2026}\natexlab{}.
+\newblock \showarticletitle{An Overview of Reinforcement Learning for Power
+  Electronic Converters: Topology Derivation, Parameter Design, and Control
+  Implementation}.
+\newblock \bibinfo{journal}{\emph{Renewable and Sustainable Energy Reviews}}
+  \bibinfo{volume}{228} (\bibinfo{year}{2026}), \bibinfo{pages}{116591}.
+\newblock
+\href{https://doi.org/10.1016/j.rser.2025.116591}{doi:\nolinkurl{10.1016/j.rser.2025.116591}}
+
+
+\bibitem[Yu et~al\mbox{.}(2022)]%
+        {yu2022surprising}
+\bibfield{author}{\bibinfo{person}{Chao Yu}, \bibinfo{person}{Akash Velu},
+  \bibinfo{person}{Eugene Vinitsky}, \bibinfo{person}{Jiaxuan Gao},
+  \bibinfo{person}{Yu Wang}, \bibinfo{person}{Alexandre~M. Bayen}, {and}
+  \bibinfo{person}{Yi Wu}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{The Surprising Effectiveness of PPO in Cooperative
+  Multi-Agent Games}. In \bibinfo{booktitle}{\emph{Advances in Neural
+  Information Processing Systems (NeurIPS)}}, Vol.~\bibinfo{volume}{35}.
+  \bibinfo{pages}{24611--24624}.
+\newblock
+\href{https://doi.org/10.48550/arXiv.2103.01955}{doi:\nolinkurl{10.48550/arXiv.2103.01955}}
+
+
+\bibitem[Zandi and Poshtan(2023)]%
+        {zandi2023voltage}
+\bibfield{author}{\bibinfo{person}{Omid Zandi} {and} \bibinfo{person}{Javad
+  Poshtan}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Voltage Control of DC--DC Converters Through Direct
+  Control of Power Switches Using Reinforcement Learning}.
+\newblock \bibinfo{journal}{\emph{Engineering Applications of Artificial
+  Intelligence}}  \bibinfo{volume}{120} (\bibinfo{year}{2023}),
+  \bibinfo{pages}{105833}.
+\newblock
+\href{https://doi.org/10.1016/j.engappai.2023.105833}{doi:\nolinkurl{10.1016/j.engappai.2023.105833}}
+
+
+\bibitem[Zeng et~al\mbox{.}(2023)]%
+        {zeng2023deep}
+\bibfield{author}{\bibinfo{person}{Yu Zeng}, \bibinfo{person}{Josep Pou},
+  \bibinfo{person}{Changjiang Sun}, \bibinfo{person}{Xinze Li},
+  \bibinfo{person}{Gaowen Liang}, \bibinfo{person}{Yang Xia},
+  \bibinfo{person}{Suvajit Mukherjee}, {and} \bibinfo{person}{Amit~Kumar
+  Gupta}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Deep Reinforcement Learning-Enabled Distributed
+  Uniform Control for a DC Solid State Transformer in DC Microgrid}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Industrial Electronics}}
+  \bibinfo{volume}{71}, \bibinfo{number}{6} (\bibinfo{year}{2023}),
+  \bibinfo{pages}{5818--5829}.
+\newblock
+\href{https://doi.org/10.1109/TIE.2023.3279277}{doi:\nolinkurl{10.1109/TIE.2023.3279277}}
+
+
+\bibitem[Zeng et~al\mbox{.}(2022a)]%
+        {zeng2022multiagent}
+\bibfield{author}{\bibinfo{person}{Yu Zeng}, \bibinfo{person}{Josep Pou},
+  \bibinfo{person}{Changjiang Sun}, \bibinfo{person}{Ali~I Maswood},
+  \bibinfo{person}{Jiaxin Dong}, \bibinfo{person}{Suvajit Mukherjee}, {and}
+  \bibinfo{person}{Amit~Kumar Gupta}.} \bibinfo{year}{2022}\natexlab{a}.
+\newblock \showarticletitle{Multiagent Deep Reinforcement Learning-Aided Output
+  Current Sharing Control for Input-Series Output-Parallel Dual Active Bridge
+  Converter}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Power Electronics}}
+  \bibinfo{volume}{37}, \bibinfo{number}{11} (\bibinfo{year}{2022}),
+  \bibinfo{pages}{12955--12961}.
+\newblock
+\href{https://doi.org/10.1109/TPEL.2022.3192345}{doi:\nolinkurl{10.1109/TPEL.2022.3192345}}
+
+
+\bibitem[Zeng et~al\mbox{.}(2022b)]%
+        {zeng2022autonomous}
+\bibfield{author}{\bibinfo{person}{Yu Zeng}, \bibinfo{person}{Josep Pou},
+  \bibinfo{person}{Changjiang Sun}, \bibinfo{person}{Suvajit Mukherjee},
+  \bibinfo{person}{Xu Xu}, \bibinfo{person}{Amit~Kumar Gupta}, {and}
+  \bibinfo{person}{Jiaxin Dong}.} \bibinfo{year}{2022}\natexlab{b}.
+\newblock \showarticletitle{Autonomous Input Voltage Sharing Control and Triple
+  Phase Shift Modulation Method for ISOP-DAB Converter in DC Microgrid: A
+  Multiagent Deep Reinforcement Learning-Based Method}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Power Electronics}}
+  \bibinfo{volume}{38}, \bibinfo{number}{3} (\bibinfo{year}{2022}),
+  \bibinfo{pages}{2985--3000}.
+\newblock
+\href{https://doi.org/10.1109/TPEL.2022.3212345}{doi:\nolinkurl{10.1109/TPEL.2022.3212345}}
+
+
+\bibitem[Zhang et~al\mbox{.}(2021)]%
+        {zhang2021multi}
+\bibfield{author}{\bibinfo{person}{Kaiqing Zhang}, \bibinfo{person}{Zhuoran
+  Yang}, {and} \bibinfo{person}{Tamer Ba{\c{s}}ar}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Multi-Agent Reinforcement Learning: A Selective
+  Overview of Theories and Algorithms}.
+\newblock In \bibinfo{booktitle}{\emph{Handbook of Reinforcement Learning and
+  Control}}. \bibinfo{publisher}{Springer}, \bibinfo{pages}{321--384}.
+\newblock
+\href{https://doi.org/10.1007/978-3-030-60990-0_12}{doi:\nolinkurl{10.1007/978-3-030-60990-0_12}}
+
+
+\bibitem[Zhang et~al\mbox{.}(2023a)]%
+        {zhang2023data}
+\bibfield{author}{\bibinfo{person}{Mengfan Zhang}, \bibinfo{person}{Guodong
+  Guo}, \bibinfo{person}{Sindri Magnusson}, \bibinfo{person}{Robert C.~N.
+  Pilawa-Podgurski}, {and} \bibinfo{person}{Qianwen Xu}.}
+  \bibinfo{year}{2023}\natexlab{a}.
+\newblock \showarticletitle{Data-Driven Decentralized Control of Inverter Based
+  Renewable Energy Sources Using Safe Guaranteed Multi-Agent Deep Reinforcement
+  Learning}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Sustainable Energy}}
+  \bibinfo{volume}{15}, \bibinfo{number}{2} (\bibinfo{year}{2023}),
+  \bibinfo{pages}{1281--1293}.
+\newblock
+\href{https://doi.org/10.1109/TSTE.2023.3341632}{doi:\nolinkurl{10.1109/TSTE.2023.3341632}}
+
+
+\bibitem[Zhang et~al\mbox{.}(2023b)]%
+        {zhang2023online}
+\bibfield{author}{\bibinfo{person}{Mengfan Zhang}, \bibinfo{person}{Pere
+  Izquierdo~G{\'o}mez}, \bibinfo{person}{Qianwen Xu}, {and}
+  \bibinfo{person}{Tomislav Dragi{\v{c}}evi{\'c}}.}
+  \bibinfo{year}{2023}\natexlab{b}.
+\newblock \showarticletitle{Review of Online Learning for Control and
+  Diagnostics of Power Converters and Drives}.
+\newblock \bibinfo{journal}{\emph{Renewable and Sustainable Energy Reviews}}
+  \bibinfo{volume}{186} (\bibinfo{year}{2023}), \bibinfo{pages}{113627}.
+\newblock
+\href{https://doi.org/10.1016/j.rser.2023.113627}{doi:\nolinkurl{10.1016/j.rser.2023.113627}}
+
+
+\bibitem[Zhang et~al\mbox{.}(2023c)]%
+        {zhang2021machine}
+\bibfield{author}{\bibinfo{person}{Shen Zhang}, \bibinfo{person}{Oliver
+  Wallscheid}, {and} \bibinfo{person}{Mario Porrmann}.}
+  \bibinfo{year}{2023}\natexlab{c}.
+\newblock \showarticletitle{Machine Learning for the Control and Monitoring of
+  Electric Machine Drives: Advances and Trends}.
+\newblock \bibinfo{journal}{\emph{IEEE Open Journal of Industry Applications}}
+  \bibinfo{volume}{4} (\bibinfo{year}{2023}), \bibinfo{pages}{188--214}.
+\newblock
+\href{https://doi.org/10.1109/OJIA.2023.3284717}{doi:\nolinkurl{10.1109/OJIA.2023.3284717}}
+
+
+\bibitem[Zhao et~al\mbox{.}(2021)]%
+        {zhao2021overview}
+\bibfield{author}{\bibinfo{person}{Shuai Zhao}, \bibinfo{person}{Frede
+  Blaabjerg}, {and} \bibinfo{person}{Huai Wang}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{An Overview of Artificial Intelligence Applications
+  for Power Electronics}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Power Electronics}}
+  \bibinfo{volume}{36}, \bibinfo{number}{4} (\bibinfo{year}{2021}),
+  \bibinfo{pages}{4633--4658}.
+\newblock
+\href{https://doi.org/10.1109/TPEL.2020.3024914}{doi:\nolinkurl{10.1109/TPEL.2020.3024914}}
+
+
+\bibitem[Zhao et~al\mbox{.}(2020)]%
+        {zhao2020sim}
+\bibfield{author}{\bibinfo{person}{Wenshuai Zhao},
+  \bibinfo{person}{Jorge~Pe{\~n}a Queralta}, {and} \bibinfo{person}{Tomi
+  Westerlund}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Sim-to-Real Transfer in Deep Reinforcement Learning
+  for Robotics: A Survey}. In \bibinfo{booktitle}{\emph{Proceedings of the IEEE
+  Symposium Series on Computational Intelligence (SSCI)}}.
+  \bibinfo{pages}{737--744}.
+\newblock
+\href{https://doi.org/10.1109/SSCI47803.2020.9308468}{doi:\nolinkurl{10.1109/SSCI47803.2020.9308468}}
+
+
+\end{thebibliography}

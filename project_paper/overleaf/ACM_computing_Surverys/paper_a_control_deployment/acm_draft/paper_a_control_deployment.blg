@@ -1,0 +1,114 @@
+This is BibTeX, Version 0.99d (TeX Live 2024)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: paper_a_control_deployment.aux
+The style file: ACM-Reference-Format.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: paper_a_control_deployment.bib
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--empty publisher in alshiekh2018safe
+Warning--empty address in alshiekh2018safe
+Warning--empty publisher in ames2019control
+Warning--empty address in ames2019control
+Warning--empty publisher in chow2018lyapunov
+Warning--empty address in chow2018lyapunov
+Warning--empty publisher in foerster2016learning
+Warning--empty address in foerster2016learning
+Warning--empty publisher in fujimoto2018addressing
+Warning--empty address in fujimoto2018addressing
+Warning--no number and no volume in gholami2021survey
+Warning--page numbers missing in both pages and numpages fields in gholami2021survey
+Warning--empty publisher in haarnoja2018soft
+Warning--empty address in haarnoja2018soft
+Warning--empty publisher in he2021weighting
+Warning--page numbers missing in both pages and numpages fields in henderson2018deep
+Warning--no number and no volume in hinton2015distilling
+Warning--page numbers missing in both pages and numpages fields in hinton2015distilling
+Warning--empty publisher in jung2022reinforcement
+Warning--empty address in jung2022reinforcement
+Warning--no number and no volume in lazaric2012transfer
+Warning--empty publisher in lillicrap2016continuous
+Warning--empty address in lillicrap2016continuous
+Warning--page numbers missing in both pages and numpages fields in lillicrap2016continuous
+Warning--empty publisher in lowe2017multi
+Warning--empty address in lowe2017multi
+Warning--empty publisher in mahazabeen2022performance
+Warning--empty address in mahazabeen2022performance
+Warning--page numbers missing in both pages and numpages fields in mahazabeen2022performance
+Warning--empty publisher in moldovan2012safe
+Warning--empty address in moldovan2012safe
+Warning--empty address in oliehoek2016concise
+Warning--no number and no volume in parisotto2016actor
+Warning--page numbers missing in both pages and numpages fields in parisotto2016actor
+Warning--empty publisher in peng2018sim
+Warning--empty address in peng2018sim
+Warning--empty publisher in schulman2015trust
+Warning--empty address in schulman2015trust
+Warning--no number and no volume in schulman2017proximal
+Warning--page numbers missing in both pages and numpages fields in schulman2017proximal
+Warning--empty publisher in silver2014deterministic
+Warning--empty address in silver2014deterministic
+Warning--empty publisher in tan2018sim
+Warning--empty address in tan2018sim
+Warning--page numbers missing in both pages and numpages fields in tan2018sim
+Warning--empty publisher in tobin2017domain
+Warning--empty address in tobin2017domain
+Warning--empty publisher in van2016deep
+Warning--empty address in van2016deep
+Warning--no number and no volume in wang2016sample
+Warning--page numbers missing in both pages and numpages fields in wang2016sample
+Warning--empty publisher in wu2021innovative
+Warning--empty address in wu2021innovative
+Warning--empty publisher in yu2022surprising
+Warning--empty address in yu2022surprising
+Warning--empty address in zhang2021multi
+Warning--empty publisher in zhao2020sim
+Warning--empty address in zhao2020sim
+You've used 80 entries,
+            6273 wiz_defined-function locations,
+            2011 strings with 39154 characters,
+and the built_in function-call counts, 105468 in all, are:
+= -- 14967
+> -- 3758
+< -- 0
++ -- 1332
+- -- 1258
+* -- 7984
+:= -- 9891
+add.period$ -- 401
+call.type$ -- 80
+change.case$ -- 711
+chr.to.int$ -- 74
+cite$ -- 138
+duplicate$ -- 8572
+empty$ -- 5983
+format.name$ -- 1564
+if$ -- 26554
+int.to.chr$ -- 8
+int.to.str$ -- 1
+missing$ -- 334
+newline$ -- 749
+num.names$ -- 554
+pop$ -- 3176
+preamble$ -- 1
+purify$ -- 1338
+quote$ -- 0
+skip$ -- 3102
+stack$ -- 0
+substring$ -- 8196
+swap$ -- 1003
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 1568
+warning$ -- 58
+while$ -- 483
+width$ -- 0
+write$ -- 1630
+(There were 58 warnings)

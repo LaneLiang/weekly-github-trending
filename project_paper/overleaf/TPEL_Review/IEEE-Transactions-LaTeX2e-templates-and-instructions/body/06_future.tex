@@ -1,0 +1,207 @@
+% \begin{table*}[t]
+% \centering
+% \caption{Summary of key limitations and research opportunities in DRL for PECs}
+% \label{tab:limitations}
+% \renewcommand{\arraystretch}{1.25}
+% \begin{tabular}{@{}p{3.5cm} p{4.5cm} p{4.0cm} p{5.0cm}@{}}
+% \toprule
+% \textbf{Limitation} & \textbf{Impact on DRL-based PECs} & \textbf{Typical Evidence} & \textbf{Research Opportunity} \\ 
+% \midrule
+
+% \textbf{Simulation dependence and limited hardware validation}
+% & • Heavy reliance on simulation models \newline
+% • Neglect of EMI, thermal drift, and sensor noise 
+% & MATLAB/Simulink and OPAL-RT dominant; few embedded tests. 
+% & Develop real-time HIL validation and FPGA/DSP deployment; 
+% promote hardware–algorithm co-design for cross-domain benchmarking. \\ 
+% \midrule
+
+% \textbf{Training stochasticity and performance uncertainty}
+% & • Random exploration causes variance \newline
+% • Non-deterministic convergence across runs 
+% & Performance variation under identical setups; reward-sensitive results. 
+% & Formulate variance-constrained DRL; apply policy ensemble averaging for reproducibility. \\ 
+% \midrule
+
+% \textbf{Instability, reward sensitivity, and sample inefficiency}
+% & • Reward shaping affects convergence \newline
+% • Excessive samples required for stability 
+% & Divergent learning curves; unsafe transient responses observed in converter tasks. 
+% & Integrate safety-constrained or model-informed DRL; hybridize with imitation learning for faster adaptation. \\ 
+% \midrule
+
+% \textbf{Centralized control assumption}
+% & • Centralized sensing infeasible for modular PECs 
+% & Studies confined to single converters; no federated or hierarchical control reported. 
+% & Extend DRL to multi-agent frameworks; develop communication-efficient coordination protocols. \\ 
+% \midrule
+
+% \textbf{Lack of interpretability and safety certification}
+% & • DRL policies act as black boxes \newline
+% • Hard to verify critical safety paths 
+% & Limited traceable decision logic; no certification-ready solutions. 
+% & Develop explainable DRL (X-DRL); combine surrogate modeling with ISO~26262-based safety verification. \\ 
+% \midrule
+
+% \textbf{High computational and memory overhead}
+% & • GPU-based training impractical for embedded control 
+% & Offline PC-based models; limited on-chip training demonstrations. 
+% & Design quantized DRL architectures; optimize inference for real-time edge converters. \\ 
+% \bottomrule
+% \end{tabular}
+% \end{table*}
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Limitations}
+% \label{sec:limitations}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Table~\ref{tab:limitations} summarizes the principal limitations and associated research opportunities of DRL in PECs. The subsequent discussion elaborates on each limitation, emphasizing its technical implications and potential research directions.
+
+% One of the primary constraints in current DRL applications for PECs remains the strong dependence on simulation-based validation. Most studies assess control performance exclusively in software environments, overlooking nonidealities such as sensor noise, electromagnetic interference, switching effects, and thermal drift. Although hardware-in-the-loop (HIL) testbeds such as OPAL-RT and dSPACE have been employed in limited cases, deployment on digital signal processors (DSPs), field-programmable gate arrays (FPGAs), and system-on-chips (SoCs) remains uncommon. Reports of application-specific integrated circuit (ASIC)–level implementation are not yet evident in the open literature, despite its importance for large-scale industrial adoption.
+
+% From an algorithmic standpoint, DRL still exhibits inherent stochasticity and inconsistent performance. Random initialization, probabilistic exploration, and reward sampling can produce substantial variability even under identical configurations. Consequently, convergence reliability and performance reproducibility remain difficult to guarantee. This uncertainty poses a particular risk in safety-critical converter systems, where minor policy deviations may induce instability, overcurrent, or overvoltage conditions.
+
+% Training instability, sensitivity to reward design, and low sample efficiency further restrict the reliability of DRL in converter systems. Divergent learning curves and unsafe transient responses have been frequently reported. These challenges emphasize the necessity of safety-constrained, physics-informed, or hybrid learning frameworks that combine model-based priors with policy learning to enhance convergence stability and data efficiency.
+
+% Another limitation stems from the assumption of centralized observation and control. This assumption is rarely valid in modular or distributed power electronic systems such as microgrids, multi-cell converters, or parallel inverters. Decentralized and hierarchical DRL architectures, incorporating multi-agent coordination and communication-efficient strategies, are therefore needed to address scalability and observability challenges in distributed converter networks.
+
+% Interpretability and safety certification remain additional barriers to practical implementation. Neural policies are often treated as opaque black boxes, complicating both fault tracing and safety verification. The absence of explainable mechanisms hinders compliance with safety standards such as ISO~26262 and restricts industrial trust. Enhancing interpretability through policy visualization, surrogate modeling, and post-hoc explanation techniques is essential for achieving certification-ready DRL control.
+
+% Finally, computational and memory limitations continue to constrain the real-time deployment of DRL in embedded systems. While inference after offline training can be computationally efficient, on-chip training and rapid online adaptation remain infeasible for hardware with stringent resource and timing constraints. Lightweight, quantized, and hardware-efficient policy representations are therefore critical for bridging the gap between high-performance algorithms and embedded converter platforms.
+
+% Overall, these limitations underscore the need for comprehensive validation, deterministic training, interpretable policy architectures, and hardware-efficient implementation. Addressing these issues is fundamental for transitioning DRL from experimental demonstrations to robust industrial applications in power electronics.
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Future Opportunities}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% To overcome the limitations outlined above, several research opportunities can be identified for advancing DRL in power electronic systems.
+
+% \textbf{1) Hardware-Centric Validation:} Develop real-time validation pipelines compatible with DSPs, FPGAs, and SoCs. Promote hardware–algorithm co-design to ensure reproducible and certifiable integration between control policies and embedded hardware platforms.
+
+% \textbf{2) Hybrid and Physics-Informed Reinforcement Learning:} Combine DRL with analytical models, residual dynamics, or safety-constrained objectives to enhance stability, accelerate convergence, and reduce reliance on large-scale training data.
+
+% \textbf{3) Explainable and Trustworthy DRL:} Employ explainable artificial intelligence (XAI) techniques such as SHAP or LIME, use attention-based visualization, or distill policies into interpretable structures (e.g., decision trees) to improve transparency and facilitate safety certification.
+
+% \textbf{4) Multi-Agent and Distributed DRL:} Explore scalable and communication-efficient control schemes for converter-dense systems such as modular multilevel converters (MMCs) and microgrids. Incorporate decentralized coordination and hierarchical control to achieve resilient and autonomous operation.
+
+% \textbf{5) Continual and Meta-Learning:} Enable adaptive learning frameworks that maintain control performance under device aging, parameter drift, or changing operating conditions without full retraining.
+
+% \textbf{6) Safety-Aware and Data-Efficient DRL:} Introduce Lyapunov-based constraints, risk-sensitive objectives, and uncertainty-aware policies to ensure safe exploration. Utilize data-efficient methods such as experience replay, few-shot learning, and domain adaptation to minimize training time and computational cost.
+
+% Collectively, these directions illustrate a convergence between embedded artificial intelligence, robust control theory, and cyber–physical system design. Addressing them in an integrated manner will be essential to achieve safe, interpretable, and scalable DRL-based controllers for next-generation power electronic converters, bridging the gap between algorithmic innovation and industrial-scale reliability.
+
+
+Table~\ref{tab:limitations} ranks the key limitations of DRL applications in PECs based on their impact on practical deployment. 
+Among these, safety and stability remain the foremost barriers to field implementation, followed by reproducibility, interpretability, scalability, simulation dependence, and computational constraints. 
+Each limitation is linked to its technical impact, representative evidence, and verifiable mitigation strategies.
+
+\begin{table*}[t]
+\centering
+\caption{Key Limitations and Research Opportunities for DRL in PECs}
+\label{tab:limitations}
+\renewcommand{\arraystretch}{1.2}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{@{}p{3.6cm}p{4.3cm}p{3.8cm}p{4.8cm}@{}}
+\toprule
+\textbf{Limitation} & \textbf{Impact on DRL-Based PECs} & \textbf{Typical Evidence} & \textbf{Research Opportunity and Mitigation Strategy} \\ 
+\midrule
+
+\textbf{Safety and stability risks} & 
+Reward sensitivity; instability; overshoot risk &
+Divergent transients; unstable Buck/DAB learning &
+Lyapunov-DRL; safe exploration; runtime shielding ~\cite{Feng2022StabilityCR,Shi2021StabilityCR,Cui2021DecentralizedSR}\\ 
+\midrule
+
+\textbf{Reproducibility and \br stochastic training} & 
+Run-to-run variance; nondeterministic updates &
+High variance in cumulative reward across identical setups &
+Variance-bounded DRL; ensemble averaging; unified benchmarks \\ 
+\midrule
+
+\textbf{Limited interpretability and certification readiness} &
+Opaque policies; low traceability; certification barrier &
+Lack of policy visualization; no rule extraction &
+X-DRL; SHAP/LIME; policy distillation \\ 
+\midrule
+
+\textbf{Centralized control assumption} & 
+Global sensing/control impractical; poor scalability &
+Single-unit focus; limited communication modeling &
+Federated DRL; multi-agent coordination; hierarchical control~\cite{Li2022FederatedMD} \\ 
+\midrule
+
+\textbf{Simulation dependence} & 
+Sim-to-real gap; weak robustness to EMI/noise &
+Simulink/OPAL-RT dominated; scarce embedded/HIL tests &
+Domain randomization; physics-based noise; cross-domain HIL pipeline \\ 
+\midrule
+
+\textbf{Computational and memory constraints} & 
+Heavy models; limited embedded feasibility &
+PC-only evaluation; few DSP/FPGA deployments &
+INT8 quantization; model compression; hardware–algorithm co-design~\cite{Jacob2017QuantizationAT} \\ 
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Limitations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Safety and stability represent the most critical deployment barriers.  
+Reward shaping, network initialization, and unbounded exploration can destabilize converter dynamics, producing overvoltage or current overshoot.  
+Lyapunov-constrained and shielded DRL frameworks have recently been introduced to guarantee bounded trajectories and safe exploration~\cite{Feng2022StabilityCR,Shi2021StabilityCR,Cui2021DecentralizedSR}. These techniques incorporate physical safety margins directly into the policy optimization process, ensuring deterministic and certifiable control behavior.
+
+Reproducibility remains a persistent challenge due to stochastic policy updates and random initialization.  
+Identical experiments frequently yield divergent performance, complicating algorithmic comparison and safety validation.  
+Variance-bounded DRL, ensemble averaging, and standardized benchmarking protocols are essential for establishing reliable evaluation metrics and reproducible learning outcomes.
+
+The lack of interpretability further limits industrial trust and certification.  
+Neural controllers often act as black boxes, obstructing compliance with functional safety standards such as ISO~26262.  
+Recent explainable DRL (X-DRL) frameworks address this issue through policy distillation, surrogate modeling, and feature attribution techniques, enabling traceable and transparent decision logic.
+
+Scalability is another constraint, as most DRL implementations assume centralized sensing and control.  
+Such assumptions are unrealistic for modular multilevel converters, microgrids, or distributed energy networks.  
+Federated multi-agent DRL frameworks~\cite{Li2022FederatedMD} enable decentralized learning and coordination with minimal communication overhead, supporting hierarchical and resilient operation.
+
+Simulation dependence remains an intrinsic limitation.  
+Nearly all reported DRL studies are evaluated in simulation environments such as MATLAB/Simulink or OPAL-RT, neglecting electromagnetic interference, thermal effects, and sensor noise.  
+Real-time validation on DSPs, FPGAs, or SoCs is rare.  
+Comprehensive hardware-in-the-loop (HIL) and cross-domain domain-randomized pipelines are required to bridge the simulation-to-hardware gap.
+
+Finally, high computational and memory demands hinder embedded implementation.  
+Although inference is lightweight after offline training, on-chip learning and fast adaptation remain challenging.  
+Quantized actor–critic architectures and INT8 inference~\cite{Jacob2017QuantizationAT} significantly reduce latency and memory consumption, enabling deployment on real-time FPGA or DSP platforms.
+
+Overall, these limitations highlight the need for safety-guaranteed, reproducible, interpretable, and resource-efficient DRL architectures that can be validated across both simulation and hardware environments.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Future Opportunities}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Addressing the above challenges presents several promising research opportunities:
+
+\textbf{1) Safety-Aware and Stable DRL:}  
+Integrate Lyapunov-based constraints, runtime shielding, and risk-sensitive objectives to ensure safe learning and bounded transients during converter operation.
+
+\textbf{2) Deterministic and Reproducible Learning:}  
+Adopt variance-regularized updates, policy ensembles, and standardized open-source benchmarks to improve reproducibility across experimental setups.
+
+\textbf{3) Explainable and Certifiable DRL:}  
+Develop interpretable policy structures and visual analytics compatible with ISO~26262 and IEC~61508 certification frameworks.
+
+\textbf{4) Distributed and Federated DRL:}  
+Enable hierarchical coordination for converter-dense systems through communication-efficient and privacy-preserving federated learning architectures.
+
+\textbf{5) Realistic Validation and Physics-Informed Learning:}  
+Design hybrid DRL pipelines that combine data-driven learning with analytical models, HIL validation, and domain randomization for reliable performance transfer.
+
+\textbf{6) Hardware-Efficient and Adaptive Implementation:}  
+Promote hardware–algorithm co-design, quantized inference, and on-chip meta-learning for low-latency adaptation under resource constraints.
+
+Collectively, these directions reveal a convergence between embedded artificial intelligence, robust control theory, and cyber–physical design.  
+Pursuing them in an integrated manner will enable safe, interpretable, and scalable DRL-based controllers, accelerating the transition from laboratory prototypes to certified industrial deployment in next-generation power electronic systems.

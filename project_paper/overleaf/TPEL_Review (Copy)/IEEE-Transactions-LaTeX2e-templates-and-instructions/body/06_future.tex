@@ -1,0 +1,49 @@
+\begin{table*}[t]
+\centering
+\caption{Limitations and Future Opportunities of DRL in Power Electronic Converter Systems}
+\label{tab:limitations}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{3.2cm}|p{6.5cm}|p{6.5cm}}
+\hline
+\textbf{Category} & \textbf{Challenges} & \textbf{Future Directions} \\
+\hline
+Validation Methodology & Heavy reliance on simulation; limited use of HIL platforms; rare deployment on embedded hardware & Promote hardware-in-the-loop (HIL) testing (e.g., dSPACE, OPAL-RT); increase deployment on DSP/FPGA; explore DRL--hardware co-design for real-time integration \\
+\hline
+Algorithm Stability & Reward functions are often manually crafted and sensitive; convergence may fail under sparse rewards or high-dimensional action spaces & Combine DRL with model-based elements; employ curriculum learning, hierarchical RL, or meta-RL for improved stability \\
+\hline
+Scalability to Large Systems & DRL controllers lack modularity; insufficient coordination in distributed converter networks & Investigate multi-agent DRL (MADRL) for modular architectures; apply graph RL for converter interconnection modeling \\
+\hline
+Policy Interpretability & Learned policies behave as black boxes; lack of transparency impedes certification and debugging & Integrate explainable AI (XAI) techniques; use attention mechanisms or policy distillation for interpretable representations \\
+\hline
+Real-Time Deployment Constraints & High inference latency and memory footprint; limited compatibility with embedded hardware & Develop lightweight DRL models; leverage FPGAs, neural processing units (NPUs), and edge-AI toolchains \\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsection{Limitations}
+
+The key limitations and their corresponding research opportunities are summarized in Table~\ref{tab:limitations} and elaborated as follows. One of the most critical limitations in current DRL research for power electronic converters is the over-reliance on simulation-based validation. Most existing works evaluate DRL performance solely in software environments, ignoring real-world effects such as sensor noise, electromagnetic interference, switching non-idealities, and thermal drift. Although hardware-in-the-loop (HIL) platforms like OPAL-RT and dSPACE are occasionally employed, full deployment on embedded hardware—such as DSPs, FPGAs, or SoCs—remains rare. To date, no studies have reported ASIC-level DRL integration, which is essential for industrial-grade converter applications.
+
+From an algorithmic standpoint, DRL still suffers from unstable training, reward sensitivity, and sample inefficiency. These issues are especially critical in converter control, where unstable policies may lead to unsafe operating conditions. Additionally, most DRL implementations assume centralized observation and control, which may not apply to modular or distributed converter topologies like microgrids or multi-cell systems.
+
+Interpretability is another key limitation. DRL agents typically operate as black-box neural networks, which complicates safety validation, certification, and debugging. This lack of transparency undermines trust and inhibits adoption in safety-critical applications such as automotive or aerospace electronics, where compliance with standards like ISO 26262 is required.
+
+Finally, DRL models often require GPU-based training and incur significant computational overhead. Although inference can be made lightweight, on-chip training or continual adaptation remains prohibitive on embedded platforms with limited memory and real-time constraints.
+
+\subsection{Future Opportunities}
+
+To address these limitations, future DRL research in power electronics should pursue the following six directions:
+
+\textbf{1) Hardware-Centric Validation:} Develop inference architectures compatible with DSPs, FPGAs, and embedded SoCs. Promote deployment of trained policies on HIL platforms such as OPAL-RT and dSPACE, and explore DRL--hardware co-design for real-time integration.
+
+\textbf{2) Hybrid and Physics-Informed RL:} Combine DRL with model-based priors (e.g., residual dynamics, safety-constrained loss functions) to improve training stability and safety during exploration.
+
+\textbf{3) Explainable and Trustworthy DRL:} Apply explainable AI (XAI) techniques such as SHAP or LIME, use attention-based networks, or distill policies into interpretable forms (e.g., decision trees) to enhance transparency and certification readiness.
+
+\textbf{4) Multi-Agent and Distributed DRL:} Explore scalable control schemes for converter-rich systems (e.g., MMCs, microgrids) through decentralized DRL and communication-efficient coordination strategies.
+
+\textbf{5) Continual and Meta-Learning:} As converters degrade or encounter unforeseen conditions, meta-RL and lifelong learning frameworks can maintain policy performance without full retraining.
+
+\textbf{6) Safety-Aware and Data-Efficient DRL:} Employ safe RL techniques using Lyapunov-based constraints or risk-sensitive policies to ensure reliability, and adopt data-efficient strategies (e.g., experience replay, few-shot learning) to reduce reliance on large datasets or long HIL cycles.
+
+Collectively, these directions highlight a convergence between embedded AI, robust control theory, and cyber-physical system design. As summarized in Table~\ref{tab:limitations}, the successful deployment of DRL in power electronic converter systems will require not only algorithmic innovation, but also hardware-aware design, interpretability guarantees, and scalable coordination frameworks. Addressing these challenges will be essential for realizing safe, reliable, and adaptive DRL controllers in next-generation power electronic infrastructures.

@@ -1,0 +1,65 @@
+\usepackage{cite}
+\usepackage{graphicx}
+\graphicspath{{./} {fig/}}
+% \usepackage[tight,footnotesize]{subfigure}
+\usepackage[labelsep=period]{caption}
+\captionsetup[figure]{font=small}
+\captionsetup[table]{textfont={sc,footnotesize}, labelfont=footnotesize, labelsep=newline, justification=centering} %ieee table format
+\usepackage{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})} %引用子图格式：数字(字母)，如Fig.1(a)
+\DeclareCaptionLabelFormat{opening}{#2}
+\captionsetup[subfigure]{labelformat=opening} %避免子图出现双括号
+
+%\usepackage{amsmath}
+\usepackage{amsmath, amssymb} % 强烈建议
+\usepackage{algorithmic}
+% \usepackage{url}
+\usepackage[hyphens,spaces,obeyspaces]{url}
+\usepackage{footmisc}
+\def\myurl#1{\setbox0\vbox{\hsize.5\maxdimen
+\url{#1}\par
+\global\setbox1\lastbox}\unhbox1 }
+\usepackage[colorlinks]{hyperref}
+\usepackage{array}
+
+\usepackage{threeparttable}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{adjustbox}
+\usepackage[utf8]{inputenc}
+\usepackage{stfloats}
+\usepackage{array} % 记得在导言区加这个包，否则 m{} 无法使用
+\usepackage{acronym}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\newcommand{\chicca}[1]{{\color{red}{\bf elisabetta:} #1}}
+
+%% Block comment. \begin{comment}  \end{comment}
+\usepackage{verbatim}
+
+%% Provides generic commands \degree, \celsius, \perthousand, \micro and \ohm which work both in text and maths mode.
+\usepackage{textcomp,gensymb}
+
+%% line break
+\usepackage{makecell}
+
+%% 调整表格线与上下内容的间隔
+\usepackage{booktabs}
+
+\usepackage{hyperref}
+\hypersetup{
+   hypertex=true,
+   colorlinks=true,
+   linkcolor=blue,
+   anchorcolor=blue,
+   citecolor=blue
+}
+
+%% emphasizing text 
+\usepackage{soul}
+\setstcolor{red}
+
+\newsavebox\CBox
+\def\textBF#1{\sbox\CBox{#1}\resizebox{\wd\CBox}{\ht\CBox}{\textbf{#1}}}

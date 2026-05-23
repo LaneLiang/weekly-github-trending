@@ -1,0 +1,19 @@
+\documentclass{standalone}
+\usepackage{amsmath}
+\usepackage{bm}
+\begin{document}
+\boldmath
+\bfseries
+\[
+\Huge
+R(\mathrm{error}) =
+\begin{cases}
+5 - |\mathrm{error}|, & \text{if } \mathrm{error} < 0.1\\
+1 - |\mathrm{error}|, & \text{if } 0.1 \leq \mathrm{error} \leq 1\\
+-5 |\mathrm{error}|, & \text{if } \mathrm{error} > 1
+\end{cases}
+\]
+\end{document}
+
+
+

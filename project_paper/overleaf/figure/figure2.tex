@@ -1,0 +1,16 @@
+\documentclass{standalone}
+\usepackage{amsmath}
+\usepackage{bm}
+\begin{document}
+\boldmath
+\bfseries
+\[
+\Huge
+R(\mathrm{error}) =
+\begin{cases}
+10 + 10|\mathrm{error}|, & 0 < |\mathrm{error}| < 0.1 \\
+1 - 10|\mathrm{error}|, & 0.1 \leq |\mathrm{error}| \leq 1 \\
+-10|\mathrm{error}|, & \text{else}
+\end{cases}
+\]
+\end{document}

@@ -1,0 +1,60 @@
+\documentclass[journal]{IEEEtran}
+\input{package}
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\begin{document}
+
+\input{body/00_title}
+\maketitle
+\IEEEpeerreviewmaketitle
+
+\input{body/00_abstract.tex}
+ 
+\input{body/00_keyword}
+
+\section{Introduction}
+\label{sec_intro}
+\input{body/01_introduction.tex}
+
+\section{RRAM Model and Conventional Sensing Schemes}
+\label{sec_conv}
+\input{body/02_conventional.tex}
+
+\section{Proposed Time-based Sensing Scheme and Theoretical Analysis}
+\label{sec_prop}
+\input{body/03_proposed.tex}
+
+\section{Extension to Time-based Multi-level Sensing}
+\label{sec_features}
+\input{body/04_features.tex}
+
+\section{Simulation Evaluation of Time-based Sensing and Comparison with Other Sensing Schemes}
+\label{sec_results}
+\input{body/05_results.tex}
+
+% \section{Discussion}
+% \label{sec:discussion}
+% \subsection{Neural Network Simulation}
+% \label{NNSIM}
+% \input{body/apx_NN_Sim.tex}
+% \subsection{Startup Circuit}
+% \label{CCO_Startup}
+% \input{body/apx_Startup.tex}
+
+\section{Conclusion}
+\label{sec_conclusion}
+\input{body/06_conclusion.tex}
+
+% \input{extra/appendix}
+
+\input{extra/acknowledgment}
+
+
+
+\Urlmuskip=0mu plus 1mu\relax
+\bibliographystyle{IEEEtran}
+\bibliography{References.bib}
+
+\input{extra/biography}
+
+\end{document}

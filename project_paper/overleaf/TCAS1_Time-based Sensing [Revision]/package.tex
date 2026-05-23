@@ -1,0 +1,46 @@
+
+\usepackage{cite}
+\usepackage{graphicx}
+\graphicspath{{./} {fig/}}
+% \usepackage[tight,footnotesize]{subfigure}
+\usepackage{caption}
+\captionsetup[figure]{font=small}
+\captionsetup[table]{textfont={sc,footnotesize}, labelfont=footnotesize, labelsep=newline, justification=centering} %ieee table format
+\usepackage{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})} %引用子图格式：数字(字母)，如Fig.1(a)
+\DeclareCaptionLabelFormat{opening}{#2}
+\captionsetup[subfigure]{labelformat=opening} %避免子图出现双括号
+
+\usepackage{amsmath}
+\usepackage{algorithmic}
+\usepackage{url}
+\usepackage{array}
+
+\usepackage{threeparttable}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{adjustbox}
+\usepackage[utf8]{inputenc}
+
+\usepackage{acronym}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\newcommand{\chicca}[1]{{\color{red}{\bf elisabetta:} #1}}
+
+%% Block comment. \begin{comment}  \end{comment}
+\usepackage{verbatim}
+
+%% Provides generic commands \degree, \celsius, \perthousand, \micro and \ohm which work both in text and maths mode.
+\usepackage{textcomp,gensymb}
+
+%% line break
+\usepackage{makecell}
+
+%% 调整表格线与上下内容的间隔
+\usepackage{booktabs}
+
+%% emphasizing text 
+\usepackage{soul}
+\setstcolor{red}

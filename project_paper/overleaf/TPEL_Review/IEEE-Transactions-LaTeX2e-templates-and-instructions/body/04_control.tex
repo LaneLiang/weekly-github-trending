@@ -1,0 +1,193 @@
+While the design stage establishes the structural and parametric foundations of PECs, the control stage governs their real-time behavior, adaptability, and robustness. In recent years, DRL has emerged as a powerful paradigm for intelligent control in PECs, offering model-free, adaptive policy learning in nonlinear, time-varying environments. Unlike conventional schemes that rely on predefined models or rules, DRL-based controllers continuously interact with the environment to optimize long-term performance objectives under uncertainty. This section surveys recent advances in DRL-enabled converter control, focusing on five representative domains: MPPT, modulation strategy optimization, variable-parameter tuning, energy management, and motor speed tracking. These categories capture both low-level signal regulation and high-level decision-making, where DRL enhances adaptability, robustness, and real-time autonomy.
+
+\subsection{Maximum Power Point Tracking (MPPT)}
+\label{sec:ctrl_mppt}
+
+Building on the structural foundations and the adaptive capabilities introduced in previous sections, MPPT represents a critical real-time control function in converter-based energy systems, particularly for PV and wind energy conversion systems. MPPT ensures that renewable sources operate at their peak power-producing conditions under varying environmental conditions. Traditional MPPT methods—such as P\&O, incremental conductance, or model-based techniques—are often limited in dynamic adaptability, robustness under partial shading conditions, and multi-modal optimization. In contrast, DRL has emerged as a promising paradigm for intelligent MPPT control, offering model-free, online adaptive policy learning that can optimize energy harvesting in real time.
+
+A representative example is the comparative analysis of SAC algorithms for PV MPPT under PSCs \cite{nwachukwu2025comparative}. This research focuses on adjusting the duty cycle of DC-DC boost converters for solar PV applications under partial shading conditions. PSCs create multi-peak power-voltage curves, causing conventional methods like P\&O to get trapped at local maxima, leading to power losses of up to 41.59\%. The SAC algorithm addresses this by dynamically adjusting the duty cycle via entropy-regulated rewards, which effectively eliminates power oscillations at the global maximum power point. SAC achieves 99.99\% tracking efficiency under PSCs, significantly outperforming  P\&O (58.41\%) and reducing power loss to 0.14\%.
+
+In wind-based systems, TD3 also has been employed to track the optimal operating point of permanent magnet synchronous generator (PMSG)-based WECSs. The TD3-based controller improves resilience to parameter uncertainty and outperforms model-based feedback linearization control in maintaining optimal rotor speed and current loop performance \cite{zholtayev2024deep}. This work deploys TD3 for direct voltage control in PMSG wind turbines, tackling wind speed volatility and parameter uncertainties. TD3 reduces speed tracking RMSE by 47.2\% (0.1623 vs. LQR's 0.3078) under perturbations, with only a 3\% degradation from nominal, showcasing enhanced robustness for MPPT in PECs
+
+Similarly, DRL agents have been coupled with heuristic algorithms such as the crayfish optimizer or dandelion optimizer to refine reference voltage values and maximize efficiency under highly dynamic PV output conditions \cite{ghazi2024maximum}. This work pioneers real-time control optimization for PECs by integrating the Crayfish Optimization Algorithm with PPO to dynamically regulate DC/DC boost and buck-boost converters in a 1-MW PV-ESS grid-tied system. Addressing critical challenges of partial shading conditions causing multi-peak power loss and PV power volatility inducing ESS current instability. Dual PPO controllers adjust boost converter duty cycles and buck-boost duty cycles to achieves: COA generates optimal $V_\text{MPPT}$ references under PSCs, enabling global MPP tracking with 95.14\% DC boost efficiency (vs. P\&O-PI's 94.24\%).  .
+
+Various DRL architectures have also been explored. DQN and their variants have shown significant performance gains over Q-learning and P\&O in MPPT tasks. For instance, under PSCs, a DQN-based MPPT strategy achieved faster convergence to the global MPP with reduced oscillation and energy loss, outperforming both P\&O and PSO-based methods \cite{yew2023investigating}. This work directly addresses control optimization for PECs by deploying DDPG to dynamically regulate DC/DC boost converter duty cycles in a 639.45 W PV system. Key challenges include: Partial shading conditions inducing multi-peak power curves that trap conventional MPPT methods at local maxima, DDPG achieves $>$4$\times$ faster MPPT tracking and $>$40\% oscillation reduction versus P\&O in grid-tied PECS, demonstrating viability for real-world partial shading mitigation despite a 1.18\% efficiency gap versus PSO under extreme PSC.
+
+More advanced architectures, such as the Deep Q-learning Direct Torque Controller for PMSG \cite{schenke2021deep}, integrate MPPT within a broader torque control framework, optimizing system-level performance in both wind and PV scenarios. This work pioneers model-free control optimization for PECs by DQL to dynamically regulate switching states of a two-level voltage source inverter driving a permanent magnet synchronous motor. Addressing critical challenges of torque-tracking instability under parameter uncertainties and efficiency degradation due to suboptimal current trajectories, the DQL agent: DQ-DTC achieves $>$5\% efficiency uplift and $>$46\% torque-tracking accuracy versus MP-DTC in PMSM drives, establishing a model-free paradigm for real-time PECS control under parameter uncertainties.
+
+In addition, recent efforts have applied explainable artificial intelligence (XAI) to interpret DRL-based MPPT decision-making policies. For example, SHAP and LIME analysis revealed that DRL agents primarily rely on power differential and converter duty cycle variations when approaching the MPP, validating the physical consistency of learned policies \cite{tan2022explainable}. This work pioneers interpretable control optimization for PECs by integrating Explainable AI with DDPG to demystify duty cycle decisions in buck-boost converters for PV MPPT. Addressing critical challenges of black-box DRL opacity hindering trust in real-world deployment and suboptimal ripple performance under partial shading, the XAI-DDPG framework: XAI-DDPG achieves 5\% higher efficiency and $>$40\% ripple reduction in PV PECS, demonstrating that explicit duty cycle feedback is critical for trustworthy, high-fidelity MPPT control under real-world volatility.
+
+In summary, DRL-based MPPT control offers a paradigm shift from rule-based and model-dependent tracking methods to fully adaptive, self-optimizing strategies capable of navigating complex energy landscapes. These approaches are particularly effective in handling nonlinearity, partial shading conditions, dynamic wind profiles, and system uncertainties, ensuring optimal power extraction in diverse environmental conditions. As DRL algorithms become more sample-efficient and interpretable, and hardware platforms better accommodate their computational demands, their deployment in next-generation PECs for renewable energy harvesting is expected to accelerate significantly.
+
+\subsection{Modulation Strategy Optimization}
+\label{sec:ctrl_modulation}
+
+Following the shift toward intelligent maximum power extraction using DRL, another critical frontier in converter control is modulation strategy optimization. Modulation strategies directly govern the switching behavior of power electronic converters, influencing energy conversion efficiency, thermal stress, electromagnetic interference, and overall system stability. Traditionally, fixed-rule or model-based modulation methods such as sinusoidal PWM, phase-shifted modulation, or predictive current control have been widely applied. However, these methods often fall short under dynamic loading, uncertain grid conditions, and parameter drifts. In contrast, DRL offers a promising alternative by learning adaptive, system-specific modulation policies through interaction with the converter environment, aiming to optimize efficiency, robustness, and multi-objective performance.
+
+One prominent application area is the DAB DC-DC converter, widely used in EV chargers and renewable-integrated microgrids. For instance, a reinforcement learning-based efficiency optimization scheme using Q-learning was proposed for triple-phase-shift modulated DAB converters \cite{tang2020reinforcement}. The Q-agent was trained offline to explore all TPS operation modes and phase-shift angle combinations, enabling real-time selection of optimal modulation strategies with minimal switching losses and high conversion efficiency. Experimental results from a 1.2 kW prototype confirmed significant improvements in full-load and partial-load efficiency.
+
+Further advancing the DAB domain, DDPG-based DRL controllers have been applied to three-level DAB converters with five degrees of freedom in modulation \cite{feng2024artificial}. These DRL agents were trained to optimize switch timings, duty cycles, and transformer utilization, outperforming heuristic and rule-based methods in energy efficiency across a wide range of operating points.
+
+In the context of grid-connected inverter systems, DRL has also demonstrated clear advantages in handling nonlinearities and model uncertainties. A DDPG-based direct current regulation strategy was proposed for two-level inverters with LCL filters, replacing conventional PI and model predictive controllers \cite{rajamallaiah2024direct}. The DRL-based controller exhibited superior dynamic response and robustness in both simulation and hardware-in-the-loop (HIL) validation using OPAL-RT platforms. Unlike traditional controllers, the DRL agent could continuously adapt to grid parameter fluctuations and disturbances without requiring manual retuning.
+
+DRL-based modulation optimization has also been extended to multi-converter systems. A notable example is the modulation strategy optimization for high-power DAB-based DC fast chargers (e.g., 350 kW systems), in which DRL was used to co-optimize the number of parallel modules, switching frequency, and transformer turns ratio, achieving over 95\% efficiency at rated power \cite{tang2020reinforcement}. Such approaches highlight the potential of DRL not only for online control, but also for design-time configuration and hardware sizing.
+
+Beyond isolated converters, DRL has been used to assist system-level modulation coordination. For example, in hybrid AC/DC transmission systems, a DQN was applied to tune controller parameters for frequency coordination and active power modulation, enhancing dynamic stability during wind power fluctuations \cite{hui2024frequency}. This reflects a growing trend of applying DRL to optimize modulation strategies across interconnected converter networks, where control decisions must account for both local and global objectives.
+
+Lastly, DRL-based modulation strategies are increasingly relevant in DC microgrids with complex load characteristics such as CPLs. In one study, DRL agents were used to stabilize buck converters feeding CPLs, improving voltage regulation and system resilience under rapid load transitions \cite{muhammad2025performance}. These results further support DRL's potential for adaptive modulation in safety-critical converter-dominated DC systems.
+
+In summary, DRL-based modulation strategy optimization represents a paradigm shift from fixed or model-dependent control toward adaptive, real-time decision-making in converter switching schemes. Whether optimizing efficiency, enhancing stability, or supporting multi-converter coordination, DRL agents can learn sophisticated modulation policies that outperform classical methods under diverse operating conditions. As DRL techniques continue to mature and integrate with hardware-accelerated platforms, their role in advancing intelligent modulation strategies across PECs is expected to expand rapidly.
+
+\subsection{Variable-Parameter Tuning}
+\label{sec:ctrl_vartuning}
+
+While modulation strategy optimization focuses on shaping switching behavior to improve converter dynamics, variable-parameter tuning complements this effort by enabling real-time adaptation of key system-level control parameters. In PECs, fixed parameters—such as droop coefficients, PWM duty cycles, virtual inertia constants, or voltage references—are typically pre-designed for nominal conditions. However, such static configurations often underperform under disturbances, load changes, or nonlinearities. Recent studies demonstrate that DRL provides an effective framework to autonomously tune these parameters, offering enhanced control precision, stability, and robustness in dynamically varying environments.
+
+One line of research centers on converter-side parameter adaptation to optimize voltage regulation, reduce transient errors, and suppress steady-state offsets. A compensatory TD3 algorithm was introduced for DC-DC boost converters, demonstrating up to 22.5\% improvement in response time and significant reduction in voltage deviation compared to classical PI control \cite{cheng2025novel}. Similarly, an adaptive control framework leveraging DDPG and an ultra-local model was proposed for buck–boost converters in wireless power transfer systems, achieving robust performance under varying constant power loads \cite{gheisarnejad2020novel}. For CPL-fed converters, a higher-order sliding mode observer was combined with DDPG to dynamically adjust control coefficients and maintain large-signal stability \cite{huangfu2022learning}. In DC microgrids, a nonsmooth composite controller with fractional-order robustness was tuned using a SAC algorithm, effectively improving transient performance under diverse CPL disturbances \cite{zhou2023drl}. Additionally, a PPO-based DRL approach was used to fine-tune boost converter duty cycles, outperforming model predictive control and sliding mode control in both settling time and voltage stability \cite{saha2024proximal}. Moreover, an adaptive predictive control scheme was proposed in \cite{cui2023adaptive}, where DRL was used to dynamically determine the prediction horizon in a GPC framework. This method enables the controller to meet multi-objective performance criteria while adapting to load variations and system uncertainties.
+
+Another stream of work applies DRL to tune grid-supporting parameters such as virtual inertia and droop gains in low-inertia systems. A physics-constrained TD3 algorithm was developed to simultaneously optimize virtual inertia and damping control in DFIG wind turbines, significantly reducing system frequency deviations during grid disturbances \cite{egbomwan2024physics}. In inverter-interfaced microgrids, TD3-based virtual inertia control outperformed PI-based designs by achieving faster frequency recovery and lower deviation \cite{egbomwan2022twin}. Further, a distributed SAC framework was employed to coordinate inertia-droop parameter tuning among multiple VSG, effectively mitigating inter-area oscillations \cite{yang2022distributed}. Meanwhile, an interactive fuzzy optimization approach guided by DQN was proposed to derive optimal droop coefficients in DC microgrids, balancing voltage regulation with power loss minimization and improved current sharing \cite{thanh2022improving}. In addition, an advanced MADRL strategy with Gumbel-softmax-enhanced topology adaptation was introduced in \cite{wu2023multi}, where DRL agents tune voltage regulation parameters across timescales based on partial observation. The framework demonstrated superior adaptability in dynamic voltage control compared to model-based methods.
+
+A third category of studies embeds parameter tuning within integrated adaptive control frameworks to handle uncertainty and time-varying conditions. For instance, SAC was used to adapt the gains of a PI-integral-reduction controller in an energy storage damping system, yielding robust performance across variable grid conditions \cite{li2021mechanism}. A multi-objective DRL controller was designed to optimize multiple control gains in converters under weak and strong grid scenarios, achieving both dynamic responsiveness and stability \cite{jiang2023stability}. To address residual steady-state errors commonly observed in RL-based controllers, an augmented state design introducing integral action was proposed, reducing voltage deviation by up to 52\% in inverter control tasks \cite{weber2023steady}. Further, a model-based safe reinforcement learning strategy was developed in \cite{shuai2024safe}, where Lyapunov theory and Gaussian process modeling were combined with DRL to ensure stable parameter adaptation. The approach guarantees both optimal performance and safety in dynamic inverter systems.
+
+In summary, DRL-based variable-parameter tuning offers a paradigm shift from static controller design to fully adaptive, real-time optimization. By leveraging environmental feedback and reward-driven learning, DRL agents can continuously adjust key system parameters in response to changing operating conditions. This capability not only improves transient and steady-state performance but also enhances the resilience of power electronic systems under uncertainty.
+
+\subsection{Energy Management}
+\label{sec:ctrl_energymgmt}
+
+In continuation of DRL-driven variable-parameter tuning, where system-level adaptability was achieved through continuous feedback-based optimization, energy management represents a higher-level control layer that determines how power is allocated, routed, and stored within converter-based systems. Within the context of PECs, energy management encompasses the coordination of energy flows among multiple sources, storage units, and loads, typically under the regulation of converters such as DC/DC, DC/AC, and multiport interfaces. With increasing complexity brought by hybrid energy storage integration, multi-energy coupling, and diverse application environments, DRL has shown growing promise in enabling intelligent, autonomous energy management across such converter-dominated infrastructures.
+
+This section reviews DRL applications for energy management in PECs, which can be grouped into three categories: 1) energy scheduling in converter-interfaced hybrid energy storage systems, 2) dispatch optimization in converter-coupled multi-energy systems, and 3) domain-specific converter-based system-level management.
+
+\subsubsection{Energy Scheduling in Converter-Interfaced Hybrid Energy Storage Systems}
+
+Hybrid energy storage systems, consisting of battery and supercapacitor elements, require finely tuned energy scheduling to address both fast transient and long-duration energy support. These systems are typically integrated via multiple DC/DC converters and bidirectional power electronic interfaces, making the control of energy flow inherently converter-centric. To this end, \cite{zhang2025deep} proposed a hybrid architecture combining DDPG-based compensation with a deadbeat duty-cycle controller. The DRL agent effectively learns the impact of nonlinear power losses and model mismatch on converter current references and adjusts the setpoints accordingly. The resulting strategy achieves a steady-state error below 1\%, with a 34–44\% reduction in bus voltage spikes, highlighting the efficacy of DRL-enhanced current reference generation for converter control. In a broader system context, [Dual Timescales Voltage Regulation Using Data-Driven and Physics-Based Optimization] coordinated converter-based reactive power compensation and energy storage dispatch. A DDPG-based DRL agent scheduled storage converter outputs at the slow timescale, while quadratic optimization governed fast-timescale volt/VAR actions. This dual-layer control effectively addressed voltage deviations across IEEE 33- and 123-bus systems, demonstrating the potential of DRL to manage energy in distribution networks through converter-interfaced HESS.
+
+\subsubsection{Dispatch Optimization in Converter-Coupled Multi-Energy Systems}
+
+Modern integrated energy systems increasingly rely on converter-based interfaces—including power electronic converters for hydrogen electrolysis, thermal-to-electrical conversion, and battery integration—to enable flexible energy flow among electricity, heat, and hydrogen domains. Within such systems, energy management relies on intelligent dispatch of converter outputs under uncertainty and multiple constraints. In \cite{wang2025energy}, the authors proposed a DRL-based dispatch policy to optimize a converter-based cooling-heating-power system. The system utilized multiple converter nodes—such as PV inverters, electric heaters, and electrolyzers—to route energy optimally. The SAC-based policy outperformed stochastic programming methods by reducing operating costs by over 10\% under various seasonal conditions. Likewise, \cite{cui2024integrated} developed an option-critic-based twin delayed DDPG framework to coordinate energy flow through a hybrid converter system combining CAES and BESS. The converter system's outputs were optimized across three operating modes—fast response, long-duration balancing, and synergy-enhanced response—highlighting how DRL supports dynamic energy allocation in multi-timescale converter operations.
+
+\subsubsection{Application-Oriented Energy Management in Converter-Based Systems}
+  
+Converter-based energy management extends across a range of domain-specific applications such as electric transportation, fuel cell systems, and building energy systems—where DC/DC, DC/AC, or AC/AC converters form the execution layer for system-level dispatch and load-following. In \cite{jiang2025collaborative}, DRL agents coordinated the output of fuel cell converters to minimize hydrogen consumption while maintaining temperature constraints, with over 5\% energy savings demonstrated. Similarly, \cite{quan2024customized} used a trained SAC policy to guide real-time converter decisions, which were then refined using a model predictive control layer. The framework improved robustness and total energy efficiency compared to pure DRL 
+
+\begin{table*}[t] 
+\centering
+\caption{Summary of DRL-based control applications in power electronic converters}
+\label{tab:DRL_ControlSummary}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{|p{2.5cm}|p{6.5cm}|p{4.5cm}|p{3.5cm}|}
+\hline
+\textbf{Control Task} & \textbf{Advantages of DRL-Based Control} & \textbf{Limitations / Challenges} & \textbf{Hardware Implications} \\
+\hline
+\textbf{MPPT} & 
+- Accurate tracking under dynamic shading conditions \newline
+- Model-free, self-optimizing \newline
+- Fast adaptation to irradiance/wind changes & 
+- Sensitive to reward design & 
+- Embedded MCU/DSP \newline
+- Real-time inference \\
+\hline
+\textbf{Modulation Strategy Optimization} & 
+- Efficient switching with low power loss \newline
+- Real-time modulation pattern selection \newline
+- Handles nonlinear dynamics & 
+- High-dimensional action space \newline
+- Requires careful safety testing & 
+- High-speed DSP/FPGA \\
+\hline
+\textbf{Variable-Parameter Tuning} & 
+- Autonomous learning replaces manual tuning \newline
+- Continuous adaptation to system drift \newline
+- Enhances dynamic and steady-state performance & 
+- Sample inefficiency \newline
+- long training cycles \newline
+- Safety concerns with online learning & 
+- Moderate hardware  \newline
+- Lightweight inference post-training \\
+\hline
+\textbf{Energy Management} & 
+- Optimal scheduling of DERs \newline
+- Handles renewable output/load uncertainty \newline
+- Learns multi-timescale dispatch and storage strategies & 
+- Poor interpretability of learned policy \newline
+- Scalability issues for large systems & 
+- Edge AI \newline
+- Embedded GPU \\
+\hline
+\textbf{Motor Speed Tracking} & 
+- Robust to load changes, uncertainties \newline
+- Direct speed/torque control \newline
+- Reduces overshoot, ripple, and steady-state error & 
+- Data collection and validation costly \newline
+- Limited transparency in control logic & 
+- SIL/HIL platforms \newline
+- Real-time essential \\
+\hline
+\end{tabular}
+\vspace{1mm}
+\begin{tablenotes}
+\small
+\item \textit{Note:} This table summarizes the key strengths and limitations of DRL-based control strategies across five major control domains in PECs. Hardware implications highlight real-time deployment requirements.
+\end{tablenotes}
+\end{table*}
+
+methods. Within buildings, DRL-based energy management was also extended to converter-driven HVAC systems.
+
+In summary, DRL-based energy management provides a unified, intelligent framework for coordinating power flow across converter-dominated systems. By learning optimal dispatch strategies through interaction with dynamic environments, DRL agents can effectively manage energy storage, multi-energy coupling, and application-specific operation. This data-driven adaptability enables superior cost-efficiency, responsiveness, and system resilience, especially under uncertainty and varying operating conditions. As converter technologies continue to evolve and integrate into complex infrastructures, DRL is poised to become a core enabler of real-time, scalable, and autonomous energy management in next-generation PECs.
+
+\subsection{Motor Speed Tracking}
+\label{sec:ctrl_motor}
+
+As energy management strategies powered by DRL continue to advance in PECs, a closely related yet more time-critical challenge lies in motor speed tracking—a fundamental task in EV, industrial drives, aerospace systems, and renewable energy generation. In these applications, precise and robust control of motor speed is often achieved through the use of converters such as voltage source inverters, DAB converters, or DC-DC stages, which serve as the interface between control algorithms and electromechanical dynamics. However, traditional controllers such as PI, MPC, or active disturbance rejection control tend to suffer performance degradation in the presence of parameter uncertainty, nonlinearities, or rapidly changing loads.
+
+To overcome these limitations, researchers have increasingly turned to DRL as a flexible, model-free alternative for real-time motor control. DRL agents can learn optimal control policies through direct interaction with converter-fed motor environments, allowing for high-accuracy speed regulation under diverse operating conditions.
+
+For instance, in \cite{bhattacharjee2022real}, a closed-loop DDPG-based controller is developed for permanent magnet synchronous motors. By jointly regulating stator current and rotor speed in the presence of nonlinear parameter variation and torque disturbances, the controller demonstrates significantly improved tracking accuracy and robustness compared to conventional adaptive PI controllers. Similarly, \cite{wang2023novel} integrates a TD3 agent into the ADRC structure, achieving better stability margins and reduced steady-state error in aviation-grade motor control systems.
+
+Beyond the aerospace and automotive domains, DRL has also been deployed for constraint-aware and physically grounded motor control. In \cite{wang2024current}, a DDPG agent is trained to adapt the interconnection and damping coefficients of a passivity-based control law, achieving fast speed response while maintaining current limits—something difficult to balance with traditional methods. Meanwhile, for multi-phase systems, \cite{broghammer2023reinforcement} shows how a DDPG-based controller can manage the increased degrees of freedom in six-phase machines, simplifying commissioning and ensuring torque balance between subsystems.
+
+Notably, DRL-based approaches have also shown promise in DC motor control, where high-speed precision and ripple suppression are critical. In \cite{cosmin2023reinforcement}, the authors use the GEM simulation environment to train a TD3-based agent for DC motor drives. Likewise, \cite{anugula2021deep} demonstrates the ability of DDPG to mitigate ripple and maintain speed stability under parameter variations, outperforming classical PI controllers.
+
+Moreover, DRL-enabled motor tracking has been successfully extended to end-to-end powertrain coordination. In \cite{basile2024sustainable}, a DDPG agent jointly manages battery SOC, inverter dynamics, and motor speed within a unified learning framework, achieving both high tracking precision and energy efficiency in realistic extra-urban driving scenarios.
+
+In summary, DRL-based motor speed tracking provides a transformative approach to precision control in converter-fed motor systems. By replacing rigid, model-dependent control structures with adaptive, self-learning policies, DRL enables 
+
+\begin{table*}[t]
+\centering
+\caption{Advantages and Limitations of Common DRL Algorithms in Control Applications}
+\label{tab:DRLcomparison}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l|cccccccc}
+\hline
+\textbf{Performance}               & \textbf{DDQN} & \textbf{DDPG} & \textbf{PPO} & \textbf{TD3} & \textbf{SAC} & \textbf{MADDPG} & \textbf{MAPPO} & \textbf{MASAC} \\
+\hline
+Approximation capability$^\dag$   & ++  & +++   & ++    & +++   & +++   & ++   & ++   & +++ \\
+Robustness                        & +   & +     & ++    & +++   & +++   & ++    & +++    & +++ \\
+Sample/data efficiency            & ++  & +++   & +    & +++    & +++   & ++    & +   & ++ \\
+Computational burden              & +   & ++    & +++   & ++    & +++   & +++   & +++   & +++ \\
+Action space                      & Discrete & Continuous & Continuous & Continuous & Continuous & Continuous & Continuous & Continuous \\ 
+On/Off-Policy                     & Off & Off & On & Off & Off & Off & On & Off \\ 
+Hardware deployment               & MCU & FPGA & PC/Cloud & GPU & Server/GPU & Cloud & GPU & HPC \\      
+\hline
+\end{tabular}
+\vspace{2mm}
+\vspace{1mm}
+\begin{tablenotes}
+\small
+\item Superior: +++, intermediate: ++, inferior: + (subjective scale based on literature consensus).
+\end{tablenotes}
+\end{table*}
+high-performance speed regulation across a wide range of motor types and application domains. This capability is especially valuable in modern power electronic systems, where load conditions, hardware configurations, and operating constraints are increasingly dynamic and complex. As DRL algorithms become more sample-efficient, safety-compliant, and hardware-friendly, they are expected to play an essential role in future converter-integrated motor drive architectures.
+
+\subsection{Discussions}
+\label{sec:ctrl_discuss}
+
+A summary of the advantages and limitations of DRL-enabled control applications in PECs is provided in Table~\ref{tab:DRL_ControlSummary}. Across the five categories—MPPT, modulation strategy optimization, variable-parameter tuning, energy management, and motor speed tracking—DRL exhibits notable strengths in adaptability, robustness against model uncertainties, and the capacity for continuous learning, making it highly suitable for the increasingly dynamic and complex operation environments of modern converter systems.
+
+In MPPT applications, DRL significantly improves tracking accuracy under partial shading and dynamic irradiance conditions, outperforming classical methods. However, training stability and convergence under extreme environmental variations remain challenges. For modulation strategy optimization, DRL enables fine-grained, context-aware switching decisions that improve efficiency and reduce loss. Yet, the design of reward functions and the safety assurance under unseen operation scenarios are non-trivial. In variable-parameter tuning, DRL shows great promise in replacing manual gain scheduling, offering real-time adjustment of controller parameters for enhanced transient and steady-state performance. Nonetheless, the high-dimensional action space may lead to slow convergence and policy instability without proper exploration control. In the domain of energy management, DRL supports multi-energy coordination, load prediction, and optimal scheduling under uncertainty. The main challenge lies in balancing multiple objectives (e.g., cost, reliability, response time) while maintaining policy interpretability and decision consistency. Finally, motor speed tracking applications benefit from DRL's ability to handle nonlinear dynamics, external disturbances, and system constraints simultaneously. However, deploying DRL in high-speed drives or safety-critical systems requires additional consideration of latency and real-time guarantees.
+
+Further, Table~\ref{tab:DRLcomparison} summarizes the characteristics of mainstream DRL algorithms and comprehensive evaluation of key performance in PECs. It is worth mentioning that the dynamic response, robustness, generalization capability, and convergence efficiency of DRL algorithms are particularly critical in converter control applications. In parallel, computational complexity, memory demand, and training time remain key obstacles to widespread adoption. As a result, high-performance digital signal (DSP) processors , Field-Programmable Gate Array (FPGA), or AI-dedicated hardware accelerators are often necessary to meet real-time implementation requirements.
+
+As DRL continues to demonstrate superior control performance across multiple converter control domains, its integration into system-level lifecycle tasks—such as condition monitoring and predictive maintenance—is becoming increasingly relevant. These applications are explored in the following section.
+
