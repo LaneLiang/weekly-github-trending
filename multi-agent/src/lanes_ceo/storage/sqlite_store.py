@@ -69,7 +69,7 @@ class SQLiteStore:
         with sqlite3.connect(self.path) as conn:
             conn.execute(
                 """
-                INSERT INTO jobs VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT OR REPLACE INTO jobs VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     job.job_id,
