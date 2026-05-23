@@ -28,7 +28,7 @@ class Scheduler:
     ) -> None:
         with self._lock:
             self._jobs[job_id] = {
-                "cron": croniter(cron_expr, datetime.now(timezone.utc)),
+                "cron": croniter(cron_expr, datetime.now()),
                 "role_group": role_group,
                 "message": message,
                 "last_fire": None,
@@ -52,12 +52,10 @@ class Scheduler:
 
     def _loop(self) -> None:
         while self._running:
-            now = datetime.now(timezone.utc)
+            now = datetime.now()
             with self._lock:
                 for job_id, cfg in list(self._jobs.items()):
                     next_fire = cfg["cron"].get_next(datetime)
-                    if next_fire.tzinfo is None:
-                        next_fire = next_fire.replace(tzinfo=timezone.utc)
                     if next_fire <= now:
                         self._fire(job_id, cfg)
             time.sleep(30)
