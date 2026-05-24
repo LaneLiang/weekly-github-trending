@@ -43,6 +43,12 @@ The 7 objectives have a strict lexicographic priority order. This means:
      weight will not cause its corresponding metric to degrade past P0. If a metric
      is already near the P0 boundary, do NOT decrease its weight.
 
+  5. SAC HYPERPARAMETER CONSTRAINT:
+     - If vo_error P0 FAIL: you MUST NOT suggest any sac_updates.
+       Changing learning rates or exploration parameters while the
+       primary control objective is failing can destabilize training.
+       Focus exclusively on reward weight adjustments until vo_error passes P0.
+
 The agent optimizes 7 objectives simultaneously:
   1. w_ev  — voltage error (deviation from Vref)
   2. w_vr  — voltage ripple (peak-to-peak over window)
@@ -212,6 +218,12 @@ class LLMMetaOptimizer:
                             result["weight_updates"][key] = min(
                                 result["weight_updates"][key], current_val
                             )
+            # (c) Freeze SAC hyperparameters: prevent destabilizing
+            # learning dynamics while vo_error is not under control.
+            # The LLM can only adjust reward weights (already constrained
+            # by gates (a) and (b)) until the primary control objective passes.
+            if "sac_updates" in result:
+                result["sac_updates"] = {}
         return result
 
     def _call_with_retry(self, system: str, user: str, max_retries: int = 2) -> dict:

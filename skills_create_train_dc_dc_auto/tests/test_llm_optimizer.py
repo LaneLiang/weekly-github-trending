@@ -43,14 +43,30 @@ class TestLLMMetaOptimizer:
         assert "weight_updates" in result
 
     @patch("dc_auto_tune.meta.llm_client.LLMClient")
-    def test_suggestions_within_bounds(self, mock_llm, optimizer, mock_training_curve):
+    def test_suggestions_within_bounds(self, mock_llm, optimizer):
         """Suggested hyperparameters must stay within valid range even for out-of-bounds LLM output."""
+        # Use vo_error < 0.5 (P0 PASS) so SAC freeze gate does not clear sac_updates
+        state = {
+            "episode": 200,
+            "recent_rewards": [0.7, 0.75, 0.72, 0.78, 0.8],
+            "metrics": {
+                "vo_error_pct": 0.3,
+                "vo_ripple_pct": 1.2,
+                "efficiency_pct": 90.0,
+                "overshoot_pct": 3.5,
+                "undershoot_pct": 2.1,
+                "recovery_time_ms": 0.45,
+                "startup_time_ms": 8.0,
+            },
+            "current_sac": SACParams(),
+            "current_weights": RewardWeights(),
+        }
         mock_llm.return_value.chat.return_value = (
             '{"analysis": "test", '
             '"sac_updates": {"actor_lr": 999.0, "gamma": 5.0}, '
             '"weight_updates": {"w_vr": -10.0}}'
         )
-        result = optimizer.analyze_and_suggest(mock_training_curve)
+        result = optimizer.analyze_and_suggest(state)
         assert result["sac_updates"]["actor_lr"] <= HyperparamSpace.SAC_BOUNDS["actor_lr"][1]
         assert result["sac_updates"]["gamma"] <= HyperparamSpace.SAC_BOUNDS["gamma"][1]
         assert result["weight_updates"]["w_vr"] >= 0.0
@@ -279,3 +295,65 @@ class TestLLMMetaOptimizer:
         assert result["weight_updates"]["w_ev"] >= 1.0
         # w_vr: freeze gate clamps to current (1.0)
         assert result["weight_updates"]["w_vr"] == 1.0
+
+    # ---- SAC freeze gate tests (Reviewer Fix 5) ----
+
+    @patch("dc_auto_tune.meta.llm_client.LLMClient")
+    def test_vo_error_fail_freezes_sac_params(self, mock_llm, optimizer):
+        """When vo_error P0 FAIL (0.8%), LLM-suggested sac_updates are cleared
+        to prevent destabilizing learning dynamics before primary objective is met."""
+        current_weights = RewardWeights(w_ev=1.0)
+        state = {
+            "episode": 200,
+            "recent_rewards": [0.5, 0.6, 0.55, 0.7, 0.65],
+            "metrics": {
+                "vo_error_pct": 0.8,
+                "vo_ripple_pct": 1.2,
+                "efficiency_pct": 85.0,
+                "overshoot_pct": 3.5,
+                "undershoot_pct": 2.1,
+                "recovery_time_ms": 0.45,
+                "startup_time_ms": 8.0,
+            },
+            "current_sac": SACParams(),
+            "current_weights": current_weights,
+        }
+        # LLM tries to change SAC hyperparameters (actor_lr, initial_alpha)
+        mock_llm.return_value.chat.return_value = (
+            '{"analysis": "adjust SAC params to improve exploration", '
+            '"sac_updates": {"actor_lr": 0.0005, "initial_alpha": 0.1}}'
+        )
+        result = optimizer.analyze_and_suggest(state)
+        # SAC freeze gate clears sac_updates when vo_error P0 FAIL
+        assert result["sac_updates"] == {}
+
+    @patch("dc_auto_tune.meta.llm_client.LLMClient")
+    def test_vo_error_pass_allows_sac_updates(self, mock_llm, optimizer):
+        """When vo_error P0 PASS (0.3%), LLM-suggested sac_updates are allowed through."""
+        current_weights = RewardWeights(w_ev=1.0)
+        state = {
+            "episode": 200,
+            "recent_rewards": [0.7, 0.75, 0.72, 0.78, 0.8],
+            "metrics": {
+                "vo_error_pct": 0.3,
+                "vo_ripple_pct": 1.2,
+                "efficiency_pct": 90.0,
+                "overshoot_pct": 3.5,
+                "undershoot_pct": 2.1,
+                "recovery_time_ms": 0.45,
+                "startup_time_ms": 8.0,
+            },
+            "current_sac": SACParams(),
+            "current_weights": current_weights,
+        }
+        # LLM suggests SAC hyperparameter changes — allowed since vo_error P0 PASS
+        mock_llm.return_value.chat.return_value = (
+            '{"analysis": "tune SAC params now that vo_error is good", '
+            '"sac_updates": {"actor_lr": 0.0005, "initial_alpha": 0.1}}'
+        )
+        result = optimizer.analyze_and_suggest(state)
+        # SAC updates preserved when vo_error P0 PASS
+        # (magnitude limiter clamps actor_lr: 0.0003 -> 0.0005 becomes 0.00045)
+        assert "sac_updates" in result
+        assert result["sac_updates"]["actor_lr"] == pytest.approx(0.00045)
+        assert result["sac_updates"]["initial_alpha"] == 0.1
